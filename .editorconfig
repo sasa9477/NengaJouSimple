@@ -1,0 +1,8 @@
+﻿[*.cs]
+
+# IDE0027: アクセサーに式本体を使用する
+csharp_style_expression_bodied_accessors = false
+csharp_style_unused_value_assignment_preference=discard_variable:suggestion
+
+# IDE0058: 式の値が使用されていません
+dotnet_diagnostic.IDE0058.severity = none
