@@ -13,11 +13,11 @@ using System.Windows.Shapes;
 namespace NengaJouSimple.Views
 {
     /// <summary>
-    /// AddressCardRegisterWindow.xaml の相互作用ロジック
+    /// SenderAddressCardListWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class AddressCardRegisterWindow : Window
+    public partial class SenderAddressCardListWindow : Window
     {
-        public AddressCardRegisterWindow()
+        public SenderAddressCardListWindow()
         {
             InitializeComponent();
         }

@@ -1,0 +1,377 @@
+﻿<UserControl x:Class="NengaJouSimple.Views.Components.AddressCardControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
+             xmlns:converters="clr-namespace:NengaJouSimple.Views.Converters"
+             xmlns:validationRules="clr-namespace:NengaJouSimple.Views.ValidationRules"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="450"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListWindowViewModel}}"
+             x:Name="Root">
+    <UserControl.Resources>
+        <!-- Styles -->
+
+        <!-- TextBoxes -->
+        <Style x:Key="MainNameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Width" Value="100"/>
+        </Style>
+
+        <Style x:Key="NameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Width" Value="100"/>
+        </Style>
+
+        <Style x:Key="AddressNumberTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Width" Value="50"/>
+        </Style>
+
+        <!-- ComboBoxes -->
+        <Style x:Key="MainHonorificComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Margin" Value="0,2,4,2"/>
+        </Style>
+
+        <!-- Buttons -->
+        <Style x:Key="RegisterButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
+
+        <!-- Converters -->
+        <converters:AddressNumberConverter x:Key="AddressNumberConverter"/>
+    </UserControl.Resources>
+
+    <Grid
+        d:Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 氏名 -->
+        <Label
+            Content="氏名"/>
+        <Grid
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Style="{StaticResource MainNameTextBox}">
+                <TextBox.Text>
+                    <Binding Path="AddressCard.MainName.FamilyName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox
+                Grid.Column="1"
+                Style="{StaticResource MainNameTextBox}">
+                <TextBox.Text>
+                    <Binding Path="AddressCard.MainName.GivenName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <ComboBox
+                Grid.Column="2"
+                SelectedItem="{Binding AddressCard.MainName.Honorific}"
+                ItemsSource="{Binding Honorifics, ElementName=Root}"
+                Style="{StaticResource MainHonorificComboBox}"/>
+        </Grid>
+
+        <!-- フリガナ -->
+        <Label
+            Grid.Row="1"
+            Content="フリガナ"/>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Style="{StaticResource NameTextBox}">
+                <TextBox.Text>
+                    <Binding Path="AddressCard.MainNameKana.FamilyName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validationRules:FuriganaValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox
+                Grid.Column="1"
+                Style="{StaticResource NameTextBox}">
+                <TextBox.Text>
+                    <Binding Path="AddressCard.MainNameKana.GivenName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validationRules:FuriganaValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
+
+        <!-- 郵便番号 -->
+        <Label
+            Grid.Row="2"
+            Content="郵便番号"/>
+        <Grid
+            Grid.Row="2"
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <!-- 全角入力不可 InputMethod.IsInputMethodEnabled="False" -->
+            <TextBox
+                x:Name="AddressNumber1"
+                InputMethod.IsInputMethodEnabled="False"
+                Style="{StaticResource AddressNumberTextBox}">
+                <TextBox.Text>
+                    <Binding Path="AddressCard.AddressNumber.AddressNumber1" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validationRules:AddressNumber1ValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Label
+                Grid.Column="1"
+                Content=" - "/>
+            <TextBox
+                Grid.Column="2"
+                x:Name="AddressNumber2"
+                InputMethod.IsInputMethodEnabled="False"
+                Style="{StaticResource AddressNumberTextBox}">
+                <TextBox.Text>
+                    <Binding Path="AddressCard.AddressNumber.AddressNumber2" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validationRules:AddressNumber2ValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Button
+                Grid.Column="4"
+                Content="郵便番号から住所を検索"
+                Command="{Binding SearchByAddressNumberCommand, ElementName=Root}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource AddressNumberConverter}">
+                        <Binding Path="Text" ElementName="AddressNumber1"/>
+                        <Binding Path="Text" ElementName="AddressNumber2"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+
+        <!-- 住所１ -->
+        <Label
+            Grid.Row="3"
+            Content="住所１"/>
+        <TextBox
+            Grid.Row="3"
+            Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="AddressCard.Address.Address1" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <!-- 住所２ -->
+        <Label
+            Grid.Row="4"
+            Content="住所２"/>
+        <TextBox
+            Grid.Row="4"
+            Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="AddressCard.Address.Address2" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+
+        <!-- 住所３ -->
+        <Label
+            Grid.Row="5"
+            Content="住所３"/>
+        <TextBox
+            Grid.Row="5"
+            Grid.Column="1"
+            Text="{Binding AddressCard.Address.Address3}"/>
+
+        <!-- 連名１ -->
+        <Label
+            Grid.Row="6"
+            Content="連名１"/>
+        <Grid
+            Grid.Row="6"
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Text="{Binding AddressCard.Renmei1.FamilyName}"
+                Style="{StaticResource NameTextBox}"/>
+            <TextBox
+                Grid.Column="1"
+                Text="{Binding AddressCard.Renmei1.GivenName}"
+                Style="{StaticResource NameTextBox}"/>
+            <ComboBox
+                Grid.Column="2"
+                SelectedItem="{Binding AddressCard.Renmei1.Honorific}"
+                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+        </Grid>
+
+        <!-- 連名２ -->
+        <Label
+            Grid.Row="7"
+            Content="連名２"/>
+        <Grid
+            Grid.Row="7"
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Text="{Binding AddressCard.Renmei2.FamilyName}"
+                Style="{StaticResource NameTextBox}"/>
+            <TextBox
+                Grid.Column="1"
+                Text="{Binding AddressCard.Renmei2.GivenName}"
+                Style="{StaticResource NameTextBox}"/>
+            <ComboBox
+                Grid.Column="2"
+                SelectedItem="{Binding AddressCard.Renmei2.Honorific}"
+                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+        </Grid>
+
+        <!-- 連名３ -->
+        <Label
+            Grid.Row="8"
+            Content="連名３"/>
+        <Grid
+            Grid.Row="8"
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Text="{Binding AddressCard.Renmei3.FamilyName}"
+                Style="{StaticResource NameTextBox}"/>
+            <TextBox
+                Grid.Column="1"
+                Text="{Binding AddressCard.Renmei3.GivenName}"
+                Style="{StaticResource NameTextBox}"/>
+            <ComboBox
+                Grid.Column="2"
+                SelectedItem="{Binding AddressCard.Renmei3.Honorific}"
+                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+        </Grid>
+
+        <!-- 連名４ -->
+        <Label
+            Grid.Row="9"
+            Content="連名４"/>
+        <Grid
+            Grid.Row="9"
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Text="{Binding AddressCard.Renmei4.FamilyName}"
+                Style="{StaticResource NameTextBox}"/>
+            <TextBox
+                Grid.Column="1"
+                Text="{Binding AddressCard.Renmei4.GivenName}"
+                Style="{StaticResource NameTextBox}"/>
+            <ComboBox
+                Grid.Column="2"
+                SelectedItem="{Binding AddressCard.Renmei4.Honorific}"
+                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+        </Grid>
+
+        <!-- 連名５ -->
+        <Label
+            Grid.Row="10"
+            Content="連名５"/>
+        <Grid
+            Grid.Row="10"
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Text="{Binding AddressCard.Renmei5.FamilyName}"
+                Style="{StaticResource NameTextBox}"/>
+            <TextBox
+                Grid.Column="1"
+                Text="{Binding AddressCard.Renmei5.GivenName}"
+                Style="{StaticResource NameTextBox}"/>
+            <ComboBox
+                Grid.Column="2"
+                SelectedItem="{Binding AddressCard.Renmei5.Honorific}"
+                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+        </Grid>
+
+        <!-- 登録ボタン -->
+        <Grid
+            Grid.Row="11"
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="1"
+                Content="登録"
+                Command="{Binding RegisterAddressCommand, ElementName=Root}"
+                Style="{StaticResource RegisterButton}"/>
+        </Grid>
+    </Grid>
+</UserControl>

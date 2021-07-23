@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NengaJouSimple.ViewModels.Entities
+namespace NengaJouSimple.Models
 {
     public class PersonName
     {

@@ -1,66 +1,71 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Commands;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using NengaJouSimple.ViewModels.Entities;
+using NengaJouSimple.Services;
 
 namespace NengaJouSimple.ViewModels
 {
     public class AddressCardListWindowViewModel : BindableBase
     {
-        private string address;
+        private readonly AddressCardService addressCardService;
 
-        private string fullName;
+        private AddressCard addressCard = new AddressCard();
 
-        private string renmei1;
-
-        private string renmei2;
-
-        private string renmei3;
-
-        private string renmei4;
-
-        private string renmei5;
-
-        public string Address
+        public AddressCardListWindowViewModel(AddressCardService addressCardService)
         {
-            get { return address; }
-            set { SetProperty(ref address, value); }
+            addressCardService = this.addressCardService;
+
+            addressCard = new AddressCard();
+            addressCard.MainName.Honorific = Honorific.FirstItem;
+
+            addressCard.MainName.FamilyName = "日下";
+            addressCard.MainName.GivenName = "智久";
         }
 
-        public string FullName
+        public AddressCard AddressCard
         {
-            get { return fullName; }
-            set { SetProperty(ref fullName, value); }
+            get { return addressCard; }
+            set { SetProperty(ref addressCard, value); }
         }
 
-        public string Renmei1
+        public List<string> Honorifics { get; } = Honorific.Items;
+
+        public ObservableCollection<AddressCard> AddressCards { get; } = new ObservableCollection<AddressCard>();
+
+        public DelegateCommand<string> SearchByAddressNumberCommand => new DelegateCommand<string>(SearchByAddressNumber);
+
+        public DelegateCommand RegisterAddressCommand => new DelegateCommand(RegisterAddress);
+
+        private void SearchByAddressNumber(string addressNumber)
         {
-            get { return renmei1; }
-            set { SetProperty(ref renmei1, value); }
+            System.Diagnostics.Debug.WriteLine($"Search by address number!{addressNumber}");
+
+            if (addressNumber.Length != 7)
+            {
+                return;
+            }
+
+            // TODO: HttpRequest through AddressSearch service.
+            // If it will be failed, there are no action.
+
+            AddressCard.Address.Address1 = $"[{addressNumber}]東京都江東区北砂";
+
+            RaisePropertyChanged(nameof(AddressCard));
         }
 
-        public string Renmei2
+        private void RegisterAddress()
         {
-            get { return renmei2; }
-            set { SetProperty(ref renmei2, value); }
-        }
+            AddressCards.Add(AddressCard);
 
-        public string Renmei3
-        {
-            get { return renmei3; }
-            set { SetProperty(ref renmei3, value); }
-        }
+            AddressCard = new AddressCard();
 
-        public string Renmei4
-        {
-            get { return renmei4; }
-            set { SetProperty(ref renmei4, value); }
-        }
+            RaisePropertyChanged(nameof(AddressCard));
 
-        public string Renmei5
-        {
-            get { return renmei5; }
-            set { SetProperty(ref renmei5, value); }
+            System.Diagnostics.Debug.WriteLine("登録しました。");
         }
     }
 }

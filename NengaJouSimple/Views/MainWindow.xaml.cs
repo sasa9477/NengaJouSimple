@@ -1,5 +1,4 @@
-﻿using NengaJouSimple.ViewModels.Components;
-using System.Windows;
+﻿using System.Windows;
 
 namespace NengaJouSimple.Views
 {
@@ -11,8 +10,6 @@ namespace NengaJouSimple.Views
         public MainWindow()
         {
             InitializeComponent();
-
-            AddressRegisterControl.DataContext = new AddressRegisterControlViewModel();
         }
     }
 }
