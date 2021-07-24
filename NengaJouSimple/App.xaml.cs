@@ -2,8 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using NengaJouSimple.Data;
 using NengaJouSimple.Data.Repositories;
+using NengaJouSimple.Data.Web;
 using NengaJouSimple.Services;
+using NengaJouSimple.ViewModels.Components;
 using NengaJouSimple.Views;
+using NengaJouSimple.Views.Components;
 using Prism.Ioc;
 using System.Data.Common;
 using System.Windows;
@@ -30,9 +33,15 @@ namespace NengaJouSimple
 
             containerRegistry.RegisterSingleton<AddressCardRepository>();
 
+            containerRegistry.RegisterSingleton<AddressWebService>();
+
             containerRegistry.RegisterSingleton<AddressCardService>();
 
             containerRegistry.RegisterInstance(AutoMapperConfig.CreateMapper());
+
+            containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>();
+
+            containerRegistry.RegisterDialog<ConfirmDialog, ConfirmDialogViewModel>();
         }
 
         private static ApplicationDbContext CreateDbContext()

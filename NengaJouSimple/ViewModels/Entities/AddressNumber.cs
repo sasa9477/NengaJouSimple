@@ -24,6 +24,11 @@ namespace NengaJouSimple.ViewModels.Entities
 
         public string AddressNumber2 { get; set; }
 
+        public bool IsCompleted
+        {
+            get { return AddressNumber1.Length == 3 && AddressNumber2.Length == 4; }
+        }
+
         public override string ToString()
         {
             return $"{AddressNumber1}-{AddressNumber2}";

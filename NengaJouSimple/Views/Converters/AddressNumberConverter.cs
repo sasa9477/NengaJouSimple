@@ -13,7 +13,7 @@ namespace NengaJouSimple.Views.Converters
         {
             var addressNumber1 = values.First() as string;
 
-            return addressNumber1.Length == 3 ? string.Concat(values) : string.Empty;
+            return addressNumber1?.Length == 3 ? string.Concat(values) : string.Empty;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

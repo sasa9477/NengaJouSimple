@@ -6,19 +6,28 @@ using System.Collections.ObjectModel;
 using System.Text;
 using NengaJouSimple.ViewModels.Entities;
 using NengaJouSimple.Services;
+using NengaJouSimple.Extensions;
+using Prism.Services.Dialogs;
 
 namespace NengaJouSimple.ViewModels
 {
     public class SenderAddressCardListWindowViewModel : BindableBase
     {
+        private readonly IDialogService dialogService;
+
         private readonly AddressCardService addressCardService;
 
         private AddressCard addressCard;
 
         private AddressCard selectedAddressCard;
 
-        public SenderAddressCardListWindowViewModel(AddressCardService addressCardService)
+        private bool isSearchingByWebService = false;
+
+        public SenderAddressCardListWindowViewModel(
+            IDialogService dialogService,
+            AddressCardService addressCardService)
         {
+            this.dialogService = dialogService;
             this.addressCardService = addressCardService;
 
             addressCard = new AddressCard();
@@ -43,7 +52,13 @@ namespace NengaJouSimple.ViewModels
             set { SetProperty(ref selectedAddressCard, value); }
         }
 
-        public ObservableCollection<AddressCard> AddressCards { get; private set; }
+        public bool IsSearchingByWebService
+        {
+            get { return isSearchingByWebService; }
+            set { SetProperty(ref isSearchingByWebService, value); }
+        }
+
+        public ObservableCollection<AddressCard> AddressCards { get; }
 
         public DelegateCommand ClearSelectedAddressCommand { get; }
 
@@ -64,7 +79,10 @@ namespace NengaJouSimple.ViewModels
 
         private void SelectAddressCard()
         {
-            if (SelectedAddressCard == null) return;
+            if (SelectedAddressCard == null)
+            {
+                return;
+            }
 
             AddressCard = SelectedAddressCard.Clone();
             AddressCard.IsRegisterdCard = true;
@@ -72,47 +90,105 @@ namespace NengaJouSimple.ViewModels
             RaisePropertyChanged(nameof(AddressCard));
         }
 
-        private void SearchByAddressNumber(string addressNumber)
+        private async void SearchByAddressNumber(string addressNumber)
         {
             if (addressNumber.Length != 7)
             {
                 return;
             }
 
-            // TODO: HttpRequest through AddressSearch service.
-            // If it will be failed, there are no action.
+            IsSearchingByWebService = true;
 
-            AddressCard.Address.Address1 = $"東京都江東区北砂";
+            var response = await addressCardService.SearchAddressByPostalCode(AddressCard.AddressNumber.ToString());
 
-            RaisePropertyChanged(nameof(AddressCard));
+            if (!string.IsNullOrEmpty(response))
+            {
+                AddressCard.Address.Address1 = response;
+
+                RaisePropertyChanged(nameof(AddressCard));
+            }
+
+            IsSearchingByWebService = false;
         }
 
         private void RegisterAddress()
         {
+            var validAddressCard = ValidAddressCard();
+
+            if (!validAddressCard.IsValid)
+            {
+                dialogService.ShowInformationDialog(validAddressCard.ErrorMessage);
+
+                return;
+            }
+
             addressCardService.Register(AddressCard);
 
-            var addressCards = addressCardService.LoadAll();
-
-            ReplaceAddressCards(addressCards);
+            ReplaceAddressCards();
 
             ClearSelectedAddress();
-
-            System.Diagnostics.Debug.WriteLine("登録しました。");
         }
 
         private void DeleteAddress()
         {
-            System.Diagnostics.Debug.WriteLine("削除しました。");
+            var message = "この住所カードを削除しますか？";
+
+            var buttonResult = dialogService.ShowConfirmDialog(message);
+
+            if (buttonResult == ButtonResult.Yes)
+            {
+                addressCardService.Delete(AddressCard);
+
+                ReplaceAddressCards();
+
+                ClearSelectedAddress();
+            }
         }
 
-        private void ReplaceAddressCards(ICollection<AddressCard> addressCards)
+        private void ReplaceAddressCards()
         {
+            var addressCards = addressCardService.LoadAll();
+
             AddressCards.Clear();
 
-            foreach(var addressCard in addressCards)
+            foreach (var addressCard in addressCards)
             {
                 AddressCards.Add(addressCard);
             }
+        }
+
+        private (bool IsValid, string ErrorMessage) ValidAddressCard()
+        {
+            var errorMessage = BuildValidationErrorMessage();
+
+            return (IsValid: string.IsNullOrEmpty(errorMessage), ErrorMessage: errorMessage);
+        }
+
+        private string BuildValidationErrorMessage()
+        {
+            var sb = new StringBuilder();
+
+            if (string.IsNullOrWhiteSpace(AddressCard.MainName.FamilyName) || string.IsNullOrWhiteSpace(AddressCard.MainName.GivenName))
+            {
+                sb.AppendLine("氏名を入力してください。");
+            }
+
+            if (!AddressCard.AddressNumber.IsCompleted)
+            {
+                sb.AppendLine("郵便番号を入力してください。");
+            }
+
+            if (string.IsNullOrWhiteSpace(AddressCard.Address.Address1))
+            {
+                sb.AppendLine("住所１を入力してください。");
+            }
+
+            if (string.IsNullOrWhiteSpace(AddressCard.Address.Address2))
+            {
+                sb.AppendLine("住所２を入力してください。");
+            }
+
+            return sb.ToString();
         }
     }
 }

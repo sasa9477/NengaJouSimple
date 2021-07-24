@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
 using NengaJouSimple.Data.Repositories;
+using NengaJouSimple.Data.Web;
 using NengaJouSimple.Models;
 
 namespace NengaJouSimple.Services
@@ -11,11 +13,17 @@ namespace NengaJouSimple.Services
     {
         private readonly AddressCardRepository addressCardRepository;
 
+        private readonly AddressWebService addressWebService;
+
         private readonly IMapper mapper;
 
-        public AddressCardService(AddressCardRepository addressCardRepository, IMapper mapper)
+        public AddressCardService(
+            AddressCardRepository addressCardRepository,
+            AddressWebService addressWebService,
+            IMapper mapper)
         {
             this.addressCardRepository = addressCardRepository;
+            this.addressWebService = addressWebService;
             this.mapper = mapper;
         }
 
@@ -38,6 +46,11 @@ namespace NengaJouSimple.Services
             var requestAddressCard = mapper.Map<AddressCard>(addressCard);
 
             addressCardRepository.Delete(requestAddressCard);
+        }
+
+        public async Task<string> SearchAddressByPostalCode(string postalCode)
+        {
+            return await addressWebService.Search(postalCode);
         }
     }
 }

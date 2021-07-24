@@ -10,7 +10,7 @@ namespace NengaJouSimple.Views.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return !string.IsNullOrWhiteSpace((string)value) ? ValidationResult.ValidResult : new ValidationResult(false, "");
+            return !string.IsNullOrWhiteSpace(value as string) ? ValidationResult.ValidResult : new ValidationResult(false, "");
         }
     }
 }

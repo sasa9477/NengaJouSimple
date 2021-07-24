@@ -22,8 +22,6 @@ namespace NengaJouSimple.ViewModels
             addressCard = new AddressCard();
             addressCard.MainName.Honorific = Honorific.FirstItem;
 
-            addressCard.MainName.FamilyName = "日下";
-            addressCard.MainName.GivenName = "智久";
         }
 
         public AddressCard AddressCard

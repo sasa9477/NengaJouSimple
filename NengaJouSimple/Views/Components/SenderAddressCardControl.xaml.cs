@@ -22,6 +22,9 @@ namespace NengaJouSimple.Views.Components
         public static readonly DependencyProperty AddressCardProperty =
             DependencyProperty.Register("AddressCard", typeof(AddressCard), typeof(SenderAddressCardControl), new PropertyMetadata(new AddressCard()));
 
+        public static readonly DependencyProperty IsSearchingByWebServiceProperty =
+            DependencyProperty.Register("IsSearchingByWebService", typeof(bool), typeof(SenderAddressCardControl), new PropertyMetadata(false));
+
         public static readonly DependencyProperty SearchByAddressNumberCommandProperty =
             DependencyProperty.Register("SearchByAddressNumberCommand", typeof(ICommand), typeof(SenderAddressCardControl), new PropertyMetadata(null));
 
@@ -35,6 +38,12 @@ namespace NengaJouSimple.Views.Components
         {
             get { return (AddressCard)GetValue(AddressCardProperty); }
             set { SetValue(AddressCardProperty, value); }
+        }
+
+        public bool IsSearchingByWebService
+        {
+            get { return (bool)GetValue(IsSearchingByWebServiceProperty); }
+            set { SetValue(IsSearchingByWebServiceProperty, value); }
         }
 
         public ICommand SearchByAddressNumberCommand
@@ -58,6 +67,16 @@ namespace NengaJouSimple.Views.Components
         public SenderAddressCardControl()
         {
             InitializeComponent();
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainNameFamilyName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            MainNameGivenName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            AddressNumber1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            AddressNumber2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            Address1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            Address2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         }
     }
 }

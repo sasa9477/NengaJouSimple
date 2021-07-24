@@ -40,7 +40,7 @@
                     <GridView>
                         <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}" Width="100"/>
                         <GridViewColumn Header="フリガナ" DisplayMemberBinding="{Binding MainNameKana}" Width="100"/>
-                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding AddressNumber}" Width="60"/>
+                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding AddressNumber}" Width="70"/>
                         <GridViewColumn Header="住所" DisplayMemberBinding="{Binding Address}" Width="300"/>
                         <GridViewColumn Header="連名１" DisplayMemberBinding="{Binding Renmei1}" Width="Auto"/>
                         <GridViewColumn Header="連名２" DisplayMemberBinding="{Binding Renmei2}" Width="Auto"/>
@@ -78,8 +78,16 @@
                 <Button
                     Grid.Column="1"
                     Content="新規登録"
-                    Command="{Binding ClearSelectedAddressCommand}"
-                    Style="{StaticResource LargeButton}">
+                    Command="{Binding ClearSelectedAddressCommand}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <bh:Interaction.Triggers>
                         <bh:EventTrigger EventName="Click">
                             <bh:ChangePropertyAction
@@ -96,6 +104,7 @@
                 BorderThickness="1">
                 <vc:SenderAddressCardControl
                     AddressCard="{Binding AddressCard}"
+                    IsSearchingByWebService="{Binding IsSearchingByWebService}"
                     SearchByAddressNumberCommand="{Binding SearchByAddressNumberCommand}"
                     RegisterAddressCommand="{Binding RegisterAddressCommand}"
                     DeleteAddressCommand="{Binding DeleteAddressCommand}"/>

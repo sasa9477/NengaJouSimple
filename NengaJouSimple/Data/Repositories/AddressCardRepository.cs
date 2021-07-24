@@ -32,7 +32,7 @@ namespace NengaJouSimple.Data.Repositories
 
         public void Delete(AddressCard addressCard)
         {
-            applicationDbContext.AddressCards.Remove(addressCard);
+            applicationDbContext.Remove(addressCard);
             
             applicationDbContext.SaveChanges();
 
