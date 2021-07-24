@@ -16,20 +16,15 @@
         <!-- TextBoxes -->
         <Style x:Key="MainNameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Width" Value="100"/>
+            <Setter Property="Width" Value="120"/>
         </Style>
 
         <Style x:Key="NameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="Width" Value="100"/>
+            <Setter Property="Width" Value="120"/>
         </Style>
 
         <Style x:Key="AddressNumberTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Width" Value="50"/>
-        </Style>
-        
-        <!-- Buttons -->
-        <Style x:Key="RegisterButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="FontSize" Value="24"/>
         </Style>
 
         <!-- Converters -->
@@ -343,12 +338,12 @@
                 Content="削除"
                 Command="{Binding DeleteAddressCommand, ElementName=Root}"
                 Visibility="{Binding AddressCard.IsRegisterdCard, Converter={StaticResource BooleanToVisibilityConverter}}"
-                Style="{StaticResource RegisterButton}"/>
+                Style="{StaticResource LargeButton}"/>
             <Button
                 Grid.Column="2"
                 Content="登録"
                 Command="{Binding RegisterAddressCommand, ElementName=Root}"
-                Style="{StaticResource RegisterButton}"/>
+                Style="{StaticResource LargeButton}"/>
         </Grid>
     </Grid>
 </UserControl>

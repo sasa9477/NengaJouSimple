@@ -31,20 +31,22 @@
                 FontSize="24"/>
             <ListView
                 Grid.Row="1"
+                x:Name="DataListView"
                 ItemsSource="{Binding AddressCards}"
                 SelectedItem="{Binding SelectedAddressCard}"
+                SelectionMode="Single"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}"/>
-                        <GridViewColumn Header="フリガナ" DisplayMemberBinding="{Binding MainNameKana}"/>
-                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding AddressNumber}"/>
-                        <GridViewColumn Header="住所" DisplayMemberBinding="{Binding Address}"/>
-                        <GridViewColumn Header="連名１" DisplayMemberBinding="{Binding Renmei1}"/>
-                        <GridViewColumn Header="連名２" DisplayMemberBinding="{Binding Renmei2}"/>
-                        <GridViewColumn Header="連名３" DisplayMemberBinding="{Binding Renmei3}"/>
-                        <GridViewColumn Header="連名４" DisplayMemberBinding="{Binding Renmei4}"/>
-                        <GridViewColumn Header="連名５" DisplayMemberBinding="{Binding Renmei5}"/>
+                        <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}" Width="100"/>
+                        <GridViewColumn Header="フリガナ" DisplayMemberBinding="{Binding MainNameKana}" Width="100"/>
+                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding AddressNumber}" Width="60"/>
+                        <GridViewColumn Header="住所" DisplayMemberBinding="{Binding Address}" Width="300"/>
+                        <GridViewColumn Header="連名１" DisplayMemberBinding="{Binding Renmei1}" Width="Auto"/>
+                        <GridViewColumn Header="連名２" DisplayMemberBinding="{Binding Renmei2}" Width="Auto"/>
+                        <GridViewColumn Header="連名３" DisplayMemberBinding="{Binding Renmei3}" Width="Auto"/>
+                        <GridViewColumn Header="連名４" DisplayMemberBinding="{Binding Renmei4}" Width="Auto"/>
+                        <GridViewColumn Header="連名５" DisplayMemberBinding="{Binding Renmei5}" Width="Auto"/>
                     </GridView>
                 </ListView.View>
                 <bh:Interaction.Triggers>
@@ -62,30 +64,41 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label
-                Content="差出人カード登録"
-                FontSize="24"/>
             <Grid
-                Grid.Row="1">
+                Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+                <Label
+                    Content="差出人カード登録"
+                    FontSize="24"/>
                 <Button
                     Grid.Column="1"
                     Content="新規登録"
-                    Command="{Binding ClearSelectedAddressCommand}"/>
+                    Command="{Binding ClearSelectedAddressCommand}"
+                    Style="{StaticResource LargeButton}">
+                    <bh:Interaction.Triggers>
+                        <bh:EventTrigger EventName="Click">
+                            <bh:ChangePropertyAction
+                            TargetName="DataListView"
+                            PropertyName="SelectedIndex"
+                            Value="-1"/>
+                        </bh:EventTrigger>
+                    </bh:Interaction.Triggers>
+                </Button>
             </Grid>
             <Border
-                Grid.Row="2"
+                Grid.Row="1"
                 BorderBrush="Gray"
                 BorderThickness="1">
                 <vc:SenderAddressCardControl
                     AddressCard="{Binding AddressCard}"
                     SearchByAddressNumberCommand="{Binding SearchByAddressNumberCommand}"
-                    RegisterAddressCommand="{Binding RegisterAddressCommand}"/>
+                    RegisterAddressCommand="{Binding RegisterAddressCommand}"
+                    DeleteAddressCommand="{Binding DeleteAddressCommand}"/>
             </Border>
         </Grid>
     </Grid>

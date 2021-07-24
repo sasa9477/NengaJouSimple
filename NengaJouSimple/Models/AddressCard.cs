@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NengaJouSimple.Models
 {
-    public class AddressCard : EntityBase<AddressCard>
+    public class AddressCard : EntityBase
     {
         public AddressCard()
         {

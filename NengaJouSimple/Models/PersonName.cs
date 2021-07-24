@@ -21,7 +21,9 @@ namespace NengaJouSimple.Models
 
         public override string ToString()
         {
-            return $"{FamilyName} {GivenName}{Honorific}";
+            var space = string.IsNullOrEmpty(FamilyName) ? "" : " ";
+
+            return $"{FamilyName}{space}{GivenName}{Honorific}";
         }
 
         public PersonName Clone()

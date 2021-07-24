@@ -17,7 +17,7 @@ namespace NengaJouSimple.ViewModels.Entities
             if (string.IsNullOrEmpty(addressNumber) || addressNumber.Length != 8) return;
 
             AddressNumber1 = addressNumber[0..3];
-            AddressNumber2 = addressNumber[5..8];
+            AddressNumber2 = addressNumber[4..8];
         }
 
         public string AddressNumber1 { get; set; }

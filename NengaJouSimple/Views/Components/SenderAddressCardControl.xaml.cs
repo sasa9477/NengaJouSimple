@@ -28,6 +28,9 @@ namespace NengaJouSimple.Views.Components
         public static readonly DependencyProperty RegisterAddressCommandProperty =
             DependencyProperty.Register("RegisterAddressCommand", typeof(ICommand), typeof(SenderAddressCardControl), new PropertyMetadata(null));
 
+        public static readonly DependencyProperty DeleteAddressCommandProperty =
+            DependencyProperty.Register("DeleteAddressCommand", typeof(ICommand), typeof(SenderAddressCardControl), new PropertyMetadata(null));
+
         public AddressCard AddressCard
         {
             get { return (AddressCard)GetValue(AddressCardProperty); }
@@ -44,6 +47,12 @@ namespace NengaJouSimple.Views.Components
         {
             get { return (ICommand)GetValue(RegisterAddressCommandProperty); }
             set { SetValue(RegisterAddressCommandProperty, value); }
+        }
+
+        public ICommand DeleteAddressCommand
+        {
+            get { return (ICommand)GetValue(DeleteAddressCommandProperty); }
+            set { SetValue(DeleteAddressCommandProperty, value); }
         }
 
         public SenderAddressCardControl()

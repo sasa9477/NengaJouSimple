@@ -43,7 +43,7 @@ namespace NengaJouSimple.ViewModels
             set { SetProperty(ref selectedAddressCard, value); }
         }
 
-        public ObservableCollection<AddressCard> AddressCards { get; }
+        public ObservableCollection<AddressCard> AddressCards { get; private set; }
 
         public DelegateCommand ClearSelectedAddressCommand { get; }
 
@@ -64,12 +64,13 @@ namespace NengaJouSimple.ViewModels
 
         private void SelectAddressCard()
         {
+            if (SelectedAddressCard == null) return;
+
             AddressCard = SelectedAddressCard.Clone();
             AddressCard.IsRegisterdCard = true;
 
             RaisePropertyChanged(nameof(AddressCard));
         }
-
 
         private void SearchByAddressNumber(string addressNumber)
         {
@@ -90,7 +91,9 @@ namespace NengaJouSimple.ViewModels
         {
             addressCardService.Register(AddressCard);
 
-            AddressCards.Add(AddressCard);
+            var addressCards = addressCardService.LoadAll();
+
+            ReplaceAddressCards(addressCards);
 
             ClearSelectedAddress();
 
@@ -100,6 +103,16 @@ namespace NengaJouSimple.ViewModels
         private void DeleteAddress()
         {
             System.Diagnostics.Debug.WriteLine("削除しました。");
+        }
+
+        private void ReplaceAddressCards(ICollection<AddressCard> addressCards)
+        {
+            AddressCards.Clear();
+
+            foreach(var addressCard in addressCards)
+            {
+                AddressCards.Add(addressCard);
+            }
         }
     }
 }
