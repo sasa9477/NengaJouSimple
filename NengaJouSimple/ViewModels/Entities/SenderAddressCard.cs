@@ -5,9 +5,9 @@ using NengaJouSimple.Models;
 
 namespace NengaJouSimple.ViewModels.Entities
 {
-    public class AddressCard : EntityBase
+    public class SenderAddressCard : EntityBase
     {
-        public AddressCard()
+        public SenderAddressCard()
         {
             MainName = new PersonName();
             MainNameKana = new PersonName();
@@ -18,7 +18,6 @@ namespace NengaJouSimple.ViewModels.Entities
             Renmei3 = new PersonName();
             Renmei4 = new PersonName();
             Renmei5 = new PersonName();
-            SenderAddressCard = new SenderAddressCard();
         }
 
         public PersonName MainName { get; set; }
@@ -39,13 +38,11 @@ namespace NengaJouSimple.ViewModels.Entities
 
         public PersonName Renmei5 { get; set; }
 
-        public SenderAddressCard SenderAddressCard { get; set; }
-
         public bool IsRegisterdCard { get; set; }
 
-        public AddressCard Clone()
+        public SenderAddressCard Clone()
         {
-            return new AddressCard
+            return new SenderAddressCard
             {
                 Id = Id,
                 MainName = MainName.Clone(),

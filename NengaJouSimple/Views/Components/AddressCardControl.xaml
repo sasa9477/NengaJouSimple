@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
              xmlns:converters="clr-namespace:NengaJouSimple.Views.Converters"
              xmlns:validationRules="clr-namespace:NengaJouSimple.Views.ValidationRules"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="450"
+             d:DesignHeight="460" d:DesignWidth="450"
              d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListWindowViewModel}}"
              x:Name="Root">
     <UserControl.Resources>
@@ -16,11 +17,11 @@
         <!-- TextBoxes -->
         <Style x:Key="MainNameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Width" Value="100"/>
+            <Setter Property="Width" Value="120"/>
         </Style>
 
         <Style x:Key="NameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="Width" Value="100"/>
+            <Setter Property="Width" Value="120"/>
         </Style>
 
         <Style x:Key="AddressNumberTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
@@ -33,12 +34,9 @@
             <Setter Property="Margin" Value="0,2,4,2"/>
         </Style>
 
-        <!-- Buttons -->
-        <Style x:Key="RegisterButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="FontSize" Value="24"/>
-        </Style>
 
         <!-- Converters -->
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:AddressNumberConverter x:Key="AddressNumberConverter"/>
     </UserControl.Resources>
 
@@ -55,6 +53,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -75,6 +75,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
+                x:Name="MainNameFamilyName"
                 Style="{StaticResource MainNameTextBox}">
                 <TextBox.Text>
                     <Binding Path="AddressCard.MainName.FamilyName" UpdateSourceTrigger="PropertyChanged">
@@ -86,6 +87,7 @@
             </TextBox>
             <TextBox
                 Grid.Column="1"
+                x:Name="MainNameGivenName"
                 Style="{StaticResource MainNameTextBox}">
                 <TextBox.Text>
                     <Binding Path="AddressCard.MainName.GivenName" UpdateSourceTrigger="PropertyChanged">
@@ -189,6 +191,15 @@
                         <Binding Path="Text" ElementName="AddressNumber2"/>
                     </MultiBinding>
                 </Button.CommandParameter>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSearchingByWebService, ElementName=Root}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
             </Button>
         </Grid>
 
@@ -198,7 +209,8 @@
             Content="住所１"/>
         <TextBox
             Grid.Row="3"
-            Grid.Column="1">
+            Grid.Column="1"
+            x:Name="Address1">
             <TextBox.Text>
                 <Binding Path="AddressCard.Address.Address1" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -206,6 +218,15 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSearchingByWebService, ElementName=Root}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
         </TextBox>
 
         <!-- 住所２ -->
@@ -214,7 +235,8 @@
             Content="住所２"/>
         <TextBox
             Grid.Row="4"
-            Grid.Column="1">
+            Grid.Column="1"
+            x:Name="Address2">
             <TextBox.Text>
                 <Binding Path="AddressCard.Address.Address2" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -245,6 +267,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding AddressCard.Renmei1.FamilyName}"
@@ -270,6 +293,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding AddressCard.Renmei2.FamilyName}"
@@ -295,6 +319,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding AddressCard.Renmei3.FamilyName}"
@@ -320,6 +345,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding AddressCard.Renmei4.FamilyName}"
@@ -345,6 +371,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding AddressCard.Renmei5.FamilyName}"
@@ -358,20 +385,50 @@
                 SelectedItem="{Binding AddressCard.Renmei5.Honorific}"
                 ItemsSource="{Binding Honorifics, ElementName=Root}"/>
         </Grid>
+        
+        <!-- 差出人 -->
+        <Label
+            Grid.Row="12"
+            Content="差出人"/>
+        <ComboBox
+            Grid.Row="12"
+            Grid.Column="1"
+            SelectedValue="{Binding SelectedSenderAddressCardId, ElementName=Root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedValuePath="Id"
+            DisplayMemberPath="MainName.FullName"
+            ItemsSource="{Binding SenderAddressCards, ElementName=Root}"/>
 
         <!-- 登録ボタン -->
         <Grid
-            Grid.Row="11"
+            Grid.Row="13"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button
                 Grid.Column="1"
+                Content="削除"
+                Command="{Binding DeleteAddressCommand, ElementName=Root}"
+                Visibility="{Binding AddressCard.IsRegisterdCard, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Style="{StaticResource LargeButton}"/>
+
+            <Button
+                Grid.Column="2"
                 Content="登録"
                 Command="{Binding RegisterAddressCommand, ElementName=Root}"
-                Style="{StaticResource RegisterButton}"/>
+                Click="RegisterButton_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSearchingByWebService, ElementName=Root}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

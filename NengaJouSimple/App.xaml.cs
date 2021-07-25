@@ -20,7 +20,7 @@ namespace NengaJouSimple
     {
         protected override Window CreateShell()
         {
-            return Container.Resolve<SenderAddressCardListWindow>();
+            return Container.Resolve<AddressCardListWindow>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -28,6 +28,8 @@ namespace NengaJouSimple
             var dbContext = CreateDbContext();
 
             dbContext.Database.EnsureCreated();
+
+            ApplicationDbContextSeed.SeedData(dbContext);
 
             containerRegistry.RegisterInstance(dbContext);
 

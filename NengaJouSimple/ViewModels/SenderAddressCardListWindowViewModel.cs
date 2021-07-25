@@ -15,41 +15,44 @@ namespace NengaJouSimple.ViewModels
     {
         private readonly IDialogService dialogService;
 
-        private readonly AddressCardService addressCardService;
+        private readonly SenderAddressCardService senderAddressCardService;
 
-        private AddressCard addressCard;
+        private SenderAddressCard senderAddressCard;
 
-        private AddressCard selectedAddressCard;
+        private SenderAddressCard selectedSenderAddressCard;
 
         private bool isSearchingByWebService = false;
 
         public SenderAddressCardListWindowViewModel(
             IDialogService dialogService,
-            AddressCardService addressCardService)
+            SenderAddressCardService senderAddressCardService)
         {
             this.dialogService = dialogService;
-            this.addressCardService = addressCardService;
+            this.senderAddressCardService = senderAddressCardService;
 
-            addressCard = new AddressCard();
-            selectedAddressCard = new AddressCard();
-            AddressCards = new ObservableCollection<AddressCard>();
-            ClearSelectedAddressCommand = new DelegateCommand(ClearSelectedAddress);
-            SelectAddressCardCommand = new DelegateCommand(SelectAddressCard);
-            SearchByAddressNumberCommand = new DelegateCommand<string>(SearchByAddressNumber);
-            RegisterAddressCommand = new DelegateCommand(RegisterAddress);
-            DeleteAddressCommand = new DelegateCommand(DeleteAddress);
+            senderAddressCard = new SenderAddressCard();
+            selectedSenderAddressCard = new SenderAddressCard();
+
+            var allSenderAddressCards = senderAddressCardService.LoadAll();
+            SenderAddressCards = new ObservableCollection<SenderAddressCard>(allSenderAddressCards);
+
+            ClearSelectedSenderAddressCommand = new DelegateCommand(ClearSelectedSenderAddress);
+            SelectSenderAddressCardCommand = new DelegateCommand(SelectSenderAddressCard);
+            SearchBySenderAddressNumberCommand = new DelegateCommand<string>(SearchBySenderAddressNumber);
+            RegisterSenderAddressCommand = new DelegateCommand(RegisterSenderAddress);
+            DeleteSenderAddressCommand = new DelegateCommand(DeleteSenderAddress);
         }
 
-        public AddressCard AddressCard
+        public SenderAddressCard SenderAddressCard
         {
-            get { return addressCard; }
-            set { SetProperty(ref addressCard, value); }
+            get { return senderAddressCard; }
+            set { SetProperty(ref senderAddressCard, value); }
         }
 
-        public AddressCard SelectedAddressCard
+        public SenderAddressCard SelectedSenderAddressCard
         {
-            get { return selectedAddressCard; }
-            set { SetProperty(ref selectedAddressCard, value); }
+            get { return selectedSenderAddressCard; }
+            set { SetProperty(ref selectedSenderAddressCard, value); }
         }
 
         public bool IsSearchingByWebService
@@ -58,78 +61,88 @@ namespace NengaJouSimple.ViewModels
             set { SetProperty(ref isSearchingByWebService, value); }
         }
 
-        public ObservableCollection<AddressCard> AddressCards { get; }
+        public ObservableCollection<SenderAddressCard> SenderAddressCards { get; }
 
-        public DelegateCommand ClearSelectedAddressCommand { get; }
+        public DelegateCommand ClearSelectedSenderAddressCommand { get; }
 
-        public DelegateCommand SelectAddressCardCommand { get; }
+        public DelegateCommand SelectSenderAddressCardCommand { get; }
 
-        public DelegateCommand<string> SearchByAddressNumberCommand { get; }
+        public DelegateCommand<string> SearchBySenderAddressNumberCommand { get; }
 
-        public DelegateCommand RegisterAddressCommand { get; }
+        public DelegateCommand RegisterSenderAddressCommand { get; }
 
-        public DelegateCommand DeleteAddressCommand { get; }
+        public DelegateCommand DeleteSenderAddressCommand { get; }
 
-        private void ClearSelectedAddress()
+        private void ClearSelectedSenderAddress()
         {
-            AddressCard = new AddressCard();
+            SenderAddressCard = new SenderAddressCard();
 
-            RaisePropertyChanged(nameof(AddressCard));
+            RaisePropertyChanged(nameof(SenderAddressCard));
         }
 
-        private void SelectAddressCard()
+        private void SelectSenderAddressCard()
         {
-            if (SelectedAddressCard == null)
+            if (SelectedSenderAddressCard == null)
             {
                 return;
             }
 
-            AddressCard = SelectedAddressCard.Clone();
-            AddressCard.IsRegisterdCard = true;
+            SenderAddressCard = SelectedSenderAddressCard.Clone();
+            SenderAddressCard.IsRegisterdCard = true;
 
-            RaisePropertyChanged(nameof(AddressCard));
+            RaisePropertyChanged(nameof(SenderAddressCard));
         }
 
-        private async void SearchByAddressNumber(string addressNumber)
+        private async void SearchBySenderAddressNumber(string senderAddressNumber)
         {
-            if (addressNumber.Length != 7)
+            if (senderAddressNumber.Length != 7)
             {
+                var message = "郵便番号の形式が正しくありません。";
+
+                dialogService.ShowInformationDialog(message);
+
                 return;
             }
 
             IsSearchingByWebService = true;
 
-            var response = await addressCardService.SearchAddressByPostalCode(AddressCard.AddressNumber.ToString());
+            var response = await senderAddressCardService.SearchAddressByPostalCode(SenderAddressCard.AddressNumber.ToString());
 
-            if (!string.IsNullOrEmpty(response))
+            if (string.IsNullOrEmpty(response))
             {
-                AddressCard.Address.Address1 = response;
+                var message = "指定した郵便番号に一致する住所が見つかりませんでした。";
 
-                RaisePropertyChanged(nameof(AddressCard));
+                dialogService.ShowInformationDialog(message);
+            }
+            else
+            {
+                SenderAddressCard.Address.Address1 = response;
+
+                RaisePropertyChanged(nameof(SenderAddressCard));
             }
 
             IsSearchingByWebService = false;
         }
 
-        private void RegisterAddress()
+        private void RegisterSenderAddress()
         {
-            var validAddressCard = ValidAddressCard();
+            var validSenderAddressCard = ValidSenderAddressCard();
 
-            if (!validAddressCard.IsValid)
+            if (!validSenderAddressCard.IsValid)
             {
-                dialogService.ShowInformationDialog(validAddressCard.ErrorMessage);
+                dialogService.ShowInformationDialog(validSenderAddressCard.ErrorMessage);
 
                 return;
             }
 
-            addressCardService.Register(AddressCard);
+            senderAddressCardService.Register(SenderAddressCard);
 
-            ReplaceAddressCards();
+            ReplaceSenderAddressCards();
 
-            ClearSelectedAddress();
+            ClearSelectedSenderAddress();
         }
 
-        private void DeleteAddress()
+        private void DeleteSenderAddress()
         {
             var message = "この住所カードを削除しますか？";
 
@@ -137,27 +150,27 @@ namespace NengaJouSimple.ViewModels
 
             if (buttonResult == ButtonResult.Yes)
             {
-                addressCardService.Delete(AddressCard);
+                senderAddressCardService.Delete(SenderAddressCard);
 
-                ReplaceAddressCards();
+                ReplaceSenderAddressCards();
 
-                ClearSelectedAddress();
+                ClearSelectedSenderAddress();
             }
         }
 
-        private void ReplaceAddressCards()
+        private void ReplaceSenderAddressCards()
         {
-            var addressCards = addressCardService.LoadAll();
+            SenderAddressCards.Clear();
 
-            AddressCards.Clear();
+            var senderAddressCards = senderAddressCardService.LoadAll();
 
-            foreach (var addressCard in addressCards)
+            foreach (var senderAddressCard in senderAddressCards)
             {
-                AddressCards.Add(addressCard);
+                SenderAddressCards.Add(senderAddressCard);
             }
         }
 
-        private (bool IsValid, string ErrorMessage) ValidAddressCard()
+        private (bool IsValid, string ErrorMessage) ValidSenderAddressCard()
         {
             var errorMessage = BuildValidationErrorMessage();
 
@@ -168,22 +181,22 @@ namespace NengaJouSimple.ViewModels
         {
             var sb = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(AddressCard.MainName.FamilyName) || string.IsNullOrWhiteSpace(AddressCard.MainName.GivenName))
+            if (string.IsNullOrWhiteSpace(SenderAddressCard.MainName.FamilyName) || string.IsNullOrWhiteSpace(SenderAddressCard.MainName.GivenName))
             {
                 sb.AppendLine("氏名を入力してください。");
             }
 
-            if (!AddressCard.AddressNumber.IsCompleted)
+            if (!SenderAddressCard.AddressNumber.IsCompleted)
             {
                 sb.AppendLine("郵便番号を入力してください。");
             }
 
-            if (string.IsNullOrWhiteSpace(AddressCard.Address.Address1))
+            if (string.IsNullOrWhiteSpace(SenderAddressCard.Address.Address1))
             {
                 sb.AppendLine("住所１を入力してください。");
             }
 
-            if (string.IsNullOrWhiteSpace(AddressCard.Address.Address2))
+            if (string.IsNullOrWhiteSpace(SenderAddressCard.Address.Address2))
             {
                 sb.AppendLine("住所２を入力してください。");
             }

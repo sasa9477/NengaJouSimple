@@ -12,6 +12,8 @@ namespace NengaJouSimple.Data
     {
         public DbSet<AddressCard> AddressCards => Set<AddressCard>();
 
+        public DbSet<SenderAddressCard> SenderAddressCards => Set<SenderAddressCard>();
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
@@ -34,33 +36,66 @@ namespace NengaJouSimple.Data
             return base.SaveChanges();
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+
+            optionsBuilder.LogTo(log => System.Diagnostics.Debug.WriteLine(log));
+
+            base.OnConfiguring(optionsBuilder);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var personNameConverter = new ValueConverter<PersonName, string>(
                     v => JsonSerializer.Serialize(v, null),
                     v => JsonSerializer.Deserialize<PersonName>(v, null));
 
-            modelBuilder.Entity<AddressCard>(buider =>
+            modelBuilder.Entity<AddressCard>(builder =>
             {
-                buider.Property(e => e.MainName)
+                builder.Property(e => e.MainName)
                     .HasConversion(personNameConverter);
 
-                buider.Property(e => e.MainNameKana)
+                builder.Property(e => e.MainNameKana)
                     .HasConversion(personNameConverter);
 
-                buider.Property(e => e.Renmei1)
+                builder.Property(e => e.Renmei1)
                     .HasConversion(personNameConverter);
 
-                buider.Property(e => e.Renmei2)
+                builder.Property(e => e.Renmei2)
                     .HasConversion(personNameConverter);
 
-                buider.Property(e => e.Renmei3)
+                builder.Property(e => e.Renmei3)
                     .HasConversion(personNameConverter);
 
-                buider.Property(e => e.Renmei4)
+                builder.Property(e => e.Renmei4)
                     .HasConversion(personNameConverter);
 
-                buider.Property(e => e.Renmei5)
+                builder.Property(e => e.Renmei5)
+                    .HasConversion(personNameConverter);
+            });
+
+            modelBuilder.Entity<SenderAddressCard>(builder =>
+            {
+                builder.Property(e => e.MainName)
+                    .HasConversion(personNameConverter);
+
+                builder.Property(e => e.MainNameKana)
+                    .HasConversion(personNameConverter);
+
+                builder.Property(e => e.Renmei1)
+                    .HasConversion(personNameConverter);
+
+                builder.Property(e => e.Renmei2)
+                    .HasConversion(personNameConverter);
+
+                builder.Property(e => e.Renmei3)
+                    .HasConversion(personNameConverter);
+
+                builder.Property(e => e.Renmei4)
+                    .HasConversion(personNameConverter);
+
+                builder.Property(e => e.Renmei5)
                     .HasConversion(personNameConverter);
             });
 

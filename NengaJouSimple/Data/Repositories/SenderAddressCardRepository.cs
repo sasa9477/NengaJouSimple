@@ -7,38 +7,37 @@ using System.Text;
 
 namespace NengaJouSimple.Data.Repositories
 {
-    public class AddressCardRepository
+    public class SenderAddressCardRepository
     {
         private readonly ApplicationDbContext applicationDbContext;
 
-        public AddressCardRepository(ApplicationDbContext applicationDbContext)
+        public SenderAddressCardRepository(ApplicationDbContext applicationDbContext)
         {
             this.applicationDbContext = applicationDbContext;
         }
 
-        public List<AddressCard> LoadAll()
+        public List<SenderAddressCard> LoadAll()
         {
             return applicationDbContext
-                .AddressCards
-                .Include(addressCard => addressCard.SenderAddressCard)
+                .SenderAddressCards
                 .AsNoTracking()
                 .ToList();
         }
 
-        public void Register(AddressCard addressCard)
+        public void Register(SenderAddressCard senderAddressCard)
         {
             applicationDbContext.ChangeTracker.Clear();
 
-            applicationDbContext.Update(addressCard);
+            applicationDbContext.Update(senderAddressCard);
 
             applicationDbContext.SaveChanges();
         }
 
-        public void Delete(AddressCard addressCard)
+        public void Delete(SenderAddressCard senderAddressCard)
         {
             applicationDbContext.ChangeTracker.Clear();
 
-            applicationDbContext.Remove(addressCard);
+            applicationDbContext.Remove(senderAddressCard);
             
             applicationDbContext.SaveChanges();
         }

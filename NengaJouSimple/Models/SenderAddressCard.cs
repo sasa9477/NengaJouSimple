@@ -4,9 +4,9 @@ using System.Text;
 
 namespace NengaJouSimple.Models
 {
-    public class AddressCard : EntityBase
+    public class SenderAddressCard : EntityBase
     {
-        public AddressCard()
+        public SenderAddressCard()
         {
             MainName = new PersonName();
             MainNameKana = new PersonName();
@@ -19,7 +19,6 @@ namespace NengaJouSimple.Models
             Renmei3 = new PersonName();
             Renmei4 = new PersonName();
             Renmei5 = new PersonName();
-            SenderAddressCard = new SenderAddressCard();
         }
 
         public PersonName MainName { get; set; }
@@ -44,7 +43,5 @@ namespace NengaJouSimple.Models
         public PersonName Renmei4 { get; set; }
 
         public PersonName Renmei5 { get; set; }
-
-        public SenderAddressCard SenderAddressCard { get; set; }
     }
 }

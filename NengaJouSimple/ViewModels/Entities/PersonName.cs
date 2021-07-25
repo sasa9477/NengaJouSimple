@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace NengaJouSimple.ViewModels.Entities
@@ -18,6 +19,8 @@ namespace NengaJouSimple.ViewModels.Entities
         public string GivenName { get; set; }
 
         public string Honorific { get; set; }
+
+        public string FullName => ToString();
 
         public override string ToString()
         {

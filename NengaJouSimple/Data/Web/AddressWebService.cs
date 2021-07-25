@@ -13,8 +13,6 @@ namespace NengaJouSimple.Data.Web
     {
         private static readonly HttpClient HttpClient = new HttpClient();
 
-        private static readonly string PostCodeBaseUri = "https://zipcloud.ibsnet.co.jp/api/search";
-
         public async Task<string> Search(string zipcode)
         {
             if (string.IsNullOrEmpty(zipcode) || zipcode.Length != 8)
@@ -22,35 +20,37 @@ namespace NengaJouSimple.Data.Web
                 return string.Empty;
             }
 
-            //TODO: catch Exception
-
-//              catch (HttpRequestException e)
-
-            var requestUri = PostCodeBaseUri + $"?zipcode={zipcode}";
-
-            var response = await HttpClient.GetAsync(requestUri);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var responseBody = await response.Content.ReadAsStringAsync();
+                var requestUri = $"https://zipcloud.ibsnet.co.jp/api/search?zipcode={zipcode}";
 
-                System.Diagnostics.Debug.WriteLine(responseBody);
+                var response = await HttpClient.GetAsync(requestUri);
 
-                var jsonSerializerOptions = new JsonSerializerOptions
+                if (response.IsSuccessStatusCode)
                 {
-                    PropertyNameCaseInsensitive = true
-                };
+                    var responseBody = await response.Content.ReadAsStringAsync();
 
-                var responseObject = JsonSerializer.Deserialize<ZipCloudRoot>(responseBody, jsonSerializerOptions);
+                    System.Diagnostics.Debug.WriteLine(responseBody);
 
-                System.Diagnostics.Debug.WriteLine(responseObject);
+                    // Json serialize ignore cases is true.
+                    var responseData = JsonSerializer.Deserialize<ZipCloudRoot>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                if (responseObject.IsSuccess)
-                {
-                    var address = responseObject.Results.First();
+                    var address = responseData.Results?.FirstOrDefault();
 
-                    return $"{address.Address1}{address.Address2}{address.Address3}";
+                    if (address != null)
+                    {
+                        return $"{address.Address1}{address.Address2}{address.Address3}";
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                if (ex is HttpRequestException || ex is JsonException)
+                {
+                    return string.Empty;
+                }
+
+                throw;
             }
 
             return string.Empty;

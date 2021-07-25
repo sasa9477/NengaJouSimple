@@ -7,8 +7,8 @@ namespace NengaJouSimple.ViewModels.Entities
 {
     public static class Honorific
     {
-        public static List<string> Items => new List<string> { "様", "さん", "くん", "ちゃん" };
+        public static List<string> Items => new List<string> { "", "様", "さん", "くん", "ちゃん" };
 
-        public static string FirstItem => Items.First();
+        public static string DefalutHonorific => Items[1];
     }
 }

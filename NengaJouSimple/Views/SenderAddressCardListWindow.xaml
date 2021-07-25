@@ -32,8 +32,8 @@
             <ListView
                 Grid.Row="1"
                 x:Name="DataListView"
-                ItemsSource="{Binding AddressCards}"
-                SelectedItem="{Binding SelectedAddressCard}"
+                ItemsSource="{Binding SenderAddressCards}"
+                SelectedItem="{Binding SelectedSenderAddressCard}"
                 SelectionMode="Single"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <ListView.View>
@@ -103,7 +103,7 @@
                 BorderBrush="Gray"
                 BorderThickness="1">
                 <vc:SenderAddressCardControl
-                    AddressCard="{Binding AddressCard}"
+                    AddressCard="{Binding SenderAddressCard}"
                     IsSearchingByWebService="{Binding IsSearchingByWebService}"
                     SearchByAddressNumberCommand="{Binding SearchByAddressNumberCommand}"
                     RegisterAddressCommand="{Binding RegisterAddressCommand}"

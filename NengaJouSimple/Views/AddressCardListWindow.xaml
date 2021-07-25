@@ -4,22 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:NengaJouSimple.Views"
         xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
         xmlns:vc="clr-namespace:NengaJouSimple.Views.Components"
+        xmlns:converters="clr-namespace:NengaJouSimple.Views.Converters"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListWindowViewModel}}"
-        Title="住所登録画面"
+        Title="宛先登録画面"
         Height="720" Width="1280">
-    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid>
+        <Grid
+            Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
@@ -29,45 +31,87 @@
                 FontSize="24"/>
             <ListView
                 Grid.Row="1"
+                x:Name="DataListView"
                 ItemsSource="{Binding AddressCards}"
+                SelectedItem="{Binding SelectedAddressCard}"
+                SelectionMode="Single"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}"/>
-                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding AddressNumber}"/>
-                        <GridViewColumn Header="住所" DisplayMemberBinding="{Binding Address}"/>
-                        <GridViewColumn Header="連名１" DisplayMemberBinding="{Binding Renmei1}"/>
-                        <GridViewColumn Header="連名２" DisplayMemberBinding="{Binding Renmei2}"/>
-                        <GridViewColumn Header="連名３" DisplayMemberBinding="{Binding Renmei3}"/>
-                        <GridViewColumn Header="連名４" DisplayMemberBinding="{Binding Renmei4}"/>
-                        <GridViewColumn Header="連名５" DisplayMemberBinding="{Binding Renmei5}"/>
+                        <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}" Width="100"/>
+                        <GridViewColumn Header="フリガナ" DisplayMemberBinding="{Binding MainNameKana}" Width="100"/>
+                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding AddressNumber}" Width="70"/>
+                        <GridViewColumn Header="住所" DisplayMemberBinding="{Binding Address}" Width="300"/>
+                        <GridViewColumn Header="連名１" DisplayMemberBinding="{Binding Renmei1}" Width="Auto"/>
+                        <GridViewColumn Header="連名２" DisplayMemberBinding="{Binding Renmei2}" Width="Auto"/>
+                        <GridViewColumn Header="連名３" DisplayMemberBinding="{Binding Renmei3}" Width="Auto"/>
+                        <GridViewColumn Header="連名４" DisplayMemberBinding="{Binding Renmei4}" Width="Auto"/>
+                        <GridViewColumn Header="連名５" DisplayMemberBinding="{Binding Renmei5}" Width="Auto"/>
+                        <GridViewColumn Header="差出人" DisplayMemberBinding="{Binding SenderAddressCard.MainName.FullName}" Width="100"/>
                     </GridView>
                 </ListView.View>
+                <bh:Interaction.Triggers>
+                    <bh:EventTrigger EventName="SelectionChanged">
+                        <bh:InvokeCommandAction Command="{Binding SelectAddressCardCommand}"/>
+                    </bh:EventTrigger>
+                </bh:Interaction.Triggers>
             </ListView>
         </Grid>
 
         <Grid
             Grid.Column="1"
-            Width="405">
+            Width="405"
+            Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label
-                Content="宛先カード登録"
-                FontSize="24"/>
+            <Grid
+                Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label
+                    Content="宛先カード登録"
+                    FontSize="24"/>
+                <Button
+                    Grid.Column="1"
+                    Content="新規登録"
+                    Command="{Binding ClearSelectedAddressCommand}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <bh:Interaction.Triggers>
+                        <bh:EventTrigger EventName="Click">
+                            <bh:ChangePropertyAction
+                            TargetName="DataListView"
+                            PropertyName="SelectedIndex"
+                            Value="-1"/>
+                        </bh:EventTrigger>
+                    </bh:Interaction.Triggers>
+                </Button>
+            </Grid>
             <Border
                 Grid.Row="1"
                 BorderBrush="Gray"
-                BorderThickness="1"
-                Margin="5,0"
-                Padding="5">
+                BorderThickness="1">
                 <vc:AddressCardControl
-                    Grid.Row="1"
                     AddressCard="{Binding AddressCard}"
                     Honorifics="{Binding Honorifics}"
+                    SelectedSenderAddressCardId="{Binding SelectedSenderAddressCardId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SenderAddressCards="{Binding SenderAddressCards}"
+                    IsSearchingByWebService="{Binding IsSearchingByWebService}"
                     SearchByAddressNumberCommand="{Binding SearchByAddressNumberCommand}"
-                    RegisterAddressCommand="{Binding RegisterAddressCommand}"/>
+                    RegisterAddressCommand="{Binding RegisterAddressCommand}"
+                    DeleteAddressCommand="{Binding DeleteAddressCommand}"/>
             </Border>
         </Grid>
     </Grid>
