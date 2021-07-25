@@ -28,6 +28,17 @@
             <Setter Property="Width" Value="50"/>
         </Style>
 
+        <!-- Buttons -->
+        <Style x:Key="SearchButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="5,0"/>
+        </Style>
+
+        <!-- ComboBoxes -->
+        <Style x:Key="MainHonorificComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Margin" Value="0,2,4,2"/>
+        </Style>
+
         <!-- Converters -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:AddressNumberConverter x:Key="AddressNumberConverter"/>
@@ -177,7 +188,7 @@
                     </MultiBinding>
                 </Button.CommandParameter>
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}">
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SearchButton}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsSearchingByWebService, ElementName=Root}" Value="True">
                                 <Setter Property="IsEnabled" Value="False"/>

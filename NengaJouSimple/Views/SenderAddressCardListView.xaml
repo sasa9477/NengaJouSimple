@@ -17,7 +17,7 @@
         d:Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="420"/>
         </Grid.ColumnDefinitions>
 
         <Grid
@@ -36,6 +36,11 @@
                 SelectedItem="{Binding SelectedSenderAddressCard}"
                 SelectionMode="Single"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontSize" Value="16"/>
+                    </Style>
+                </ListView.Resources>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}" Width="120"/>
@@ -59,7 +64,6 @@
 
         <Grid
             Grid.Column="1"
-            Width="405"
             Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

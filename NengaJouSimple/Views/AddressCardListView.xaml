@@ -16,15 +16,17 @@
         d:Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="420"/>
         </Grid.ColumnDefinitions>
-
+        
+        <!-- 宛先一覧 -->
         <Grid
             Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            
             <Label
                 Content="宛先一覧"
                 FontSize="24"/>
@@ -35,6 +37,11 @@
                 SelectedItem="{Binding SelectedAddressCard}"
                 SelectionMode="Single"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontSize" Value="16"/>
+                    </Style>
+                </ListView.Resources>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}" Width="120"/>
@@ -59,13 +66,15 @@
 
         <Grid
             Grid.Column="1"
-            Width="405"
             Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            
+            <!-- 宛先カード登録 -->
             <Grid
                 Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -112,6 +121,31 @@
                     RegisterAddressCommand="{Binding RegisterAddressCommand}"
                     DeleteAddressCommand="{Binding DeleteAddressCommand}"/>
             </Border>
+            
+            <!-- アクション -->
+            <Grid
+                Grid.Row="2"
+                Margin="0,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Content="差出人編集"
+                    Style="{StaticResource LargeButton}"/>
+
+                <Button
+                    Grid.Row="1"
+                    Content="印刷"
+                    Style="{StaticResource LargeButton}"/>
+
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

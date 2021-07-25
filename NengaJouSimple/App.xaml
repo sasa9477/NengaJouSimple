@@ -4,12 +4,6 @@
              xmlns:local="clr-namespace:NengaJouSimple"
              xmlns:prism="http://prismlibrary.com/" >
     <Application.Resources>
-        <!-- Labels -->
-        <Style TargetType="{x:Type Label}">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
         <!-- TextBoxes -->
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -26,8 +20,8 @@
 
         <!-- Buttons -->
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="0,2,4,2"/>
-            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Margin" Value="4,2,0,2"/>
+            <Setter Property="Padding" Value="4,2"/>
         </Style>
 
         <Style x:Key="LargeButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
@@ -37,11 +31,6 @@
         <!-- GridViewColumnHeaders -->
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-
-        <!-- TextBlockes -->
-        <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="16"/>
         </Style>
 

@@ -27,13 +27,17 @@
         <Style x:Key="AddressNumberTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Width" Value="50"/>
         </Style>
+        
+        <!-- Buttons -->
+        <Style x:Key="SearchButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="5,0"/>
+        </Style>
 
         <!-- ComboBoxes -->
         <Style x:Key="MainHonorificComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Margin" Value="0,2,4,2"/>
         </Style>
-
 
         <!-- Converters -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -99,9 +103,10 @@
             </TextBox>
             <ComboBox
                 Grid.Column="2"
-                SelectedItem="{Binding AddressCard.MainName.Honorific}"
-                ItemsSource="{Binding Honorifics, ElementName=Root}"
-                Style="{StaticResource MainHonorificComboBox}"/>
+                SelectedIndex="0"
+                Style="{StaticResource MainHonorificComboBox}">
+                <ComboBoxItem Content="様"/>
+            </ComboBox>
         </Grid>
 
         <!-- フリガナ -->
@@ -192,7 +197,7 @@
                     </MultiBinding>
                 </Button.CommandParameter>
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}">
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SearchButton}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsSearchingByWebService, ElementName=Root}" Value="True">
                                 <Setter Property="IsEnabled" Value="False"/>
