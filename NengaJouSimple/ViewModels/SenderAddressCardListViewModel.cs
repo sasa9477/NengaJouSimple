@@ -11,7 +11,7 @@ using Prism.Services.Dialogs;
 
 namespace NengaJouSimple.ViewModels
 {
-    public class SenderAddressCardListWindowViewModel : BindableBase
+    public class SenderAddressCardListViewModel : BindableBase
     {
         private readonly IDialogService dialogService;
 
@@ -23,7 +23,7 @@ namespace NengaJouSimple.ViewModels
 
         private bool isSearchingByWebService = false;
 
-        public SenderAddressCardListWindowViewModel(
+        public SenderAddressCardListViewModel(
             IDialogService dialogService,
             SenderAddressCardService senderAddressCardService)
         {

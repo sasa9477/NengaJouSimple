@@ -1,20 +1,19 @@
-﻿<Window x:Class="NengaJouSimple.Views.SenderAddressCardListWindow"
+﻿<UserControl x:Class="NengaJouSimple.Views.AddressCardListView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:local="clr-namespace:NengaJouSimple.Views"
         xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
         xmlns:vc="clr-namespace:NengaJouSimple.Views.Components"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        d:DataContext="{d:DesignInstance Type={x:Type vm:SenderAddressCardListWindowViewModel}}"
-        Title="差出人登録画面"
-        Height="720" Width="1280">
+        d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListViewModel}}"
+        d:DesignHeight="720" d:DesignWidth="1280">
 
-    <Grid>
+    <Grid
+        d:Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
@@ -27,26 +26,27 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label
-                Content="差出人一覧"
+                Content="宛先一覧"
                 FontSize="24"/>
             <ListView
                 Grid.Row="1"
                 x:Name="DataListView"
-                ItemsSource="{Binding SenderAddressCards}"
-                SelectedItem="{Binding SelectedSenderAddressCard}"
+                ItemsSource="{Binding AddressCards}"
+                SelectedItem="{Binding SelectedAddressCard}"
                 SelectionMode="Single"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}" Width="100"/>
+                        <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}" Width="120"/>
                         <GridViewColumn Header="フリガナ" DisplayMemberBinding="{Binding MainNameKana}" Width="100"/>
-                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding AddressNumber}" Width="70"/>
-                        <GridViewColumn Header="住所" DisplayMemberBinding="{Binding Address}" Width="300"/>
-                        <GridViewColumn Header="連名１" DisplayMemberBinding="{Binding Renmei1}" Width="Auto"/>
-                        <GridViewColumn Header="連名２" DisplayMemberBinding="{Binding Renmei2}" Width="Auto"/>
-                        <GridViewColumn Header="連名３" DisplayMemberBinding="{Binding Renmei3}" Width="Auto"/>
-                        <GridViewColumn Header="連名４" DisplayMemberBinding="{Binding Renmei4}" Width="Auto"/>
-                        <GridViewColumn Header="連名５" DisplayMemberBinding="{Binding Renmei5}" Width="Auto"/>
+                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding AddressNumber}" Width="80"/>
+                        <GridViewColumn Header="住所" DisplayMemberBinding="{Binding Address}" Width="400"/>
+                        <GridViewColumn Header="連名１" DisplayMemberBinding="{Binding Renmei1}" Width="100"/>
+                        <GridViewColumn Header="連名２" DisplayMemberBinding="{Binding Renmei2}" Width="100"/>
+                        <GridViewColumn Header="連名３" DisplayMemberBinding="{Binding Renmei3}" Width="100"/>
+                        <GridViewColumn Header="連名４" DisplayMemberBinding="{Binding Renmei4}" Width="100"/>
+                        <GridViewColumn Header="連名５" DisplayMemberBinding="{Binding Renmei5}" Width="100"/>
+                        <GridViewColumn Header="差出人" DisplayMemberBinding="{Binding SenderAddressCard.MainName.FullName}" Width="100"/>
                     </GridView>
                 </ListView.View>
                 <bh:Interaction.Triggers>
@@ -73,7 +73,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Label
-                    Content="差出人カード登録"
+                    Content="宛先カード登録"
                     FontSize="24"/>
                 <Button
                     Grid.Column="1"
@@ -102,8 +102,11 @@
                 Grid.Row="1"
                 BorderBrush="Gray"
                 BorderThickness="1">
-                <vc:SenderAddressCardControl
-                    AddressCard="{Binding SenderAddressCard}"
+                <vc:AddressCardControl
+                    AddressCard="{Binding AddressCard}"
+                    Honorifics="{Binding Honorifics}"
+                    SelectedSenderAddressCardId="{Binding SelectedSenderAddressCardId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SenderAddressCards="{Binding SenderAddressCards}"
                     IsSearchingByWebService="{Binding IsSearchingByWebService}"
                     SearchByAddressNumberCommand="{Binding SearchByAddressNumberCommand}"
                     RegisterAddressCommand="{Binding RegisterAddressCommand}"
@@ -111,4 +114,4 @@
             </Border>
         </Grid>
     </Grid>
-</Window>
+</UserControl>

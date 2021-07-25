@@ -38,9 +38,9 @@ namespace NengaJouSimple.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.EnableSensitiveDataLogging();
+            //optionsBuilder.EnableSensitiveDataLogging();
 
-            optionsBuilder.LogTo(log => System.Diagnostics.Debug.WriteLine(log));
+            //optionsBuilder.LogTo(log => System.Diagnostics.Debug.WriteLine(log));
 
             base.OnConfiguring(optionsBuilder);
         }

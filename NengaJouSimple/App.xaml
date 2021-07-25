@@ -33,5 +33,17 @@
         <Style x:Key="LargeButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="FontSize" Value="24"/>
         </Style>
+        
+        <!-- GridViewColumnHeaders -->
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+
+        <!-- TextBlockes -->
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+
     </Application.Resources>
 </prism:PrismApplication>

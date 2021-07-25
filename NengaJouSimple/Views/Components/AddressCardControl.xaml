@@ -9,7 +9,7 @@
              xmlns:validationRules="clr-namespace:NengaJouSimple.Views.ValidationRules"
              mc:Ignorable="d"
              d:DesignHeight="460" d:DesignWidth="450"
-             d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListWindowViewModel}}"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListViewModel}}"
              x:Name="Root">
     <UserControl.Resources>
         <!-- Styles -->

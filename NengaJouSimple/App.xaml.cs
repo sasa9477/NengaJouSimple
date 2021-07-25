@@ -20,7 +20,7 @@ namespace NengaJouSimple
     {
         protected override Window CreateShell()
         {
-            return Container.Resolve<AddressCardListWindow>();
+            return Container.Resolve<MainWindow>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -44,6 +44,8 @@ namespace NengaJouSimple
             containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>();
 
             containerRegistry.RegisterDialog<ConfirmDialog, ConfirmDialogViewModel>();
+
+            containerRegistry.RegisterForNavigation<AddressCardListView>();
         }
 
         private static ApplicationDbContext CreateDbContext()

@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace NengaJouSimple.ViewModels
 {
-    public class AddressCardListWindowViewModel : BindableBase
+    public class AddressCardListViewModel : BindableBase
     {
         private readonly IDialogService dialogService;
 
@@ -26,7 +26,7 @@ namespace NengaJouSimple.ViewModels
 
         private bool isSearchingByWebService;
 
-        public AddressCardListWindowViewModel(
+        public AddressCardListViewModel(
             IDialogService dialogService,
             AddressCardService addressCardService,
             SenderAddressCardService senderAddressCardService)
