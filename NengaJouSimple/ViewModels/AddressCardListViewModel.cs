@@ -9,11 +9,14 @@ using NengaJouSimple.Services;
 using NengaJouSimple.Extensions;
 using Prism.Services.Dialogs;
 using System.Linq;
+using Prism.Regions;
 
 namespace NengaJouSimple.ViewModels
 {
     public class AddressCardListViewModel : BindableBase
     {
+        private readonly IRegionManager regionManager;
+
         private readonly IDialogService dialogService;
 
         private readonly AddressCardService addressCardService;
@@ -27,10 +30,12 @@ namespace NengaJouSimple.ViewModels
         private bool isSearchingByWebService;
 
         public AddressCardListViewModel(
+            IRegionManager regionManager,
             IDialogService dialogService,
             AddressCardService addressCardService,
             SenderAddressCardService senderAddressCardService)
         {
+            this.regionManager = regionManager;
             this.dialogService = dialogService;
             this.addressCardService = addressCardService;
 
@@ -54,6 +59,8 @@ namespace NengaJouSimple.ViewModels
             SearchByAddressNumberCommand = new DelegateCommand<string>(SearchByAddressNumber);
             RegisterAddressCommand = new DelegateCommand(RegisterAddress);
             DeleteAddressCommand = new DelegateCommand(DeleteAddress);
+            EditSenderAddressCardsCommand = new DelegateCommand(EditSenderAddressCards);
+            PrintAddressCardsCommand = new DelegateCommand(PrintAddressCards);
         }
 
         public AddressCard AddressCard
@@ -95,6 +102,10 @@ namespace NengaJouSimple.ViewModels
         public DelegateCommand RegisterAddressCommand { get; }
 
         public DelegateCommand DeleteAddressCommand { get; }
+
+        public DelegateCommand EditSenderAddressCardsCommand { get; }
+
+        public DelegateCommand PrintAddressCardsCommand { get; }
 
         private void ClearSelectedAddress()
         {
@@ -234,6 +245,16 @@ namespace NengaJouSimple.ViewModels
             }
 
             return sb.ToString();
+        }
+
+        private void EditSenderAddressCards()
+        {
+            regionManager.RequestNavigate(RegionNames.ContentRegion, "SenderAddressCardListView");
+        }
+
+        private void PrintAddressCards()
+        {
+            regionManager.RequestNavigate(RegionNames.ContentRegion, "PrintLayoutSettingView");
         }
     }
 }

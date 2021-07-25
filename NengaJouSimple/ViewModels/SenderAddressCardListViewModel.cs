@@ -8,11 +8,14 @@ using NengaJouSimple.ViewModels.Entities;
 using NengaJouSimple.Services;
 using NengaJouSimple.Extensions;
 using Prism.Services.Dialogs;
+using Prism.Regions;
 
 namespace NengaJouSimple.ViewModels
 {
     public class SenderAddressCardListViewModel : BindableBase
     {
+        private readonly IRegionManager regionManager;
+
         private readonly IDialogService dialogService;
 
         private readonly SenderAddressCardService senderAddressCardService;
@@ -24,9 +27,11 @@ namespace NengaJouSimple.ViewModels
         private bool isSearchingByWebService = false;
 
         public SenderAddressCardListViewModel(
+            IRegionManager regionManager,
             IDialogService dialogService,
             SenderAddressCardService senderAddressCardService)
         {
+            this.regionManager = regionManager;
             this.dialogService = dialogService;
             this.senderAddressCardService = senderAddressCardService;
 
@@ -41,6 +46,7 @@ namespace NengaJouSimple.ViewModels
             SearchBySenderAddressNumberCommand = new DelegateCommand<string>(SearchBySenderAddressNumber);
             RegisterSenderAddressCommand = new DelegateCommand(RegisterSenderAddress);
             DeleteSenderAddressCommand = new DelegateCommand(DeleteSenderAddress);
+            EditAddressCardsCommand = new DelegateCommand(EditAddressCards);
         }
 
         public SenderAddressCard SenderAddressCard
@@ -72,6 +78,8 @@ namespace NengaJouSimple.ViewModels
         public DelegateCommand RegisterSenderAddressCommand { get; }
 
         public DelegateCommand DeleteSenderAddressCommand { get; }
+
+        public DelegateCommand EditAddressCardsCommand { get; }
 
         private void ClearSelectedSenderAddress()
         {
@@ -202,6 +210,11 @@ namespace NengaJouSimple.ViewModels
             }
 
             return sb.ToString();
+        }
+
+        private void EditAddressCards()
+        {
+            regionManager.RequestNavigate(RegionNames.ContentRegion, "AddressCardListView");
         }
     }
 }

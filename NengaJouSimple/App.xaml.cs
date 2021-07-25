@@ -25,13 +25,7 @@ namespace NengaJouSimple
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            var dbContext = CreateDbContext();
-
-            dbContext.Database.EnsureCreated();
-
-            ApplicationDbContextSeed.SeedData(dbContext);
-
-            containerRegistry.RegisterInstance(dbContext);
+            containerRegistry.RegisterInstance(CreateDbContext());
 
             containerRegistry.RegisterSingleton<AddressCardRepository>();
 
@@ -46,13 +40,23 @@ namespace NengaJouSimple
             containerRegistry.RegisterDialog<ConfirmDialog, ConfirmDialogViewModel>();
 
             containerRegistry.RegisterForNavigation<AddressCardListView>();
+
+            containerRegistry.RegisterForNavigation<SenderAddressCardListView>();
+
+            containerRegistry.RegisterForNavigation<PrintLayoutSettingView>();
         }
 
         private static ApplicationDbContext CreateDbContext()
         {
             var dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(CreateInMemoryDatabase()).Options;
 
-            return new ApplicationDbContext(dbContextOptions);
+            var dbContext = new ApplicationDbContext(dbContextOptions);
+
+            dbContext.Database.EnsureCreated();
+
+            ApplicationDbContextSeed.SeedData(dbContext);
+
+            return dbContext;
         }
 
         private static DbConnection CreateInMemoryDatabase()

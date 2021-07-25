@@ -19,8 +19,8 @@ namespace NengaJouSimple.Views.Components
     /// </summary>
     public partial class SenderAddressCardControl : UserControl
     {
-        public static readonly DependencyProperty AddressCardProperty =
-            DependencyProperty.Register("AddressCard", typeof(AddressCard), typeof(SenderAddressCardControl), new PropertyMetadata(new AddressCard()));
+        public static readonly DependencyProperty SenderAddressCardProperty =
+            DependencyProperty.Register("SenderAddressCard", typeof(SenderAddressCard), typeof(SenderAddressCardControl), new PropertyMetadata(new SenderAddressCard()));
 
         public static readonly DependencyProperty IsSearchingByWebServiceProperty =
             DependencyProperty.Register("IsSearchingByWebService", typeof(bool), typeof(SenderAddressCardControl), new PropertyMetadata(false));
@@ -34,10 +34,10 @@ namespace NengaJouSimple.Views.Components
         public static readonly DependencyProperty DeleteAddressCommandProperty =
             DependencyProperty.Register("DeleteAddressCommand", typeof(ICommand), typeof(SenderAddressCardControl), new PropertyMetadata(null));
 
-        public AddressCard AddressCard
+        public SenderAddressCard SenderAddressCard
         {
-            get { return (AddressCard)GetValue(AddressCardProperty); }
-            set { SetValue(AddressCardProperty, value); }
+            get { return (SenderAddressCard)GetValue(SenderAddressCardProperty); }
+            set { SetValue(SenderAddressCardProperty, value); }
         }
 
         public bool IsSearchingByWebService

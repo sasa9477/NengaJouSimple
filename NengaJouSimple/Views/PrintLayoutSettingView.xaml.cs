@@ -8,16 +8,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace NengaJouSimple.Views
 {
     /// <summary>
-    /// PrintLayoutSettingWindow.xaml の相互作用ロジック
+    /// PrintLayoutSettingView.xaml の相互作用ロジック
     /// </summary>
-    public partial class PrintLayoutSettingWindow : Window
+    public partial class PrintLayoutSettingView : UserControl
     {
-        public PrintLayoutSettingWindow()
+        public PrintLayoutSettingView()
         {
             InitializeComponent();
         }

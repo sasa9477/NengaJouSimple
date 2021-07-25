@@ -103,10 +103,9 @@
             </TextBox>
             <ComboBox
                 Grid.Column="2"
-                SelectedIndex="0"
-                Style="{StaticResource MainHonorificComboBox}">
-                <ComboBoxItem Content="様"/>
-            </ComboBox>
+                SelectedItem="{Binding AddressCard.MainName.Honorific}"
+                ItemsSource="{Binding Honorifics, ElementName=Root}"
+                Style="{StaticResource MainHonorificComboBox}"/>
         </Grid>
 
         <!-- フリガナ -->

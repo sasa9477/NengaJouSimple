@@ -20,6 +20,7 @@
             <ColumnDefinition Width="420"/>
         </Grid.ColumnDefinitions>
 
+        <!-- 差出人一覧 -->
         <Grid
             Margin="5">
             <Grid.RowDefinitions>
@@ -56,7 +57,7 @@
                 </ListView.View>
                 <bh:Interaction.Triggers>
                     <bh:EventTrigger EventName="SelectionChanged">
-                        <bh:InvokeCommandAction Command="{Binding SelectAddressCardCommand}"/>
+                        <bh:InvokeCommandAction Command="{Binding SelectSenderAddressCardCommand}"/>
                     </bh:EventTrigger>
                 </bh:Interaction.Triggers>
             </ListView>
@@ -68,8 +69,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+
+            <!-- 差出人カード登録 -->
             <Grid
                 Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -82,7 +86,7 @@
                 <Button
                     Grid.Column="1"
                     Content="新規登録"
-                    Command="{Binding ClearSelectedAddressCommand}">
+                    Command="{Binding ClearSelectedSenderAddressCommand}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
                             <Style.Triggers>
@@ -107,12 +111,31 @@
                 BorderBrush="Gray"
                 BorderThickness="1">
                 <vc:SenderAddressCardControl
-                    AddressCard="{Binding SenderAddressCard}"
+                    SenderAddressCard="{Binding SenderAddressCard}"
                     IsSearchingByWebService="{Binding IsSearchingByWebService}"
-                    SearchByAddressNumberCommand="{Binding SearchByAddressNumberCommand}"
-                    RegisterAddressCommand="{Binding RegisterAddressCommand}"
-                    DeleteAddressCommand="{Binding DeleteAddressCommand}"/>
+                    SearchByAddressNumberCommand="{Binding SearchBySenderAddressNumberCommand}"
+                    RegisterAddressCommand="{Binding RegisterSenderAddressCommand}"
+                    DeleteAddressCommand="{Binding DeleteSenderAddressCommand}"/>
             </Border>
+
+            <!-- アクション -->
+            <Grid
+                Grid.Row="2"
+                Margin="0,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Content="宛先編集"
+                    Command="{Binding EditAddressCardsCommand}"
+                    Style="{StaticResource LargeButton}"/>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

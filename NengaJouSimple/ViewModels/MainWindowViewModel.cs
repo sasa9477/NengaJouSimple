@@ -28,7 +28,7 @@ namespace NengaJouSimple.ViewModels
 
         private void Loaded()
         {
-            regionManager.RequestNavigate(RegionNames.ContentRegion, "AddressCardListView");
+            regionManager.RequestNavigate(RegionNames.ContentRegion, "SenderAddressCardListView");
         }
     }
 }

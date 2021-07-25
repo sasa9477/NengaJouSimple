@@ -79,7 +79,7 @@
                 x:Name="MainNameFamilyName"
                 Style="{StaticResource MainNameTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.MainName.FamilyName" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.MainName.FamilyName" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
                         </Binding.ValidationRules>
@@ -91,7 +91,7 @@
                 x:Name="MainNameGivenName"
                 Style="{StaticResource MainNameTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.MainName.GivenName" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.MainName.GivenName" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
                         </Binding.ValidationRules>
@@ -114,7 +114,7 @@
             <TextBox
                 Style="{StaticResource NameTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.MainNameKana.FamilyName" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.MainNameKana.FamilyName" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validationRules:FuriganaValidationRule/>
                         </Binding.ValidationRules>
@@ -125,7 +125,7 @@
                 Grid.Column="1"
                 Style="{StaticResource NameTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.MainNameKana.GivenName" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.MainNameKana.GivenName" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validationRules:FuriganaValidationRule/>
                         </Binding.ValidationRules>
@@ -154,7 +154,7 @@
                 InputMethod.IsInputMethodEnabled="False"
                 Style="{StaticResource AddressNumberTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.AddressNumber.AddressNumber1" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.AddressNumber.AddressNumber1" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validationRules:AddressNumber1ValidationRule/>
                         </Binding.ValidationRules>
@@ -170,7 +170,7 @@
                 InputMethod.IsInputMethodEnabled="False"
                 Style="{StaticResource AddressNumberTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.AddressNumber.AddressNumber2" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.AddressNumber.AddressNumber2" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validationRules:AddressNumber2ValidationRule/>
                         </Binding.ValidationRules>
@@ -208,7 +208,7 @@
             Grid.Column="1"
             x:Name="Address1">
             <TextBox.Text>
-                <Binding Path="AddressCard.Address.Address1" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="SenderAddressCard.Address.Address1" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
                     </Binding.ValidationRules>
@@ -234,7 +234,7 @@
             Grid.Column="1"
             x:Name="Address2">
             <TextBox.Text>
-                <Binding Path="AddressCard.Address.Address2" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="SenderAddressCard.Address.Address2" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
                     </Binding.ValidationRules>
@@ -250,7 +250,7 @@
         <TextBox
             Grid.Row="5"
             Grid.Column="1"
-            Text="{Binding AddressCard.Address.Address3}"/>
+            Text="{Binding SenderAddressCard.Address.Address3}"/>
 
         <!-- 連名１ -->
         <Label
@@ -265,11 +265,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
-                Text="{Binding AddressCard.Renmei1.FamilyName}"
+                Text="{Binding SenderAddressCard.Renmei1.FamilyName}"
                 Style="{StaticResource NameTextBox}"/>
             <TextBox
                 Grid.Column="1"
-                Text="{Binding AddressCard.Renmei1.GivenName}"
+                Text="{Binding SenderAddressCard.Renmei1.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
         </Grid>
 
@@ -286,11 +286,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
-                Text="{Binding AddressCard.Renmei2.FamilyName}"
+                Text="{Binding SenderAddressCard.Renmei2.FamilyName}"
                 Style="{StaticResource NameTextBox}"/>
             <TextBox
                 Grid.Column="1"
-                Text="{Binding AddressCard.Renmei2.GivenName}"
+                Text="{Binding SenderAddressCard.Renmei2.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
         </Grid>
 
@@ -307,11 +307,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
-                Text="{Binding AddressCard.Renmei3.FamilyName}"
+                Text="{Binding SenderAddressCard.Renmei3.FamilyName}"
                 Style="{StaticResource NameTextBox}"/>
             <TextBox
                 Grid.Column="1"
-                Text="{Binding AddressCard.Renmei3.GivenName}"
+                Text="{Binding SenderAddressCard.Renmei3.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
         </Grid>
 
@@ -328,11 +328,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
-                Text="{Binding AddressCard.Renmei4.FamilyName}"
+                Text="{Binding SenderAddressCard.Renmei4.FamilyName}"
                 Style="{StaticResource NameTextBox}"/>
             <TextBox
                 Grid.Column="1"
-                Text="{Binding AddressCard.Renmei4.GivenName}"
+                Text="{Binding SenderAddressCard.Renmei4.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
         </Grid>
 
@@ -349,11 +349,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
-                Text="{Binding AddressCard.Renmei5.FamilyName}"
+                Text="{Binding SenderAddressCard.Renmei5.FamilyName}"
                 Style="{StaticResource NameTextBox}"/>
             <TextBox
                 Grid.Column="1"
-                Text="{Binding AddressCard.Renmei5.GivenName}"
+                Text="{Binding SenderAddressCard.Renmei5.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
         </Grid>
 
@@ -370,7 +370,7 @@
                 Grid.Column="1"
                 Content="削除"
                 Command="{Binding DeleteAddressCommand, ElementName=Root}"
-                Visibility="{Binding AddressCard.IsRegisterdCard, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Visibility="{Binding SenderAddressCard.IsRegisterdCard, Converter={StaticResource BooleanToVisibilityConverter}}"
                 Style="{StaticResource LargeButton}"/>
 
             <Button
