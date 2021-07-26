@@ -34,7 +34,6 @@ namespace NengaJouSimple.Models
 
         public string Address3 { get; set; }
 
-
         public PersonName Renmei1 { get; set; }
 
         public PersonName Renmei2 { get; set; }

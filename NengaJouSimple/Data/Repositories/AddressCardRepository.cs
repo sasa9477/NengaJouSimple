@@ -42,5 +42,19 @@ namespace NengaJouSimple.Data.Repositories
             
             applicationDbContext.SaveChanges();
         }
+
+        public void AddRanges(IEnumerable<AddressCard> addressCards)
+        {
+            applicationDbContext.ChangeTracker.Clear();
+
+            foreach (var addressCard in addressCards)
+            {
+                addressCard.SenderAddressCard = applicationDbContext.SenderAddressCards.Find(addressCard.SenderAddressCard.Id);
+            }
+
+            applicationDbContext.AddRange(addressCards);
+
+            applicationDbContext.SaveChanges();
+        }
     }
 }
