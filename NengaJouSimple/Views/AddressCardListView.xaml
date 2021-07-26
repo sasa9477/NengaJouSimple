@@ -7,10 +7,12 @@
         xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
         xmlns:vc="clr-namespace:NengaJouSimple.Views.Components"
+        xmlns:vme="clr-namespace:NengaJouSimple.ViewModels.Entities"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListViewModel}}"
-        d:DesignHeight="720" d:DesignWidth="1280">
+        d:DesignHeight="720" d:DesignWidth="1280"
+        x:Name="Root">
 
     <Grid
         d:Background="White">
@@ -21,7 +23,7 @@
         
         <!-- 宛先一覧 -->
         <Grid
-            Margin="5">
+            Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
@@ -44,6 +46,21 @@
                 </ListView.Resources>
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Header="印刷する" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox
+                                        IsChecked="{Binding IsPrintTarget}">
+                                        <bh:Interaction.Triggers>
+                                            <bh:EventTrigger EventName="Checked">
+                                                <bh:InvokeCommandAction Command="{Binding DataContext.ChangePrintTargetCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                                        CommandParameter="{Binding}"/>
+                                            </bh:EventTrigger>
+                                        </bh:Interaction.Triggers>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}" Width="120"/>
                         <GridViewColumn Header="フリガナ" DisplayMemberBinding="{Binding MainNameKana}" Width="100"/>
                         <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding AddressNumber}" Width="80"/>
@@ -66,7 +83,7 @@
 
         <Grid
             Grid.Column="1"
-            Margin="5">
+            Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -110,7 +127,8 @@
             <Border
                 Grid.Row="1"
                 BorderBrush="Gray"
-                BorderThickness="1">
+                BorderThickness="1"
+                Padding="5">
                 <vc:AddressCardControl
                     AddressCard="{Binding AddressCard}"
                     Honorifics="{Binding Honorifics}"

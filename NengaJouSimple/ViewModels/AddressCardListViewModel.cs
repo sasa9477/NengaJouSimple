@@ -59,6 +59,7 @@ namespace NengaJouSimple.ViewModels
             SearchByAddressNumberCommand = new DelegateCommand<string>(SearchByAddressNumber);
             RegisterAddressCommand = new DelegateCommand(RegisterAddress);
             DeleteAddressCommand = new DelegateCommand(DeleteAddress);
+            ChangePrintTargetCommand = new DelegateCommand<AddressCard>(ChangePrintTarget);
             EditSenderAddressCardsCommand = new DelegateCommand(EditSenderAddressCards);
             PrintAddressCardsCommand = new DelegateCommand(PrintAddressCards);
         }
@@ -102,6 +103,8 @@ namespace NengaJouSimple.ViewModels
         public DelegateCommand RegisterAddressCommand { get; }
 
         public DelegateCommand DeleteAddressCommand { get; }
+
+        public DelegateCommand<AddressCard> ChangePrintTargetCommand { get; }
 
         public DelegateCommand EditSenderAddressCardsCommand { get; }
 
@@ -199,6 +202,11 @@ namespace NengaJouSimple.ViewModels
 
                 ClearSelectedAddress();
             }
+        }
+
+        private void ChangePrintTarget(AddressCard addressCard)
+        {
+            addressCardService.Register(addressCard);
         }
 
         private void ReplaceAddressCards()

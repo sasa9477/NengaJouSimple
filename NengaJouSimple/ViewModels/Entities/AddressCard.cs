@@ -19,6 +19,7 @@ namespace NengaJouSimple.ViewModels.Entities
             Renmei4 = new PersonName();
             Renmei5 = new PersonName();
             SenderAddressCard = new SenderAddressCard();
+            IsPrintTarget = true;
         }
 
         public PersonName MainName { get; set; }
@@ -43,6 +44,8 @@ namespace NengaJouSimple.ViewModels.Entities
 
         public bool IsRegisterdCard { get; set; }
 
+        public bool IsPrintTarget { get; set; }
+
         public AddressCard Clone()
         {
             return new AddressCard
@@ -59,7 +62,8 @@ namespace NengaJouSimple.ViewModels.Entities
                 Renmei5 = Renmei5.Clone(),
                 RegisterdDateTime = RegisterdDateTime,
                 UpdatedDateTime = UpdatedDateTime,
-                IsRegisterdCard = IsRegisterdCard
+                IsRegisterdCard = IsRegisterdCard,
+                IsPrintTarget = IsPrintTarget
             };
         }
     }

@@ -46,5 +46,7 @@ namespace NengaJouSimple.Models
         public PersonName Renmei5 { get; set; }
 
         public SenderAddressCard SenderAddressCard { get; set; }
+
+        public bool IsPrintTarget { get; set; }
     }
 }
