@@ -118,9 +118,7 @@ namespace NengaJouSimple.ViewModels
 
             if (string.IsNullOrEmpty(response))
             {
-                var message = "指定した郵便番号に一致する住所が見つかりませんでした。";
-
-                dialogService.ShowInformationDialog(message);
+                dialogService.ShowInformationDialog("指定した郵便番号に一致する住所が見つかりませんでした。");
             }
             else
             {
@@ -152,9 +150,7 @@ namespace NengaJouSimple.ViewModels
 
         private void DeleteSenderAddress()
         {
-            var message = "この住所カードを削除しますか？";
-
-            var buttonResult = dialogService.ShowConfirmDialog(message);
+            var buttonResult = dialogService.ShowConfirmDialog("この住所カードを削除しますか？");
 
             if (buttonResult == ButtonResult.Yes)
             {
@@ -214,6 +210,13 @@ namespace NengaJouSimple.ViewModels
 
         private void EditAddressCards()
         {
+            if (!senderAddressCardService.IsRegisterdAnySenderAddressCard())
+            {
+                dialogService.ShowInformationDialog("差出人を一人以上登録してください。");
+
+                return;
+            }
+
             regionManager.RequestNavigate(RegionNames.ContentRegion, "AddressCardListView");
         }
     }

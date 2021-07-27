@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using NengaJouSimple.Services;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -9,11 +10,16 @@ namespace NengaJouSimple.ViewModels
     {
         private readonly IRegionManager regionManager;
 
+        private readonly SenderAddressCardService senderAddressCardService;
+
         private string _title = "年賀状アプリケーション";
 
-        public MainWindowViewModel(IRegionManager regionManager)
+        public MainWindowViewModel(
+            IRegionManager regionManager,
+            SenderAddressCardService senderAddressCardService)
         {
             this.regionManager = regionManager;
+            this.senderAddressCardService = senderAddressCardService;
 
             LoadedCommand = new DelegateCommand(Loaded);
         }
@@ -28,7 +34,14 @@ namespace NengaJouSimple.ViewModels
 
         private void Loaded()
         {
-            regionManager.RequestNavigate(RegionNames.ContentRegion, "SenderAddressCardListView");
+            if (!senderAddressCardService.IsRegisterdAnySenderAddressCard())
+            {
+                regionManager.RequestNavigate(RegionNames.ContentRegion, "SenderAddressCardListView");
+
+                return;
+            }
+
+            regionManager.RequestNavigate(RegionNames.ContentRegion, "AddressCardListView");
         }
     }
 }

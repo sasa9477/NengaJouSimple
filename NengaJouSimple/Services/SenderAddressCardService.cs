@@ -57,6 +57,11 @@ namespace NengaJouSimple.Services
             WriteCsvFile();
         }
 
+        public bool IsRegisterdAnySenderAddressCard()
+        {
+            return senderAddressCardRepository.IsRegisterdAnySenderAddressCard();
+        }
+
         public async Task<string> SearchAddressByPostalCode(string postalCode)
         {
             return await addressWebService.Search(postalCode);
