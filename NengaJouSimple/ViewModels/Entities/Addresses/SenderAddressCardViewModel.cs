@@ -59,5 +59,18 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
                 IsRegisterdCard = IsRegisterdCard
             };
         }
+
+        public void Clear()
+        {
+            MainName = new PersonNameViewModel();
+            MainNameKana = new PersonNameViewModel();
+            PostalCode = new PostalCodeViewModel();
+            Address = new AddressViewModel();
+            Renmei1 = new PersonNameViewModel();
+            Renmei2 = new PersonNameViewModel();
+            Renmei3 = new PersonNameViewModel();
+            Renmei4 = new PersonNameViewModel();
+            Renmei5 = new PersonNameViewModel();
+        }
     }
 }

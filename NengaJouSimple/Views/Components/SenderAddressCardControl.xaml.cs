@@ -19,50 +19,6 @@ namespace NengaJouSimple.Views.Components
     /// </summary>
     public partial class SenderAddressCardControl : UserControl
     {
-        public static readonly DependencyProperty SenderAddressCardProperty =
-            DependencyProperty.Register("SenderAddressCard", typeof(SenderAddressCardViewModel), typeof(SenderAddressCardControl), new PropertyMetadata(new SenderAddressCardViewModel()));
-
-        public static readonly DependencyProperty IsSearchingByWebServiceProperty =
-            DependencyProperty.Register("IsSearchingByWebService", typeof(bool), typeof(SenderAddressCardControl), new PropertyMetadata(false));
-
-        public static readonly DependencyProperty SearchByAddressNumberCommandProperty =
-            DependencyProperty.Register("SearchByAddressNumberCommand", typeof(ICommand), typeof(SenderAddressCardControl), new PropertyMetadata(null));
-
-        public static readonly DependencyProperty RegisterAddressCommandProperty =
-            DependencyProperty.Register("RegisterAddressCommand", typeof(ICommand), typeof(SenderAddressCardControl), new PropertyMetadata(null));
-
-        public static readonly DependencyProperty DeleteAddressCommandProperty =
-            DependencyProperty.Register("DeleteAddressCommand", typeof(ICommand), typeof(SenderAddressCardControl), new PropertyMetadata(null));
-
-        public SenderAddressCardViewModel SenderAddressCard
-        {
-            get { return (SenderAddressCardViewModel)GetValue(SenderAddressCardProperty); }
-            set { SetValue(SenderAddressCardProperty, value); }
-        }
-
-        public bool IsSearchingByWebService
-        {
-            get { return (bool)GetValue(IsSearchingByWebServiceProperty); }
-            set { SetValue(IsSearchingByWebServiceProperty, value); }
-        }
-
-        public ICommand SearchByAddressNumberCommand
-        {
-            get { return (ICommand)GetValue(SearchByAddressNumberCommandProperty); }
-            set { SetValue(SearchByAddressNumberCommandProperty, value); }
-        }
-
-        public ICommand RegisterAddressCommand
-        {
-            get { return (ICommand)GetValue(RegisterAddressCommandProperty); }
-            set { SetValue(RegisterAddressCommandProperty, value); }
-        }
-
-        public ICommand DeleteAddressCommand
-        {
-            get { return (ICommand)GetValue(DeleteAddressCommandProperty); }
-            set { SetValue(DeleteAddressCommandProperty, value); }
-        }
 
         public SenderAddressCardControl()
         {

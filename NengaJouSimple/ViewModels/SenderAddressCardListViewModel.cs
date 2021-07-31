@@ -43,7 +43,7 @@ namespace NengaJouSimple.ViewModels
 
             ClearSelectedSenderAddressCommand = new DelegateCommand(ClearSelectedSenderAddress);
             SelectSenderAddressCardCommand = new DelegateCommand(SelectSenderAddressCard);
-            SearchBySenderAddressNumberCommand = new DelegateCommand<string>(SearchBySenderAddressNumber);
+            SearchByPostalCodeCommand = new DelegateCommand<string>(SearchByPostalCode);
             RegisterSenderAddressCommand = new DelegateCommand(RegisterSenderAddress);
             DeleteSenderAddressCommand = new DelegateCommand(DeleteSenderAddress);
             EditAddressCardsCommand = new DelegateCommand(EditAddressCards);
@@ -73,7 +73,7 @@ namespace NengaJouSimple.ViewModels
 
         public DelegateCommand SelectSenderAddressCardCommand { get; }
 
-        public DelegateCommand<string> SearchBySenderAddressNumberCommand { get; }
+        public DelegateCommand<string> SearchByPostalCodeCommand { get; }
 
         public DelegateCommand RegisterSenderAddressCommand { get; }
 
@@ -83,7 +83,7 @@ namespace NengaJouSimple.ViewModels
 
         private void ClearSelectedSenderAddress()
         {
-            SenderAddressCard = new SenderAddressCardViewModel();
+            SenderAddressCard.Clear();
 
             RaisePropertyChanged(nameof(SenderAddressCard));
         }
@@ -101,9 +101,9 @@ namespace NengaJouSimple.ViewModels
             RaisePropertyChanged(nameof(SenderAddressCard));
         }
 
-        private async void SearchBySenderAddressNumber(string senderAddressNumber)
+        private async void SearchByPostalCode(string postalCode)
         {
-            if (senderAddressNumber.Length != 7)
+            if (postalCode.Length != 7)
             {
                 var message = "郵便番号の形式が正しくありません。";
 

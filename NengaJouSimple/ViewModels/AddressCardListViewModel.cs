@@ -112,7 +112,7 @@ namespace NengaJouSimple.ViewModels
 
         private void ClearSelectedAddress()
         {
-            AddressCard = new AddressCardViewModel();
+            AddressCard.Clear();
 
             AddressCard.MainName.Honorific = HonorificViewModel.DefalutHonorific;
 

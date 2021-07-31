@@ -9,8 +9,7 @@
              xmlns:validationRules="clr-namespace:NengaJouSimple.Views.ValidationRules"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="450"
-             d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListViewModel}}"
-             x:Name="Root">
+             d:DataContext="{d:DesignInstance Type={x:Type vm:SenderAddressCardListViewModel}}">
     <UserControl.Resources>
         <!-- Styles -->
 
@@ -180,7 +179,7 @@
             <Button
                 Grid.Column="4"
                 Content="郵便番号から住所を検索"
-                Command="{Binding SearchByAddressNumberCommand, ElementName=Root}">
+                Command="{Binding SearchByPostalCodeCommand}">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource PostalCodeConverter}">
                         <Binding Path="Text" ElementName="MailWard"/>
@@ -190,7 +189,7 @@
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SearchButton}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSearchingByWebService, ElementName=Root}" Value="True">
+                            <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
                                 <Setter Property="IsEnabled" Value="False"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -217,7 +216,7 @@
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsSearchingByWebService, ElementName=Root}" Value="True">
+                        <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
                             <Setter Property="IsEnabled" Value="False"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -369,19 +368,19 @@
             <Button
                 Grid.Column="1"
                 Content="削除"
-                Command="{Binding DeleteAddressCommand, ElementName=Root}"
+                Command="{Binding DeleteSenderAddressCommand}"
                 Visibility="{Binding SenderAddressCard.IsRegisterdCard, Converter={StaticResource BooleanToVisibilityConverter}}"
                 Style="{StaticResource LargeButton}"/>
 
             <Button
                 Grid.Column="2"
                 Content="登録"
-                Command="{Binding RegisterAddressCommand, ElementName=Root}"
+                Command="{Binding RegisterSenderAddressCommand}"
                 Click="RegisterButton_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSearchingByWebService, ElementName=Root}" Value="True">
+                            <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
                                 <Setter Property="IsEnabled" Value="False"/>
                             </DataTrigger>
                         </Style.Triggers>
