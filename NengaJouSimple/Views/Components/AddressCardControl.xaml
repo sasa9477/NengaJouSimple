@@ -158,13 +158,13 @@
             </Grid.ColumnDefinitions>
             <!-- 全角入力不可 InputMethod.IsInputMethodEnabled="False" -->
             <TextBox
-                x:Name="PostalCode1"
+                x:Name="MailWard"
                 InputMethod.IsInputMethodEnabled="False"
                 Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.PostalCode.PostalCode1" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="AddressCard.PostalCode.MailWard" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validationRules:AddressNumber1ValidationRule/>
+                            <validationRules:MailWardValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -174,13 +174,13 @@
                 Content=" - "/>
             <TextBox
                 Grid.Column="2"
-                x:Name="PostalCode2"
+                x:Name="TownWard"
                 InputMethod.IsInputMethodEnabled="False"
                 Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.PostalCode.PostalCode2" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="AddressCard.PostalCode.TownWard" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validationRules:AddressNumber2ValidationRule/>
+                            <validationRules:TownWardValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -188,11 +188,11 @@
             <Button
                 Grid.Column="4"
                 Content="郵便番号から住所を検索"
-                Command="{Binding SearchByAddressNumberCommand, ElementName=Root}">
+                Command="{Binding SearchByPostalCodeCommand, ElementName=Root}">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource PostalCodeConverter}">
-                        <Binding Path="Text" ElementName="PostalCode1"/>
-                        <Binding Path="Text" ElementName="PostalCode2"/>
+                        <Binding Path="Text" ElementName="MailWard"/>
+                        <Binding Path="Text" ElementName="TownWard"/>
                     </MultiBinding>
                 </Button.CommandParameter>
                 <Button.Style>

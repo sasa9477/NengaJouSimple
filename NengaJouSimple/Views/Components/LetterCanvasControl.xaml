@@ -29,100 +29,100 @@
                 IsEnabled="False"/>
 
             <cc:PostalCodeTextBlockControl
-                Text="{Binding AddressCardLayout.PostalCode.Text, ElementName=Root}"
-                FontSize="{Binding AddressCardLayout.PostalCode.Font.FontSize, ElementName=Root}"
-                SpaceBetweenMailWardAndTownWard="{Binding AddressCardLayout.PostalCode.SpaceBetweenMainWardAndTownWard, ElementName=Root}"
-                EachWardMargin="{Binding AddressCardLayout.PostalCode.SpaceBetweenEachWard, Converter={StaticResource WardSpaceAndMarginConverter}, ElementName=Root}"
+                Text="{Binding AddressCardLayout.PostalCode.Text, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="{Binding AddressCardLayout.PostalCode.Font.FontSize}"
+                SpaceBetweenMailWardAndTownWard="{Binding AddressCardLayout.PostalCode.SpaceBetweenMainWardAndTownWard}"
+                EachWardMargin="{Binding AddressCardLayout.PostalCode.SpaceBetweenEachWard, Converter={StaticResource WardSpaceAndMarginConverter}}"
                 d:Text="116-0017"
                 d:FontSize="18"
                 d:Canvas.Left="166" d:Canvas.Top="45">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior
-                        X="{Binding AddressCardLayout.PostalCode.Position.X, Mode=TwoWay, ElementName=Root}"
-                        Y="{Binding AddressCardLayout.PostalCode.Position.Y, Mode=TwoWay, ElementName=Root}"/>
+                        X="{Binding AddressCardLayout.PostalCode.Position.X, Mode=TwoWay}"
+                        Y="{Binding AddressCardLayout.PostalCode.Position.Y, Mode=TwoWay}"/>
                 </bh:Interaction.Behaviors>
             </cc:PostalCodeTextBlockControl>
 
             <cc:VerticalTextBlockControl
-                Text="{Binding AddressCardLayout.Address.Text, ElementName=Root}"
-                FontSize="{Binding AddressCardLayout.Address.Font.FontSize, ElementName=Root}"
-                FontFamily="{Binding AddressCardLayout.Address.Font.FontFamily, ElementName=Root}"
-                FontWeight="{Binding AddressCardLayout.Address.Font.FontWeight, ElementName=Root}"
-                FontStyle="{Binding AddressCardLayout.Address.Font.FontStyle, ElementName=Root}"
-                VerticalAlignment="{Binding AddressCardLayout.Address.Font.VerticalAlignment, ElementName=Root}"
+                Text="{Binding AddressCardLayout.Address.Text}"
+                FontSize="{Binding AddressCardLayout.Address.Font.FontSize}"
+                FontFamily="{Binding AddressCardLayout.Address.Font.FontFamily}"
+                FontWeight="{Binding AddressCardLayout.Address.Font.FontWeight}"
+                FontStyle="{Binding AddressCardLayout.Address.Font.FontStyle}"
+                VerticalAlignment="{Binding AddressCardLayout.Address.Font.VerticalAlignment}"
                 d:Text="東京都江東区荒川一ー十五&#xA;若草荘 ２０３号室"
                 d:FontSize="20"
                 d:Canvas.Left="300" d:Canvas.Top="110" d:FontFamily="Yu Mincho">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior
-                        X="{Binding AddressCardLayout.Address.Position.X, Mode=TwoWay, ElementName=Root}"
-                        Y="{Binding AddressCardLayout.Address.Position.Y, Mode=TwoWay, ElementName=Root}"/>
+                        X="{Binding AddressCardLayout.Address.Position.X, Mode=TwoWay}"
+                        Y="{Binding AddressCardLayout.Address.Position.Y, Mode=TwoWay}"/>
                 </bh:Interaction.Behaviors>
             </cc:VerticalTextBlockControl>
 
             <cc:VerticalTextBlockControl
-                Text="{Binding AddressCardLayout.Addressee.Text, ElementName=Root}"
-                FontSize="{Binding AddressCardLayout.Addressee.Font.FontSize, ElementName=Root}"
-                FontFamily="{Binding AddressCardLayout.Addressee.Font.FontFamily, ElementName=Root}"
-                FontWeight="{Binding AddressCardLayout.Addressee.Font.FontWeight, ElementName=Root}"
-                FontStyle="{Binding AddressCardLayout.Addressee.Font.FontStyle, ElementName=Root}"
-                VerticalAlignment="{Binding AddressCardLayout.Addressee.Font.VerticalAlignment, ElementName=Root}"
+                Text="{Binding AddressCardLayout.Addressee.Text}"
+                FontSize="{Binding AddressCardLayout.Addressee.Font.FontSize}"
+                FontFamily="{Binding AddressCardLayout.Addressee.Font.FontFamily}"
+                FontWeight="{Binding AddressCardLayout.Addressee.Font.FontWeight}"
+                FontStyle="{Binding AddressCardLayout.Addressee.Font.FontStyle}"
+                VerticalAlignment="{Binding AddressCardLayout.Addressee.Font.VerticalAlignment}"
                 d:Text="田中 太郎様"
                 d:FontSize="43"
                 d:Canvas.Left="167" d:Canvas.Top="110">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior
-                        X="{Binding AddressCardLayout.Addressee.Position.X, Mode=TwoWay, ElementName=Root}"
-                        Y="{Binding AddressCardLayout.Addressee.Position.Y, Mode=TwoWay, ElementName=Root}"/>
+                        X="{Binding AddressCardLayout.Addressee.Position.X, Mode=TwoWay}"
+                        Y="{Binding AddressCardLayout.Addressee.Position.Y, Mode=TwoWay}"/>
                 </bh:Interaction.Behaviors>
             </cc:VerticalTextBlockControl>
 
             <cc:PostalCodeTextBlockControl
-                Text="{Binding AddressCardLayout.SenderPostalCode.Text, ElementName=Root}"
-                FontSize="{Binding AddressCardLayout.SenderPostalCode.Font.FontSize, ElementName=Root}"
-                SpaceBetweenMailWardAndTownWard="{Binding AddressCardLayout.SenderPostalCode.SpaceBetweenMainWardAndTownWard, ElementName=Root}"
-                EachWardMargin="{Binding AddressCardLayout.SenderPostalCode.SpaceBetweenEachWard, Converter={StaticResource WardSpaceAndMarginConverter}, ElementName=Root}"
+                Text="{Binding AddressCardLayout.SenderPostalCode.Text}"
+                FontSize="{Binding AddressCardLayout.SenderPostalCode.Font.FontSize}"
+                SpaceBetweenMailWardAndTownWard="{Binding AddressCardLayout.SenderPostalCode.SpaceBetweenMainWardAndTownWard}"
+                EachWardMargin="{Binding AddressCardLayout.SenderPostalCode.SpaceBetweenEachWard, Converter={StaticResource WardSpaceAndMarginConverter}}"
                 d:Text="116-0003"
                 d:FontSize="12"
                 d:Canvas.Left="23" d:Canvas.Top="464">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior
-                        X="{Binding AddressCardLayout.SenderPostalCode.Position.X, Mode=TwoWay, ElementName=Root}"
-                        Y="{Binding AddressCardLayout.SenderPostalCode.Position.Y, Mode=TwoWay, ElementName=Root}"/>
+                        X="{Binding AddressCardLayout.SenderPostalCode.Position.X, Mode=TwoWay}"
+                        Y="{Binding AddressCardLayout.SenderPostalCode.Position.Y, Mode=TwoWay}"/>
                 </bh:Interaction.Behaviors>
             </cc:PostalCodeTextBlockControl>
 
             <cc:VerticalTextBlockControl
-                Text="{Binding AddressCardLayout.SenderAddress.Text, ElementName=Root}"
-                FontSize="{Binding AddressCardLayout.SenderAddress.Font.FontSize, ElementName=Root}"
-                FontFamily="{Binding AddressCardLayout.SenderAddress.Font.FontFamily, ElementName=Root}"
-                FontWeight="{Binding AddressCardLayout.SenderAddress.Font.FontWeight, ElementName=Root}"
-                FontStyle="{Binding AddressCardLayout.SenderAddress.Font.FontStyle, ElementName=Root}"
-                VerticalAlignment="{Binding AddressCardLayout.SenderAddress.Font.VerticalAlignment, ElementName=Root}"
+                Text="{Binding AddressCardLayout.SenderAddress.Text}"
+                FontSize="{Binding AddressCardLayout.SenderAddress.Font.FontSize}"
+                FontFamily="{Binding AddressCardLayout.SenderAddress.Font.FontFamily}"
+                FontWeight="{Binding AddressCardLayout.SenderAddress.Font.FontWeight}"
+                FontStyle="{Binding AddressCardLayout.SenderAddress.Font.FontStyle}"
+                VerticalAlignment="{Binding AddressCardLayout.SenderAddress.Font.VerticalAlignment}"
                 d:Text="東京都江東区荒川一の十六"
                 d:FontSize="15"
                 d:Canvas.Left="110" d:Canvas.Top="200">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior
-                        X="{Binding AddressCardLayout.SenderAddress.Position.X, Mode=TwoWay, ElementName=Root}"
-                        Y="{Binding AddressCardLayout.SenderAddress.Position.Y, Mode=TwoWay, ElementName=Root}"/>
+                        X="{Binding AddressCardLayout.SenderAddress.Position.X, Mode=TwoWay}"
+                        Y="{Binding AddressCardLayout.SenderAddress.Position.Y, Mode=TwoWay}"/>
                 </bh:Interaction.Behaviors>
             </cc:VerticalTextBlockControl>
 
             <cc:VerticalTextBlockControl
-                Text="{Binding AddressCardLayout.Sender.Text, ElementName=Root}"
-                FontSize="{Binding AddressCardLayout.Sender.Font.FontSize, ElementName=Root}"
-                FontFamily="{Binding AddressCardLayout.Sender.Font.FontFamily, ElementName=Root}"
-                FontWeight="{Binding AddressCardLayout.Sender.Font.FontWeight, ElementName=Root}"
-                FontStyle="{Binding AddressCardLayout.Sender.Font.FontStyle, ElementName=Root}"
-                VerticalAlignment="{Binding AddressCardLayout.Sender.Font.VerticalAlignment, ElementName=Root}"
+                Text="{Binding AddressCardLayout.Sender.Text}"
+                FontSize="{Binding AddressCardLayout.Sender.Font.FontSize}"
+                FontFamily="{Binding AddressCardLayout.Sender.Font.FontFamily}"
+                FontWeight="{Binding AddressCardLayout.Sender.Font.FontWeight}"
+                FontStyle="{Binding AddressCardLayout.Sender.Font.FontStyle}"
+                VerticalAlignment="{Binding AddressCardLayout.Sender.Font.VerticalAlignment}"
                 d:Text="佐藤 弘樹"
                 d:FontSize="24"
                 d:Canvas.Left="55" d:Canvas.Top="260">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior
-                        X="{Binding AddressCardLayout.Sender.Position.X, Mode=TwoWay, ElementName=Root}"
-                        Y="{Binding AddressCardLayout.Sender.Position.Y, Mode=TwoWay, ElementName=Root}"/>
+                        X="{Binding AddressCardLayout.Sender.Position.X, Mode=TwoWay}"
+                        Y="{Binding AddressCardLayout.Sender.Position.Y, Mode=TwoWay}"/>
                 </bh:Interaction.Behaviors>
             </cc:VerticalTextBlockControl>
         </Canvas>

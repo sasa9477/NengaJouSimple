@@ -7,6 +7,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 
@@ -18,23 +19,36 @@ namespace NengaJouSimple.ViewModels
 
         private readonly AddressCardService addressCardService;
 
+        private readonly AddressCardLayoutService addressCardLayoutService;
+
         private AddressCardLayoutViewModel selectedAddressCardLayout;
 
         private bool isLetterCanvasVisible;
 
         private int currentAddressCardIndex;
 
+        private bool isEnablePreviousViewAddressCard;
+
+        private bool isEnableNextViewAddressCard;
+
         public PrintLayoutSettingViewModel(
             IRegionManager regionManager,
+            AddressCardLayoutService addressCardLayoutService,
             AddressCardService addressCardService)
         {
             this.regionManager = regionManager;
+
+            this.addressCardLayoutService = addressCardLayoutService;
 
             this.addressCardService = addressCardService;
 
             var allAddressCards = addressCardService.LoadAll();
 
             AddressCards = new ObservableCollection<AddressCardViewModel>(allAddressCards);
+
+            AddressCardLayout = addressCardLayoutService.Load();
+
+            AddressCardLayout.AttachAddressCard(allAddressCards.First());
 
             GoBackAddressCardViewCommand = new DelegateCommand(GoBackAddressCardView);
 
@@ -45,9 +59,11 @@ namespace NengaJouSimple.ViewModels
             PreviousViewAddressCardCommnad = new DelegateCommand(PreviousViewAddressCard);
 
             NextViewAddressCardCommand = new DelegateCommand(NextViewAddressCard);
+
+            ValidViewAddressCardButtons();
         }
 
-        public AddressCardLayoutViewModel SelectedAddressCardLayout
+        public AddressCardLayoutViewModel AddressCardLayout
         {
             get { return selectedAddressCardLayout; }
             set { SetProperty(ref selectedAddressCardLayout, value); }
@@ -63,6 +79,18 @@ namespace NengaJouSimple.ViewModels
         {
             get { return currentAddressCardIndex; }
             set { SetProperty(ref currentAddressCardIndex, value); }
+        }
+
+        public bool IsEnablePreviousViewAddressCard
+        {
+            get { return isEnablePreviousViewAddressCard; }
+            set { SetProperty(ref isEnablePreviousViewAddressCard, value); }
+        }
+
+        public bool IsEnableNextViewAddressCard
+        {
+            get { return isEnableNextViewAddressCard; }
+            set { SetProperty(ref isEnableNextViewAddressCard, value); }
         }
 
         public ObservableCollection<AddressCardViewModel> AddressCards { get; }
@@ -99,31 +127,33 @@ namespace NengaJouSimple.ViewModels
             switch (targetName)
             {
                 case "PostalCodeSpaceBetweenMainWardAndTownWard":
-                    SelectedAddressCardLayout.PostalCode.SpaceBetweenMainWardAndTownWard = 2.2;
+                    AddressCardLayout.PostalCode.SpaceBetweenMainWardAndTownWard = 2.2;
                     break;
 
                 case "PostalCodeSpaceBetweenEachWard":
-                    SelectedAddressCardLayout.PostalCode.SpaceBetweenEachWard = 4;
+                    AddressCardLayout.PostalCode.SpaceBetweenEachWard = 4;
                     break;
 
                 case "SenderPostalCodeSpaceBetweenMainWardAndTownWard":
-                    SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenMainWardAndTownWard = 4;
+                    AddressCardLayout.SenderPostalCode.SpaceBetweenMainWardAndTownWard = 4;
                     break;
 
                 case "SenderPostalCodeSpaceBetweenEachWard":
-                    SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenEachWard = 1.5;
+                    AddressCardLayout.SenderPostalCode.SpaceBetweenEachWard = 1.5;
                     break;
 
                 default:
                     return;
             }
 
-            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
+            RaisePropertyChanged(nameof(AddressCardLayout));
         }
 
         private void PreviousViewAddressCard()
         {
             CurrentAddressCardIndex -= 1;
+
+            ValidViewAddressCardButtons();
 
             ChangeSelectedAddressCard();
         }
@@ -132,11 +162,34 @@ namespace NengaJouSimple.ViewModels
         {
             CurrentAddressCardIndex += 1;
 
+            ValidViewAddressCardButtons();
+
             ChangeSelectedAddressCard();
         }
+
+        private void ValidViewAddressCardButtons()
+        {
+            if (AddressCards.Count() <= 1)
+            {
+                IsEnablePreviousViewAddressCard = false;
+                IsEnableNextViewAddressCard = false;
+
+                return;
+            }
+
+            IsEnablePreviousViewAddressCard = CurrentAddressCardIndex > 0;
+            IsEnableNextViewAddressCard = CurrentAddressCardIndex < AddressCards.Count() - 1;
+        }
+
         private void ChangeSelectedAddressCard()
         {
-//            SelectedAddressCardLayout = AddressCardLayoutViewModel();
+            if (CurrentAddressCardIndex < 0 || AddressCards.Count() <= CurrentAddressCardIndex) return;
+
+            var selectedAddressCard = AddressCards[CurrentAddressCardIndex];
+
+            AddressCardLayout.AttachAddressCard(selectedAddressCard);
+
+            RaisePropertyChanged(nameof(AddressCardLayout));
         }
     }
 }

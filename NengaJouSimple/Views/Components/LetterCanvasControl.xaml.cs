@@ -19,19 +19,6 @@ namespace NengaJouSimple.Views.Components
     /// </summary>
     public partial class LetterCanvasControl : UserControl
     {
-        public static readonly DependencyProperty AddressCardLayoutProperty =
-            DependencyProperty.Register(
-                "AddressCardLayout",
-                typeof(AddressCardLayoutViewModel),
-                typeof(LetterCanvasControl),
-                new PropertyMetadata(new AddressCardLayoutViewModel()));
-
-        public AddressCardLayoutViewModel AddressCardLayout
-        {
-            get { return (AddressCardLayoutViewModel)GetValue(AddressCardLayoutProperty); }
-            set { SetValue(AddressCardLayoutProperty, value); }
-        }
-
         public LetterCanvasControl()
         {
             InitializeComponent();

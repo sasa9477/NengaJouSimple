@@ -31,5 +31,14 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
 
         public TextLayoutViewModel SenderAddress { get; set; }
 
+        public void AttachAddressCard(AddressCardViewModel addressCard)
+        {
+            PostalCode.Text = addressCard.PostalCode.ToString();
+            Address.Text = addressCard.Address.ToString();
+            Addressee.Text = addressCard.MainName.ToString();
+            SenderPostalCode.Text = addressCard.SenderAddressCard.PostalCode.ToString();
+            Sender.Text = addressCard.SenderAddressCard.MainName.ToString();
+            SenderAddress.Text = addressCard.SenderAddressCard.Address.ToString();
+        }
     }
 }

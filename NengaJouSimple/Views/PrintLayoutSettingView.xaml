@@ -41,8 +41,7 @@
                 BorderThickness="1"
                 Background="WhiteSmoke"
                 Padding="20,10">
-                <vc:LetterCanvasControl
-                    AddressCardLayout="{Binding SelectedAddressCardLayout}"/>
+                <vc:LetterCanvasControl/>
             </Border>
 
             <Grid
@@ -59,6 +58,7 @@
                     Grid.Column="1"
                     Content="◀"
                     Margin="5"
+                    IsEnabled="{Binding IsEnablePreviousViewAddressCard}"
                     Command="{Binding PreviousViewAddressCardCommnad}"
                     Style="{StaticResource LargeButton}"/>
 
@@ -66,6 +66,7 @@
                     Grid.Column="3"
                     Content="▶"
                     Margin="5"
+                    IsEnabled="{Binding IsEnableNextViewAddressCard}"
                     Command="{Binding NextViewAddressCardCommand}"
                     Style="{StaticResource LargeButton}"/>
             </Grid>
@@ -106,7 +107,7 @@
                             Content="フォントサイズ"/>
                         <TextBox
                             Grid.Column="1"
-                            Text="{Binding PostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.PostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label
                             Grid.Row="1"
@@ -114,7 +115,7 @@
                         <TextBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding PostalCode.SpaceBetweenMainWardAndTownWard, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.PostalCode.SpaceBetweenMainWardAndTownWard, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Button
                             Grid.Row="1"
@@ -129,7 +130,7 @@
                         <TextBox
                             Grid.Row="2"
                             Grid.Column="1"
-                            Text="{Binding PostalCode.SpaceBetweenEachWard, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.PostalCode.SpaceBetweenEachWard, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Button
                             Grid.Row="2"
@@ -155,7 +156,7 @@
                             Content="フォントサイズ"/>
                         <TextBox
                             Grid.Column="1"
-                            Text="{Binding Address.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.Address.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </GroupBox>
 
@@ -173,7 +174,7 @@
                             Content="フォントサイズ"/>
                         <TextBox
                             Grid.Column="1"
-                            Text="{Binding Addressee.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.Addressee.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </GroupBox>
             </StackPanel>
@@ -202,7 +203,7 @@
                             Content="フォントサイズ"/>
                         <TextBox
                             Grid.Column="1"
-                            Text="{Binding SenderPostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.SenderPostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label
                             Grid.Row="1"
@@ -210,7 +211,7 @@
                         <TextBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding SenderPostalCode.SpaceBetweenMainWardAndTownWard, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.SenderPostalCode.SpaceBetweenMainWardAndTownWard, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Button
                             Grid.Row="1"
@@ -225,7 +226,7 @@
                         <TextBox
                             Grid.Row="2"
                             Grid.Column="1"
-                            Text="{Binding SenderPostalCode.SpaceBetweenEachWard, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.SenderPostalCode.SpaceBetweenEachWard, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Button
                             Grid.Row="2"
@@ -252,7 +253,7 @@
                             Content="フォントサイズ"/>
                         <TextBox
                             Grid.Column="1"
-                            Text="{Binding SenderAddress.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.SenderAddress.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </GroupBox>
 
@@ -270,7 +271,7 @@
                             Content="フォントサイズ"/>
                         <TextBox
                             Grid.Column="1"
-                            Text="{Binding Sender.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding AddressCardLayout.Sender.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </GroupBox>
             </StackPanel>

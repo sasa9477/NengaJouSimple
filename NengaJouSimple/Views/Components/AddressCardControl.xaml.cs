@@ -19,8 +19,6 @@ namespace NengaJouSimple.Views.Components
     /// </summary>
     public partial class AddressCardControl : UserControl
     {
-        public static readonly DependencyProperty AddressCardProperty =
-            DependencyProperty.Register("AddressCard", typeof(AddressCardViewModel), typeof(AddressCardControl), new PropertyMetadata(new AddressCardViewModel()));
 
         public static readonly DependencyProperty HonorificsProperty =
             DependencyProperty.Register("Honorifics", typeof(ICollection<string>), typeof(AddressCardControl), new PropertyMetadata(new List<string>()));
@@ -34,20 +32,14 @@ namespace NengaJouSimple.Views.Components
         public static readonly DependencyProperty IsSearchingByWebServiceProperty =
             DependencyProperty.Register("IsSearchingByWebService", typeof(bool), typeof(AddressCardControl), new PropertyMetadata(false));
 
-        public static readonly DependencyProperty SearchByAddressNumberCommandProperty =
-            DependencyProperty.Register("SearchByAddressNumberCommand", typeof(ICommand), typeof(AddressCardControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty SearchByPostalCodeCommandProperty =
+            DependencyProperty.Register("SearchByPostalCodeCommand", typeof(ICommand), typeof(AddressCardControl), new PropertyMetadata(null));
 
         public static readonly DependencyProperty RegisterAddressCommandProperty =
             DependencyProperty.Register("RegisterAddressCommand", typeof(ICommand), typeof(AddressCardControl), new PropertyMetadata(null));
 
         public static readonly DependencyProperty DeleteAddressCommandProperty =
             DependencyProperty.Register("DeleteAddressCommand", typeof(ICommand), typeof(AddressCardControl), new PropertyMetadata(null));
-
-        public AddressCardViewModel AddressCard
-        {
-            get { return (AddressCardViewModel)GetValue(AddressCardProperty); }
-            set { SetValue(AddressCardProperty, value); }
-        }
 
         public ICollection<string> Honorifics
         {
@@ -73,10 +65,10 @@ namespace NengaJouSimple.Views.Components
             set { SetValue(IsSearchingByWebServiceProperty, value); }
         }
 
-        public ICommand SearchByAddressNumberCommand
+        public ICommand SearchByPostalCodeCommand
         {
-            get { return (ICommand)GetValue(SearchByAddressNumberCommandProperty); }
-            set { SetValue(SearchByAddressNumberCommandProperty, value); }
+            get { return (ICommand)GetValue(SearchByPostalCodeCommandProperty); }
+            set { SetValue(SearchByPostalCodeCommandProperty, value); }
         }
 
         public ICommand RegisterAddressCommand
@@ -101,8 +93,8 @@ namespace NengaJouSimple.Views.Components
             // Force validation rules
             MainNameFamilyName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             MainNameGivenName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            PostalCode1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            PostalCode2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            MailWard.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            TownWard.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             Address1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             Address2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         }

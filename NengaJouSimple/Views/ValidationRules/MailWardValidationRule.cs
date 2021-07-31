@@ -7,13 +7,13 @@ using System.Windows.Controls;
 
 namespace NengaJouSimple.Views.ValidationRules
 {
-    public class AddressNumber1ValidationRule : ValidationRule
+    public class MailWardValidationRule : ValidationRule
     {
-        private static readonly Regex addressNumber1Regex = new Regex(@"^[0-9]{3}$");
+        private static readonly Regex MailWardRegex = new Regex(@"^[0-9]{3}$");
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return addressNumber1Regex.IsMatch(value as string) ? ValidationResult.ValidResult : new ValidationResult(false, "");
+            return MailWardRegex.IsMatch(value as string) ? ValidationResult.ValidResult : new ValidationResult(false, "");
         }
     }
 }

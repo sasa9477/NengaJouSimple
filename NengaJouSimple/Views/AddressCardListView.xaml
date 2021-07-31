@@ -7,7 +7,6 @@
         xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
         xmlns:vc="clr-namespace:NengaJouSimple.Views.Components"
-        xmlns:vme="clr-namespace:NengaJouSimple.ViewModels.Entities"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListViewModel}}"
@@ -130,12 +129,8 @@
                 BorderThickness="1"
                 Padding="5">
                 <vc:AddressCardControl
-                    AddressCard="{Binding AddressCard}"
-                    Honorifics="{Binding Honorifics}"
                     SelectedSenderAddressCardId="{Binding SelectedSenderAddressCardId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    SenderAddressCards="{Binding SenderAddressCards}"
-                    IsSearchingByWebService="{Binding IsSearchingByWebService}"
-                    SearchByAddressNumberCommand="{Binding SearchByAddressNumberCommand}"
+                    SearchByPostalCodeCommand="{Binding SearchByPostalCodeCommand}"
                     RegisterAddressCommand="{Binding RegisterAddressCommand}"
                     DeleteAddressCommand="{Binding DeleteAddressCommand}"/>
             </Border>
