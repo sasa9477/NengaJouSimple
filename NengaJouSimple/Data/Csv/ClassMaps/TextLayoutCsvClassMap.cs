@@ -18,8 +18,8 @@ namespace NengaJouSimple.Data.Csv.ClassMaps
             Map(e => e.FontStyle).Index(4).Name(nameof(TextLayoutCsvDTO.FontStyle));
             Map(e => e.FontWeight).Index(5).Name(nameof(TextLayoutCsvDTO.FontWeight));
             Map(e => e.VerticalAlignment).Index(6).Name(nameof(TextLayoutCsvDTO.VerticalAlignment));
-            Map(e => e.SpaceBetweenMainWardAndTownWard).Index(7).Name(nameof(TextLayoutCsvDTO.SpaceBetweenMainWardAndTownWard));
-            Map(e => e.SpaceBetweenEachWard).Index(8).Name(nameof(TextLayoutCsvDTO.SpaceBetweenEachWard));
+            Map(e => e.SpaceBetweenMailWardAndTownWard).Index(7).Name(nameof(TextLayoutCsvDTO.SpaceBetweenMailWardAndTownWard));
+            Map(e => e.SpaceBetweenMailWardEachWard).Index(8).Name(nameof(TextLayoutCsvDTO.SpaceBetweenMailWardEachWard));
         }
     }
 }

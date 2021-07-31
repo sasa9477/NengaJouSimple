@@ -4,14 +4,29 @@ using System.Text;
 
 namespace NengaJouSimple.ViewModels.Entities.Layouts
 {
-    public class PostalCodeTextLayoutViewModel : TextLayoutViewModel
+    public class PostalCodeTextLayoutViewModel
     {
-        public PostalCodeTextLayoutViewModel() : base()
+        public PostalCodeTextLayoutViewModel()
         {
+            MailWard = string.Empty;
+            TownWard = string.Empty;
+            Position = new PositionViewModel();
+            Font = new FontViewModel();
         }
 
-        public double SpaceBetweenMainWardAndTownWard { get; set; }
+        public string MailWard { get; set; }
 
-        public double SpaceBetweenEachWard { get; set; }
+        public string TownWard { get; set; }
+
+        public PositionViewModel Position { get; set; }
+
+        public FontViewModel Font { get; set; }
+
+        public double SpaceBetweenMailWardAndTownWard { get; set; }
+
+        public double SpaceBetweenMailWardEachWard { get; set; }
+
+        public double SpaceBetweenTownWardEachWard { get; set; }
+
     }
 }

@@ -10,8 +10,10 @@ namespace NengaJouSimple.Models.Layouts
         {
         }
 
-        public double SpaceBetweenMainWardAndTownWard { get; set; }
+        public double SpaceBetweenMailWardAndTownWard { get; set; }
 
-        public double SpaceBetweenEachWard { get; set; }
+        public double SpaceBetweenMailWardEachWard { get; set; }
+
+        public double SpaceBetweenTownWardEachWard { get; set; }
     }
 }

@@ -53,12 +53,14 @@
                     <WrapPanel Orientation="Horizontal">
                         <!-- Mail Ward -->
                         <ItemsControl
-                            x:Name="MailWardTextItemsControl">
+                            x:Name="MailWardTextItemsControl"
+                            ItemsSource="{Binding MailWardText, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"
+                            Margin="{Binding MailWardAndTownWardMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock
                                         Text="{Binding}"
-                                        Margin="{Binding EachWardMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"/>
+                                        Margin="{Binding MailWardEachWardMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>
@@ -71,12 +73,13 @@
                         
                         <!-- Town Ward -->
                         <ItemsControl
-                            x:Name="TownWardTextItemsControl">
+                            x:Name="TownWardTextItemsControl"
+                            ItemsSource="{Binding TownWardText, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock
                                         Text="{Binding}"
-                                        Margin="{Binding EachWardMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"/>
+                                        Margin="{Binding TownWardEachWardMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>

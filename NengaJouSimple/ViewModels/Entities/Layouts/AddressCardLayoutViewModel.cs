@@ -33,10 +33,12 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
 
         public void AttachAddressCard(AddressCardViewModel addressCard)
         {
-            PostalCode.Text = addressCard.PostalCode.ToString();
+            PostalCode.MailWard = addressCard.PostalCode.MailWard;
+            PostalCode.TownWard = addressCard.PostalCode.TownWard;
             Address.Text = addressCard.Address.ToString();
             Addressee.Text = addressCard.MainName.ToString();
-            SenderPostalCode.Text = addressCard.SenderAddressCard.PostalCode.ToString();
+            SenderPostalCode.MailWard = addressCard.PostalCode.MailWard;
+            SenderPostalCode.TownWard = addressCard.PostalCode.TownWard;
             Sender.Text = addressCard.SenderAddressCard.MainName.ToString();
             SenderAddress.Text = addressCard.SenderAddressCard.Address.ToString();
         }

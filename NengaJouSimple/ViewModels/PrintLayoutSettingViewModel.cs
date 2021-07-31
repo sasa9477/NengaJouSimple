@@ -1,4 +1,5 @@
-﻿using NengaJouSimple.Services;
+﻿using NengaJouSimple.Models.Layouts;
+using NengaJouSimple.Services;
 using NengaJouSimple.ViewModels.Entities.Addresses;
 using NengaJouSimple.ViewModels.Entities.Layouts;
 using Prism.Commands;
@@ -46,9 +47,9 @@ namespace NengaJouSimple.ViewModels
 
             AddressCards = new ObservableCollection<AddressCardViewModel>(allAddressCards);
 
-            AddressCardLayout = addressCardLayoutService.Load();
+            SelectedAddressCardLayout = addressCardLayoutService.Load();
 
-            AddressCardLayout.AttachAddressCard(allAddressCards.First());
+            SelectedAddressCardLayout.AttachAddressCard(allAddressCards.First());
 
             GoBackAddressCardViewCommand = new DelegateCommand(GoBackAddressCardView);
 
@@ -63,7 +64,7 @@ namespace NengaJouSimple.ViewModels
             ValidViewAddressCardButtons();
         }
 
-        public AddressCardLayoutViewModel AddressCardLayout
+        public AddressCardLayoutViewModel SelectedAddressCardLayout
         {
             get { return selectedAddressCardLayout; }
             set { SetProperty(ref selectedAddressCardLayout, value); }
@@ -126,27 +127,35 @@ namespace NengaJouSimple.ViewModels
         {
             switch (targetName)
             {
-                case "PostalCodeSpaceBetweenMainWardAndTownWard":
-                    AddressCardLayout.PostalCode.SpaceBetweenMainWardAndTownWard = 2.2;
+                case "PostalCode.SpaceBetweenMailWardAndTownWard":
+                    SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardAndTownWard = AddressCardLayout.PostalCodeSpaceBetweenMainWardAndTownWardDefaultValue;
                     break;
 
-                case "PostalCodeSpaceBetweenEachWard":
-                    AddressCardLayout.PostalCode.SpaceBetweenEachWard = 4;
+                case "PostalCode.SpaceBetweenMailWardEachWard":
+                    SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardEachWard = AddressCardLayout.PostalCodeSpaceBetweenMailWardEachWardDefaultValue;
                     break;
 
-                case "SenderPostalCodeSpaceBetweenMainWardAndTownWard":
-                    AddressCardLayout.SenderPostalCode.SpaceBetweenMainWardAndTownWard = 4;
+                case "PostatlCode.SpaceBetweenTownWardEachWard":
+                    SelectedAddressCardLayout.PostalCode.SpaceBetweenTownWardEachWard = AddressCardLayout.PostalCodeSpaceBetweenTownWardEachWardDefaultValue;
                     break;
 
-                case "SenderPostalCodeSpaceBetweenEachWard":
-                    AddressCardLayout.SenderPostalCode.SpaceBetweenEachWard = 1.5;
+                case "SenderPostalCode.SpaceBetweenMailWardAndTownWard":
+                    SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenMailWardAndTownWard = AddressCardLayout.SenderPostalCodeSpaceBetweenMainWardAndTownWardDefaultValue;
+                    break;
+
+                case "SenderPostalCode.SpaceBetweenMailWardEachWard":
+                    SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenMailWardEachWard = AddressCardLayout.SenderPostalCodeSpaceBetweenMailWardEachWardDefaultValue;
+                    break;
+
+                case "SenderPostatlCode.SpaceBetweenTownWardEachWard":
+                    SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenTownWardEachWard = AddressCardLayout.SenderPostalCodeSpaceBetweenTownWardEachWardDefaultValue;
                     break;
 
                 default:
                     return;
             }
 
-            RaisePropertyChanged(nameof(AddressCardLayout));
+            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
         }
 
         private void PreviousViewAddressCard()
@@ -187,9 +196,9 @@ namespace NengaJouSimple.ViewModels
 
             var selectedAddressCard = AddressCards[CurrentAddressCardIndex];
 
-            AddressCardLayout.AttachAddressCard(selectedAddressCard);
+            SelectedAddressCardLayout.AttachAddressCard(selectedAddressCard);
 
-            RaisePropertyChanged(nameof(AddressCardLayout));
+            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
         }
     }
 }

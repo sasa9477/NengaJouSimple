@@ -11,16 +11,14 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
     {
         public TextLayoutViewModel()
         {
-            Position = new PositionViewModel();
             Text = string.Empty;
+            Position = new PositionViewModel();
             Font = new FontViewModel();
         }
 
-        public int Id { get; set; }
+        public string Text { get; set; }
 
         public PositionViewModel Position { get; set; }
-
-        public string Text { get; set; }
 
         public FontViewModel Font { get; set; }
     }

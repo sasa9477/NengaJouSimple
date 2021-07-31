@@ -8,6 +8,18 @@ namespace NengaJouSimple.Models.Layouts
 {
     public class AddressCardLayout : EntityBase
     {
+        public const double PostalCodeSpaceBetweenMainWardAndTownWardDefaultValue = 3;
+
+        public const double PostalCodeSpaceBetweenMailWardEachWardDefaultValue = 7.8;
+
+        public const double PostalCodeSpaceBetweenTownWardEachWardDefaultValue = 7.4;
+
+        public const double SenderPostalCodeSpaceBetweenMainWardAndTownWardDefaultValue = 4.5;
+
+        public const double SenderPostalCodeSpaceBetweenMailWardEachWardDefaultValue = 3.7;
+
+        public const double SenderPostalCodeSpaceBetweenTownWardEachWardDefaultValue = 3.7;
+
         public AddressCardLayout()
         {
             PostalCode = new PostalCodeTextLayout
@@ -15,11 +27,12 @@ namespace NengaJouSimple.Models.Layouts
                 TextLayoutKind = TextLayoutKind.PostalCode,
                 Font = new Font
                 {
-                    FontSize = 18,
+                    FontSize = 20,
                 },
-                Position = new Position(166, 45),
-                SpaceBetweenMainWardAndTownWard = 2.2,
-                SpaceBetweenEachWard = 4
+                Position = new Position(165, 48),
+                SpaceBetweenMailWardAndTownWard = PostalCodeSpaceBetweenMainWardAndTownWardDefaultValue,
+                SpaceBetweenMailWardEachWard = PostalCodeSpaceBetweenMailWardEachWardDefaultValue,
+                SpaceBetweenTownWardEachWard = PostalCodeSpaceBetweenTownWardEachWardDefaultValue
             };
 
             Address = new TextLayout
@@ -47,11 +60,12 @@ namespace NengaJouSimple.Models.Layouts
                 TextLayoutKind = TextLayoutKind.SenderPostalCode,
                 Font = new Font
                 {
-                    FontSize = 12,
+                    FontSize = 14,
                 },
                 Position = new Position(23, 464),
-                SpaceBetweenMainWardAndTownWard = 4,
-                SpaceBetweenEachWard = 1.5
+                SpaceBetweenMailWardAndTownWard = SenderPostalCodeSpaceBetweenMainWardAndTownWardDefaultValue,
+                SpaceBetweenMailWardEachWard = SenderPostalCodeSpaceBetweenMailWardEachWardDefaultValue,
+                SpaceBetweenTownWardEachWard = SenderPostalCodeSpaceBetweenTownWardEachWardDefaultValue
             };
 
             SenderAddress = new TextLayout

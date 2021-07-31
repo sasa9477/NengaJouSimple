@@ -65,7 +65,8 @@ namespace NengaJouSimple
                     .ForMember(dest => dest.Text, opt => opt.Ignore());
 
                 config.CreateMap<PostalCodeTextLayout, PostalCodeTextLayoutViewModel>()
-                    .IncludeBase<TextLayout, TextLayoutViewModel>();
+                    .ForMember(dest => dest.MailWard, opt => opt.Ignore())
+                    .ForMember(dest => dest.TownWard, opt => opt.Ignore());
 
                 config.CreateMap<AddressCardLayout, AddressCardLayoutViewModel>();
 
@@ -78,12 +79,16 @@ namespace NengaJouSimple
                 config.CreateMap<PositionViewModel, Position>();
 
                 config.CreateMap<TextLayoutViewModel, TextLayout>()
+                    .ForMember(dest => dest.Id, opt => opt.Ignore())
                     .ForMember(dest => dest.TextLayoutKind, opt => opt.Ignore())
                     .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
                     .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
 
                 config.CreateMap<PostalCodeTextLayoutViewModel, PostalCodeTextLayout>()
-                    .IncludeBase<TextLayoutViewModel, TextLayout>();
+                    .ForMember(dest => dest.Id, opt => opt.Ignore())
+                    .ForMember(dest => dest.TextLayoutKind, opt => opt.Ignore())
+                    .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
+                    .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
 
                 config.CreateMap<AddressCardLayoutViewModel, AddressCardLayout>()
                     .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
@@ -96,13 +101,15 @@ namespace NengaJouSimple
                     .ForMember(dest => dest.FontStyle, opt => opt.MapFrom(src => src.Font.FontStyle))
                     .ForMember(dest => dest.FontWeight, opt => opt.MapFrom(src => src.Font.FontWeight))
                     .ForMember(dest => dest.VerticalAlignment, opt => opt.MapFrom(src => src.Font.VerticalAlignment))
-                    .ForMember(dest => dest.SpaceBetweenMainWardAndTownWard, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpaceBetweenEachWard, opt => opt.Ignore());
+                    .ForMember(dest => dest.SpaceBetweenMailWardAndTownWard, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpaceBetweenMailWardEachWard, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpaceBetweenTownWardEachWard, opt => opt.Ignore());
 
                 config.CreateMap<PostalCodeTextLayout, TextLayoutCsvDTO>()
                     .IncludeBase<TextLayout, TextLayoutCsvDTO>()
-                    .ForMember(dest => dest.SpaceBetweenMainWardAndTownWard, opt => opt.MapFrom(src => src.SpaceBetweenMainWardAndTownWard))
-                    .ForMember(dest => dest.SpaceBetweenEachWard, opt => opt.MapFrom(src => src.SpaceBetweenEachWard));
+                    .ForMember(dest => dest.SpaceBetweenMailWardAndTownWard, opt => opt.MapFrom(src => src.SpaceBetweenMailWardAndTownWard))
+                    .ForMember(dest => dest.SpaceBetweenMailWardEachWard, opt => opt.MapFrom(src => src.SpaceBetweenMailWardEachWard))
+                    .ForMember(dest => dest.SpaceBetweenTownWardEachWard, opt => opt.MapFrom(src => src.SpaceBetweenTownWardEachWard));
 
                 config.CreateMap<TextLayoutCsvDTO, TextLayout>()
                     .ForMember(dest => dest.Id, opt => opt.Ignore())
