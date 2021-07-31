@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using NengaJouSimple.ViewModels.Entities;
+using NengaJouSimple.ViewModels.Entities.Addresses;
 using NengaJouSimple.Services;
 using NengaJouSimple.Extensions;
 using Prism.Services.Dialogs;
@@ -21,9 +21,9 @@ namespace NengaJouSimple.ViewModels
 
         private readonly AddressCardService addressCardService;
 
-        private AddressCard addressCard;
+        private AddressCardViewModel addressCard;
 
-        private AddressCard selectedAddressCard;
+        private AddressCardViewModel selectedAddressCard;
 
         private int selectedSenderAddressCardId;
 
@@ -39,16 +39,16 @@ namespace NengaJouSimple.ViewModels
             this.dialogService = dialogService;
             this.addressCardService = addressCardService;
 
-            AddressCard = new AddressCard();
+            AddressCard = new AddressCardViewModel();
 
-            SelectedAddressCard = new AddressCard();
+            SelectedAddressCard = new AddressCardViewModel();
 
             var allAddressCards = addressCardService.LoadAll();
-            AddressCards = new ObservableCollection<AddressCard>(allAddressCards);
+            AddressCards = new ObservableCollection<AddressCardViewModel>(allAddressCards);
 
-            Honorifics = Honorific.Items;
+            Honorifics = HonorificViewModel.Items;
 
-            AddressCard.MainName.Honorific = Honorific.DefalutHonorific;
+            AddressCard.MainName.Honorific = HonorificViewModel.DefalutHonorific;
 
             SenderAddressCards = senderAddressCardService.LoadAll().ToList();
 
@@ -59,28 +59,28 @@ namespace NengaJouSimple.ViewModels
             SearchByAddressNumberCommand = new DelegateCommand<string>(SearchByAddressNumber);
             RegisterAddressCommand = new DelegateCommand(RegisterAddress);
             DeleteAddressCommand = new DelegateCommand(DeleteAddress);
-            ChangePrintTargetCommand = new DelegateCommand<AddressCard>(ChangePrintTarget);
+            ChangePrintTargetCommand = new DelegateCommand<AddressCardViewModel>(ChangePrintTarget);
             EditSenderAddressCardsCommand = new DelegateCommand(EditSenderAddressCards);
             PrintAddressCardsCommand = new DelegateCommand(PrintAddressCards);
         }
 
-        public AddressCard AddressCard
+        public AddressCardViewModel AddressCard
         {
             get { return addressCard; }
             set { SetProperty(ref addressCard, value); }
         }
 
-        public AddressCard SelectedAddressCard
+        public AddressCardViewModel SelectedAddressCard
         {
             get { return selectedAddressCard; }
             set { SetProperty(ref selectedAddressCard, value); }
         }
 
-        public ObservableCollection<AddressCard> AddressCards { get; }
+        public ObservableCollection<AddressCardViewModel> AddressCards { get; }
 
         public List<string> Honorifics { get; }
 
-        public List<SenderAddressCard> SenderAddressCards { get; }
+        public List<SenderAddressCardViewModel> SenderAddressCards { get; }
 
         public int SelectedSenderAddressCardId
         {
@@ -104,7 +104,7 @@ namespace NengaJouSimple.ViewModels
 
         public DelegateCommand DeleteAddressCommand { get; }
 
-        public DelegateCommand<AddressCard> ChangePrintTargetCommand { get; }
+        public DelegateCommand<AddressCardViewModel> ChangePrintTargetCommand { get; }
 
         public DelegateCommand EditSenderAddressCardsCommand { get; }
 
@@ -112,9 +112,9 @@ namespace NengaJouSimple.ViewModels
 
         private void ClearSelectedAddress()
         {
-            AddressCard = new AddressCard();
+            AddressCard = new AddressCardViewModel();
 
-            AddressCard.MainName.Honorific = Honorific.DefalutHonorific;
+            AddressCard.MainName.Honorific = HonorificViewModel.DefalutHonorific;
 
             RaisePropertyChanged(nameof(AddressCard));
 
@@ -150,7 +150,7 @@ namespace NengaJouSimple.ViewModels
 
             IsSearchingByWebService = true;
 
-            var response = await addressCardService.SearchAddressByPostalCode(AddressCard.AddressNumber.ToString());
+            var response = await addressCardService.SearchAddressByPostalCode(AddressCard.PostalCode.ToString());
 
             if (string.IsNullOrEmpty(response))
             {
@@ -204,7 +204,7 @@ namespace NengaJouSimple.ViewModels
             }
         }
 
-        private void ChangePrintTarget(AddressCard addressCard)
+        private void ChangePrintTarget(AddressCardViewModel addressCard)
         {
             addressCardService.Register(addressCard);
         }
@@ -237,7 +237,7 @@ namespace NengaJouSimple.ViewModels
                 sb.AppendLine("氏名を入力してください。");
             }
 
-            if (!AddressCard.AddressNumber.IsCompleted)
+            if (!AddressCard.PostalCode.IsCompleted)
             {
                 sb.AppendLine("郵便番号を入力してください。");
             }

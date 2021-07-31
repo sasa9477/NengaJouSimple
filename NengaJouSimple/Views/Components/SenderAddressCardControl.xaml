@@ -24,7 +24,7 @@
             <Setter Property="Width" Value="120"/>
         </Style>
 
-        <Style x:Key="AddressNumberTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Style x:Key="PostalCodeTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Width" Value="50"/>
         </Style>
 
@@ -41,7 +41,7 @@
 
         <!-- Converters -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converters:AddressNumberConverter x:Key="AddressNumberConverter"/>
+        <converters:PostalCodeConverter x:Key="PostalCodeConverter"/>
     </UserControl.Resources>
 
     <Grid
@@ -150,11 +150,11 @@
             </Grid.ColumnDefinitions>
             <!-- 全角入力不可 InputMethod.IsInputMethodEnabled="False" -->
             <TextBox
-                x:Name="AddressNumber1"
+                x:Name="PostalCode1"
                 InputMethod.IsInputMethodEnabled="False"
-                Style="{StaticResource AddressNumberTextBox}">
+                Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
-                    <Binding Path="SenderAddressCard.AddressNumber.AddressNumber1" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.PostalCode.MailWard" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validationRules:AddressNumber1ValidationRule/>
                         </Binding.ValidationRules>
@@ -166,11 +166,11 @@
                 Content=" - "/>
             <TextBox
                 Grid.Column="2"
-                x:Name="AddressNumber2"
+                x:Name="PostalCode2"
                 InputMethod.IsInputMethodEnabled="False"
-                Style="{StaticResource AddressNumberTextBox}">
+                Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
-                    <Binding Path="SenderAddressCard.AddressNumber.AddressNumber2" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.PostalCode.TownWard" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validationRules:AddressNumber2ValidationRule/>
                         </Binding.ValidationRules>
@@ -182,9 +182,9 @@
                 Content="郵便番号から住所を検索"
                 Command="{Binding SearchByAddressNumberCommand, ElementName=Root}">
                 <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource AddressNumberConverter}">
-                        <Binding Path="Text" ElementName="AddressNumber1"/>
-                        <Binding Path="Text" ElementName="AddressNumber2"/>
+                    <MultiBinding Converter="{StaticResource PostalCodeConverter}">
+                        <Binding Path="Text" ElementName="PostalCode1"/>
+                        <Binding Path="Text" ElementName="PostalCode2"/>
                     </MultiBinding>
                 </Button.CommandParameter>
                 <Button.Style>

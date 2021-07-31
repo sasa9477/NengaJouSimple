@@ -1,6 +1,6 @@
 ﻿using CsvHelper;
 using NengaJouSimple.Data.Csv.ClassMaps;
-using NengaJouSimple.Models;
+using NengaJouSimple.Models.Addresses;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

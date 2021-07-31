@@ -1,0 +1,94 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:NengaJouSimple.Views.CustomControls">
+
+
+    <Style TargetType="{x:Type local:VerticalTextBlockControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:VerticalTextBlockControl}">
+                    <ItemsControl 
+                        Name="MultiLineItemsControl"
+                        ItemsSource="{Binding GlyphsMultiLine, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                  Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ItemsControl
+                                    x:Name="LineItemsControl"
+                                    ItemsSource="{Binding}"
+                                              VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                              Margin="2,1"
+                                              IsTabStop="False">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Glyphs
+                                                FontUri="{Binding FontUri, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                                Indices="{Binding}"
+                                                Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                                FontRenderingEmSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                                StyleSimulations="{Binding StyleSimulation, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}">
+                                            </Glyphs>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel
+                                    Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:PostalCodeTextBlockControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PostalCodeTextBlockControl}">
+                    <WrapPanel Orientation="Horizontal">
+                        <!-- Mail Ward -->
+                        <ItemsControl
+                            x:Name="MailWardTextItemsControl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Text="{Binding}"
+                                        Margin="{Binding EachWardMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel
+                                        Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                        
+                        <!-- Town Ward -->
+                        <ItemsControl
+                            x:Name="TownWardTextItemsControl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Text="{Binding}"
+                                        Margin="{Binding EachWardMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel
+                                        Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </WrapPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

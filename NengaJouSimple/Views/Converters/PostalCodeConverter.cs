@@ -7,13 +7,13 @@ using System.Windows.Data;
 
 namespace NengaJouSimple.Views.Converters
 {
-    public class AddressNumberConverter : IMultiValueConverter
+    public class PostalCodeConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var addressNumber1 = values.First() as string;
+            var postalCode1 = values.First() as string;
 
-            return addressNumber1?.Length == 3 ? string.Concat(values) : string.Empty;
+            return postalCode1?.Length == 3 ? string.Concat(values) : string.Empty;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

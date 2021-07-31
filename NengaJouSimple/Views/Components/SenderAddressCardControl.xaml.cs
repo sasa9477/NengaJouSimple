@@ -1,4 +1,4 @@
-﻿using NengaJouSimple.ViewModels.Entities;
+﻿using NengaJouSimple.ViewModels.Entities.Addresses;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +20,7 @@ namespace NengaJouSimple.Views.Components
     public partial class SenderAddressCardControl : UserControl
     {
         public static readonly DependencyProperty SenderAddressCardProperty =
-            DependencyProperty.Register("SenderAddressCard", typeof(SenderAddressCard), typeof(SenderAddressCardControl), new PropertyMetadata(new SenderAddressCard()));
+            DependencyProperty.Register("SenderAddressCard", typeof(SenderAddressCardViewModel), typeof(SenderAddressCardControl), new PropertyMetadata(new SenderAddressCardViewModel()));
 
         public static readonly DependencyProperty IsSearchingByWebServiceProperty =
             DependencyProperty.Register("IsSearchingByWebService", typeof(bool), typeof(SenderAddressCardControl), new PropertyMetadata(false));
@@ -34,9 +34,9 @@ namespace NengaJouSimple.Views.Components
         public static readonly DependencyProperty DeleteAddressCommandProperty =
             DependencyProperty.Register("DeleteAddressCommand", typeof(ICommand), typeof(SenderAddressCardControl), new PropertyMetadata(null));
 
-        public SenderAddressCard SenderAddressCard
+        public SenderAddressCardViewModel SenderAddressCard
         {
-            get { return (SenderAddressCard)GetValue(SenderAddressCardProperty); }
+            get { return (SenderAddressCardViewModel)GetValue(SenderAddressCardProperty); }
             set { SetValue(SenderAddressCardProperty, value); }
         }
 
@@ -71,10 +71,11 @@ namespace NengaJouSimple.Views.Components
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
+            // Force validation rules
             MainNameFamilyName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             MainNameGivenName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            AddressNumber1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            AddressNumber2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            PostalCode1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            PostalCode2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             Address1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             Address2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         }

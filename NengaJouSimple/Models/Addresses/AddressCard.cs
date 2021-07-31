@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NengaJouSimple.Models
+namespace NengaJouSimple.Models.Addresses
 {
     public class AddressCard : EntityBase
     {
@@ -10,7 +10,7 @@ namespace NengaJouSimple.Models
         {
             MainName = new PersonName();
             MainNameKana = new PersonName();
-            AddressNumber = string.Empty;
+            PostalCode = string.Empty;
             Address1 = string.Empty;
             Address2 = string.Empty;
             Address3 = string.Empty;
@@ -26,7 +26,7 @@ namespace NengaJouSimple.Models
 
         public PersonName MainNameKana { get; set; }
 
-        public string AddressNumber { get; set; }
+        public string PostalCode { get; set; }
 
         public string Address1 { get; set; }
 

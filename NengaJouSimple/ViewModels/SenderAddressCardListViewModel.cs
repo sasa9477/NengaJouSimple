@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using NengaJouSimple.ViewModels.Entities;
+using NengaJouSimple.ViewModels.Entities.Addresses;
 using NengaJouSimple.Services;
 using NengaJouSimple.Extensions;
 using Prism.Services.Dialogs;
@@ -20,9 +20,9 @@ namespace NengaJouSimple.ViewModels
 
         private readonly SenderAddressCardService senderAddressCardService;
 
-        private SenderAddressCard senderAddressCard;
+        private SenderAddressCardViewModel senderAddressCard;
 
-        private SenderAddressCard selectedSenderAddressCard;
+        private SenderAddressCardViewModel selectedSenderAddressCard;
 
         private bool isSearchingByWebService = false;
 
@@ -35,11 +35,11 @@ namespace NengaJouSimple.ViewModels
             this.dialogService = dialogService;
             this.senderAddressCardService = senderAddressCardService;
 
-            senderAddressCard = new SenderAddressCard();
-            selectedSenderAddressCard = new SenderAddressCard();
+            senderAddressCard = new SenderAddressCardViewModel();
+            selectedSenderAddressCard = new SenderAddressCardViewModel();
 
             var allSenderAddressCards = senderAddressCardService.LoadAll();
-            SenderAddressCards = new ObservableCollection<SenderAddressCard>(allSenderAddressCards);
+            SenderAddressCards = new ObservableCollection<SenderAddressCardViewModel>(allSenderAddressCards);
 
             ClearSelectedSenderAddressCommand = new DelegateCommand(ClearSelectedSenderAddress);
             SelectSenderAddressCardCommand = new DelegateCommand(SelectSenderAddressCard);
@@ -49,13 +49,13 @@ namespace NengaJouSimple.ViewModels
             EditAddressCardsCommand = new DelegateCommand(EditAddressCards);
         }
 
-        public SenderAddressCard SenderAddressCard
+        public SenderAddressCardViewModel SenderAddressCard
         {
             get { return senderAddressCard; }
             set { SetProperty(ref senderAddressCard, value); }
         }
 
-        public SenderAddressCard SelectedSenderAddressCard
+        public SenderAddressCardViewModel SelectedSenderAddressCard
         {
             get { return selectedSenderAddressCard; }
             set { SetProperty(ref selectedSenderAddressCard, value); }
@@ -67,7 +67,7 @@ namespace NengaJouSimple.ViewModels
             set { SetProperty(ref isSearchingByWebService, value); }
         }
 
-        public ObservableCollection<SenderAddressCard> SenderAddressCards { get; }
+        public ObservableCollection<SenderAddressCardViewModel> SenderAddressCards { get; }
 
         public DelegateCommand ClearSelectedSenderAddressCommand { get; }
 
@@ -83,7 +83,7 @@ namespace NengaJouSimple.ViewModels
 
         private void ClearSelectedSenderAddress()
         {
-            SenderAddressCard = new SenderAddressCard();
+            SenderAddressCard = new SenderAddressCardViewModel();
 
             RaisePropertyChanged(nameof(SenderAddressCard));
         }
@@ -114,7 +114,7 @@ namespace NengaJouSimple.ViewModels
 
             IsSearchingByWebService = true;
 
-            var response = await senderAddressCardService.SearchAddressByPostalCode(SenderAddressCard.AddressNumber.ToString());
+            var response = await senderAddressCardService.SearchAddressByPostalCode(SenderAddressCard.PostalCode.ToString());
 
             if (string.IsNullOrEmpty(response))
             {
@@ -190,7 +190,7 @@ namespace NengaJouSimple.ViewModels
                 sb.AppendLine("氏名を入力してください。");
             }
 
-            if (!SenderAddressCard.AddressNumber.IsCompleted)
+            if (!SenderAddressCard.PostalCode.IsCompleted)
             {
                 sb.AppendLine("郵便番号を入力してください。");
             }

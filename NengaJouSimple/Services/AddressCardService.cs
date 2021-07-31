@@ -6,7 +6,8 @@ using AutoMapper;
 using NengaJouSimple.Data.Csv;
 using NengaJouSimple.Data.Repositories;
 using NengaJouSimple.Data.Web;
-using NengaJouSimple.Models;
+using NengaJouSimple.Models.Addresses;
+using NengaJouSimple.ViewModels.Entities.Addresses;
 
 namespace NengaJouSimple.Services
 {
@@ -32,14 +33,14 @@ namespace NengaJouSimple.Services
             this.mapper = mapper;
         }
 
-        public List<ViewModels.Entities.AddressCard> LoadAll()
+        public List<AddressCardViewModel> LoadAll()
         {
             var allAddressCards = addressCardRepository.LoadAll();
 
-            return mapper.Map<List<ViewModels.Entities.AddressCard>>(allAddressCards);
+            return mapper.Map<List<AddressCardViewModel>>(allAddressCards);
         }
 
-        public void Register(ViewModels.Entities.AddressCard addressCard)
+        public void Register(AddressCardViewModel addressCard)
         {
             var requestAddressCard = mapper.Map<AddressCard>(addressCard);
 
@@ -48,7 +49,7 @@ namespace NengaJouSimple.Services
             WriteCsvFile();
         }
 
-        public void Delete(ViewModels.Entities.AddressCard addressCard)
+        public void Delete(AddressCardViewModel addressCard)
         {
             var requestAddressCard = mapper.Map<AddressCard>(addressCard);
 

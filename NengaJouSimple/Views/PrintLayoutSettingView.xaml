@@ -6,15 +6,294 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
+             xmlns:vc="clr-namespace:NengaJouSimple.Views.Components"
              mc:Ignorable="d"
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance Type={x:Type vm:PrintLayoutSettingViewModel}}"
              d:DesignHeight="720" d:DesignWidth="1280">
 
-    <Grid>
-        <Button
-            Content="宛先一覧画面に戻る"
-            IsDefault="True"
-            Command="{Binding GoBackAddressCardViewCommand}"/>
+    <Grid
+        d:Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label
+            Content="印刷設定画面"
+            FontSize="24"/>
+
+        <Grid
+            Grid.Row="1"
+            Margin="10, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border
+                BorderBrush="Gray"
+                BorderThickness="1"
+                Background="WhiteSmoke"
+                Padding="20,10">
+                <vc:LetterCanvasControl
+                    AddressCardLayout="{Binding SelectedAddressCardLayout}"/>
+            </Border>
+
+            <Grid
+                Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Grid.Column="1"
+                    Content="◀"
+                    Margin="5"
+                    Command="{Binding PreviousViewAddressCardCommnad}"
+                    Style="{StaticResource LargeButton}"/>
+
+                <Button
+                    Grid.Column="3"
+                    Content="▶"
+                    Margin="5"
+                    Command="{Binding NextViewAddressCardCommand}"
+                    Style="{StaticResource LargeButton}"/>
+            </Grid>
+        </Grid>
+
+        <Grid
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+                <GroupBox
+                    Header="郵便番号"
+                    FontSize="16"
+                    Padding="0,5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Content="フォントサイズ"/>
+                        <TextBox
+                            Grid.Column="1"
+                            Text="{Binding PostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Label
+                            Grid.Row="1"
+                            Content="ハイフンスペース"/>
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{Binding PostalCode.SpaceBetweenMainWardAndTownWard, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Content="規定値に戻す"
+                            Command="{Binding SetDefaultValueCommand}"
+                            CommandParameter="PostalCodeSpaceBetweenMainWardAndTownWard"/>
+
+                        <Label
+                            Grid.Row="2"
+                            Content="文字間スペース"/>
+                        <TextBox
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Text="{Binding PostalCode.SpaceBetweenEachWard, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Content="規定値に戻す"
+                            Command="{Binding SetDefaultValueCommand}"
+                            CommandParameter="PostatlCodeSpaceBetweenEachWard"/>
+
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox
+                    Header="宛先住所"
+                    FontSize="16"
+                    Padding="0,5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Content="フォントサイズ"/>
+                        <TextBox
+                            Grid.Column="1"
+                            Text="{Binding Address.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox
+                    Header="宛先氏名"
+                    FontSize="16"
+                    Padding="0,5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Content="フォントサイズ"/>
+                        <TextBox
+                            Grid.Column="1"
+                            Text="{Binding Addressee.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+
+
+            <StackPanel
+                Grid.Column="1">
+                <GroupBox
+                    Header="差出人郵便番号"
+                    FontSize="16"
+                    Padding="0,5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Content="フォントサイズ"/>
+                        <TextBox
+                            Grid.Column="1"
+                            Text="{Binding SenderPostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Label
+                            Grid.Row="1"
+                            Content="ハイフンスペース"/>
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{Binding SenderPostalCode.SpaceBetweenMainWardAndTownWard, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Content="規定値に戻す"
+                            Command="{Binding SetDefaultValueCommand}"
+                            CommandParameter="SenderPostalCodeSpaceBetweenMainWardAndTownWard"/>
+
+                        <Label
+                            Grid.Row="2"
+                            Content="文字間スペース"/>
+                        <TextBox
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Text="{Binding SenderPostalCode.SpaceBetweenEachWard, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Content="規定値に戻す"
+                            Command="{Binding SetDefaultValueCommand}"
+                            CommandParameter="SenderPostalCodeSpaceBetweenEachWard"/>
+
+                    </Grid>
+                </GroupBox>
+
+
+                <GroupBox
+                    Header="差出人住所"
+                    FontSize="16"
+                    Padding="0,5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Content="フォントサイズ"/>
+                        <TextBox
+                            Grid.Column="1"
+                            Text="{Binding SenderAddress.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox
+                    Header="差出人氏名"
+                    FontSize="16"
+                    Padding="0,5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Content="フォントサイズ"/>
+                        <TextBox
+                            Grid.Column="1"
+                            Text="{Binding Sender.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+            
+            <!-- アクション -->
+            <Grid
+                Grid.Row="2"
+                Margin="0,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Button
+                    Content="宛先一覧画面に戻る"
+                    IsDefault="True"
+                    Command="{Binding GoBackAddressCardViewCommand}"
+                    Style="{StaticResource LargeButton}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

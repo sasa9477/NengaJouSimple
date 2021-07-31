@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace NengaJouSimple.ViewModels.Entities
+namespace NengaJouSimple.ViewModels.Entities.Addresses
 {
-    public class PersonName
+    public class PersonNameViewModel
     {
-        public PersonName()
+        public PersonNameViewModel()
         {
             FamilyName = string.Empty;
             GivenName = string.Empty;
@@ -29,9 +29,9 @@ namespace NengaJouSimple.ViewModels.Entities
             return $"{FamilyName}{space}{GivenName}{Honorific}";
         }
 
-        public PersonName Clone()
+        public PersonNameViewModel Clone()
         {
-            return new PersonName
+            return new PersonNameViewModel
             {
                 FamilyName = FamilyName,
                 GivenName = GivenName,

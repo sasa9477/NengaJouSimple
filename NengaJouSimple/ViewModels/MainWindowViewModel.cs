@@ -34,6 +34,9 @@ namespace NengaJouSimple.ViewModels
 
         private void Loaded()
         {
+            regionManager.RequestNavigate(RegionNames.ContentRegion, "PrintLayoutSettingView");
+            return;
+
             if (!senderAddressCardService.IsRegisterdAnySenderAddressCard())
             {
                 regionManager.RequestNavigate(RegionNames.ContentRegion, "SenderAddressCardListView");

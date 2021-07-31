@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NengaJouSimple.Models;
+using NengaJouSimple.Models.Addresses;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NengaJouSimple.ViewModels.Entities
+namespace NengaJouSimple.ViewModels.Entities.Addresses
 {
-    public class Address
+    public class AddressViewModel
     {
-        public Address()
+        public AddressViewModel()
         {
             Address1 = string.Empty;
             Address2 = string.Empty;
             Address3 = string.Empty;
         }
 
-        public Address(string address1, string address2, string address3)
+        public AddressViewModel(string address1, string address2, string address3)
         {
             Address1 = address1;
             Address2 = address2;
@@ -31,9 +31,9 @@ namespace NengaJouSimple.ViewModels.Entities
             return $"{Address1}{Address2}{Address3}";
         }
 
-        public Address Clone()
+        public AddressViewModel Clone()
         {
-            return new Address
+            return new AddressViewModel
             {
                 Address1 = Address1,
                 Address2 = Address2,

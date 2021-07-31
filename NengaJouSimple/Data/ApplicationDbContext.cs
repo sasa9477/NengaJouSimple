@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NengaJouSimple.Models;
+using NengaJouSimple.Models.Addresses;
+using NengaJouSimple.Models.Layouts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +15,14 @@ namespace NengaJouSimple.Data
         public DbSet<AddressCard> AddressCards => Set<AddressCard>();
 
         public DbSet<SenderAddressCard> SenderAddressCards => Set<SenderAddressCard>();
+
+        public DbSet<AddressCardLayout> AddressCardLayouts => Set<AddressCardLayout>();
+
+        public DbSet<TextLayout> TextLayouts => Set<TextLayout>();
+
+        public DbSet<Font> Fonts => Set<Font>();
+
+        public DbSet<PostalCodeTextLayout> PostalCodeTextLayouts => Set<PostalCodeTextLayout>();
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -98,6 +108,17 @@ namespace NengaJouSimple.Data
                 builder.Property(e => e.Renmei5)
                     .HasConversion(personNameConverter);
             });
+
+            modelBuilder.Entity<TextLayout>(builder =>
+            {
+                builder.Property(e => e.Position)
+                    .HasConversion(
+                        v => JsonSerializer.Serialize(v, null),
+                        v => JsonSerializer.Deserialize<Position>(v, null));
+
+                builder.OwnsOne(e => e.Font);
+            });
+
 
             base.OnModelCreating(modelBuilder);
         }

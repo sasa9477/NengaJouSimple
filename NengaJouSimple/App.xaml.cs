@@ -39,10 +39,14 @@ namespace NengaJouSimple
 
             containerRegistry.RegisterSingleton<SenderAddressCardCsvService>();
 
+            containerRegistry.RegisterSingleton<TextLayoutCsvService>();
+
             // Repositories
             containerRegistry.RegisterSingleton<AddressCardRepository>();
 
             containerRegistry.RegisterSingleton<SenderAddressCardRepository>();
+
+            containerRegistry.RegisterSingleton<AddressCardLayoutRepository>();
 
             // Webs
             containerRegistry.RegisterSingleton<AddressWebService>();
@@ -51,6 +55,8 @@ namespace NengaJouSimple
             containerRegistry.RegisterSingleton<AddressCardService>();
 
             containerRegistry.RegisterSingleton<SenderAddressCardService>();
+
+            containerRegistry.RegisterSingleton<AddressCardLayoutService>();
 
             // Dialogs
             containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>();
@@ -96,6 +102,10 @@ namespace NengaJouSimple
             var addressCardService = Container.Resolve<AddressCardService>();
 
             addressCardService.ReadCsvFile();
+
+            var addressCardLayoutService = Container.Resolve<AddressCardLayoutService>();
+
+            addressCardLayoutService.ReadCsvFile();
         }
     }
 }

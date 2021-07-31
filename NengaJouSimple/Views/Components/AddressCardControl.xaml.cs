@@ -1,4 +1,4 @@
-﻿using NengaJouSimple.ViewModels.Entities;
+﻿using NengaJouSimple.ViewModels.Entities.Addresses;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +20,7 @@ namespace NengaJouSimple.Views.Components
     public partial class AddressCardControl : UserControl
     {
         public static readonly DependencyProperty AddressCardProperty =
-            DependencyProperty.Register("AddressCard", typeof(AddressCard), typeof(AddressCardControl), new PropertyMetadata(new AddressCard()));
+            DependencyProperty.Register("AddressCard", typeof(AddressCardViewModel), typeof(AddressCardControl), new PropertyMetadata(new AddressCardViewModel()));
 
         public static readonly DependencyProperty HonorificsProperty =
             DependencyProperty.Register("Honorifics", typeof(ICollection<string>), typeof(AddressCardControl), new PropertyMetadata(new List<string>()));
@@ -29,7 +29,7 @@ namespace NengaJouSimple.Views.Components
             DependencyProperty.Register("SelectedSenderAddressCardId", typeof(int), typeof(AddressCardControl), new PropertyMetadata(0));
 
         public static readonly DependencyProperty SenderAddressCardsProperty =
-            DependencyProperty.Register("SenderAddressCards", typeof(ICollection<SenderAddressCard>), typeof(AddressCardControl), new PropertyMetadata(new List<SenderAddressCard>()));
+            DependencyProperty.Register("SenderAddressCards", typeof(ICollection<SenderAddressCardViewModel>), typeof(AddressCardControl), new PropertyMetadata(new List<SenderAddressCardViewModel>()));
 
         public static readonly DependencyProperty IsSearchingByWebServiceProperty =
             DependencyProperty.Register("IsSearchingByWebService", typeof(bool), typeof(AddressCardControl), new PropertyMetadata(false));
@@ -43,9 +43,9 @@ namespace NengaJouSimple.Views.Components
         public static readonly DependencyProperty DeleteAddressCommandProperty =
             DependencyProperty.Register("DeleteAddressCommand", typeof(ICommand), typeof(AddressCardControl), new PropertyMetadata(null));
 
-        public AddressCard AddressCard
+        public AddressCardViewModel AddressCard
         {
-            get { return (AddressCard)GetValue(AddressCardProperty); }
+            get { return (AddressCardViewModel)GetValue(AddressCardProperty); }
             set { SetValue(AddressCardProperty, value); }
         }
 
@@ -61,9 +61,9 @@ namespace NengaJouSimple.Views.Components
             set { SetValue(SelectedSenderAddressCardIdProperty, value); }
         }
 
-        public ICollection<SenderAddressCard> SenderAddressCards
+        public ICollection<SenderAddressCardViewModel> SenderAddressCards
         {
-            get { return (ICollection<SenderAddressCard>)GetValue(SenderAddressCardsProperty); }
+            get { return (ICollection<SenderAddressCardViewModel>)GetValue(SenderAddressCardsProperty); }
             set { SetValue(SenderAddressCardsProperty, value); }
         }
 
@@ -98,10 +98,11 @@ namespace NengaJouSimple.Views.Components
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
+            // Force validation rules
             MainNameFamilyName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             MainNameGivenName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            AddressNumber1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            AddressNumber2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            PostalCode1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            PostalCode2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             Address1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             Address2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         }

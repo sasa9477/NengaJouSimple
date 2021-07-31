@@ -1,4 +1,4 @@
-﻿using NengaJouSimple.Models;
+﻿using NengaJouSimple.Models.Addresses;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +18,7 @@ namespace NengaJouSimple.Data
                         FamilyName = "田中",
                         GivenName = "久重"
                     },
-                    AddressNumber = "038-3305",
+                    PostalCode = "038-3305",
                     Address1 = "青森県つがる市牛潟町",
                     Address2 = "75-56"
                 },
@@ -29,7 +29,7 @@ namespace NengaJouSimple.Data
                         FamilyName = "岡本",
                         GivenName = "太郎"
                     },
-                    AddressNumber = "038-3305",
+                    PostalCode = "038-3305",
                     Address1 = "青森県つがる市牛潟町",
                     Address2 = "75-56"
                 }
@@ -45,7 +45,7 @@ namespace NengaJouSimple.Data
                         GivenName = "光彦",
                         Honorific = "様"
                     },
-                    AddressNumber = "038-3305",
+                    PostalCode = "038-3305",
                     Address1 = "青森県つがる市牛潟町",
                     Address2 = "56-56",
                     SenderAddressCard = new SenderAddressCard
@@ -55,7 +55,7 @@ namespace NengaJouSimple.Data
                             FamilyName = "園田",
                             GivenName = "彌栄"
                         },
-                        AddressNumber = "038-3305",
+                        PostalCode = "038-3305",
                         Address1 = "青森県つがる市牛潟町",
                         Address2 = "75-56"
                     }
