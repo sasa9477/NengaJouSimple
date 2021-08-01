@@ -10,6 +10,7 @@ using NengaJouSimple.Extensions;
 using Prism.Services.Dialogs;
 using System.Linq;
 using Prism.Regions;
+using NengaJouSimple.Models.Addresses;
 
 namespace NengaJouSimple.ViewModels
 {
@@ -46,9 +47,9 @@ namespace NengaJouSimple.ViewModels
             var allAddressCards = addressCardService.LoadAll();
             AddressCards = new ObservableCollection<AddressCardViewModel>(allAddressCards);
 
-            Honorifics = HonorificViewModel.Items;
+            Honorifics = Honorific.Honorifics;
 
-            AddressCard.MainName.Honorific = HonorificViewModel.DefalutHonorific;
+            AddressCard.MainName.Honorific = Honorific.DefalutHonorific;
 
             SenderAddressCards = senderAddressCardService.LoadAll().ToList();
 
@@ -130,7 +131,7 @@ namespace NengaJouSimple.ViewModels
         {
             AddressCard.Clear();
 
-            AddressCard.MainName.Honorific = HonorificViewModel.DefalutHonorific;
+            AddressCard.MainName.Honorific = Honorific.DefalutHonorific;
 
             RaisePropertyChanged(nameof(AddressCard));
 
