@@ -21,20 +21,27 @@ namespace NengaJouSimple
             {
                 config.CreateMap<PersonName, PersonNameViewModel>();
 
-                config.CreateMap<PersonNameViewModel, PersonName>();
+                config.CreateMap<Renmei, RenmeiViewModel>()
+                    .IncludeBase<PersonName, PersonNameViewModel>();
 
                 config.CreateMap<SenderAddressCard, SenderAddressCardViewModel>()
                     .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => new PostalCodeViewModel(src.PostalCode)))
                     .ForMember(dest => dest.IsRegisterdCard, opt => opt.Ignore());
 
+                config.CreateMap<AddressCard, AddressCardViewModel>()
+                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => new PostalCodeViewModel(src.PostalCode)))
+                    .ForMember(dest => dest.IsRegisterdCard, opt => opt.Ignore());
+
+
+                config.CreateMap<PersonNameViewModel, PersonName>();
+
+                config.CreateMap<RenmeiViewModel, Renmei>()
+                    .IncludeBase<PersonNameViewModel, PersonName>();
+
                 config.CreateMap<SenderAddressCardViewModel, SenderAddressCard>()
                     .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.ToString()))
                     .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
                     .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
-
-                config.CreateMap<AddressCard, AddressCardViewModel>()
-                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => new PostalCodeViewModel(src.PostalCode)))
-                    .ForMember(dest => dest.IsRegisterdCard, opt => opt.Ignore());
 
                 config.CreateMap<AddressCardViewModel, AddressCard>()
                     .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.ToString()))
@@ -63,6 +70,8 @@ namespace NengaJouSimple
                     })
                     .ForMember(dest => dest.IsAlreadyPrinted, opt => opt.Ignore());
 
+                config.CreateMap<AddressCardLayout, AddressCardLayoutJsonDTO>();
+
 
                 config.CreateMap<FontViewModel, Font>()
                     .ForMember(dest => dest.FontStyle, opt => opt.MapFrom(src => src.FontStyle.ToFontStyleKind()))
@@ -80,9 +89,6 @@ namespace NengaJouSimple
                     .ForMember(dest => dest.FontFamilyName, opt => opt.MapFrom(src => src.FontFamily.Source))
                     .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
                     .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
-
-
-                config.CreateMap<AddressCardLayout, AddressCardLayoutJsonDTO>();
 
                 config.CreateMap<AddressCardLayoutJsonDTO, AddressCardLayout>()
                     .ForMember(dest => dest.Id, opt => opt.Ignore())

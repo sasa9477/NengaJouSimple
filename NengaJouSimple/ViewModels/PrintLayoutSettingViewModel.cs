@@ -222,6 +222,10 @@ namespace NengaJouSimple.ViewModels
         {
             switch (targetName)
             {
+                case "PostalCode.FontSize":
+                    SelectedAddressCardLayout.PostalCode.Font.FontSize = AddressCardLayout.PostalCodeFontSizeDefaultValue;
+                    break;
+
                 case "PostalCode.SpaceBetweenMailWardAndTownWard":
                     SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardAndTownWard = AddressCardLayout.PostalCodeSpaceBetweenMainWardAndTownWardDefaultValue;
                     break;
@@ -232,6 +236,10 @@ namespace NengaJouSimple.ViewModels
 
                 case "PostatlCode.SpaceBetweenTownWardEachWard":
                     SelectedAddressCardLayout.PostalCode.SpaceBetweenTownWardEachWard = AddressCardLayout.PostalCodeSpaceBetweenTownWardEachWardDefaultValue;
+                    break;
+
+                case "SenderPostalCode.FontSize":
+                    SelectedAddressCardLayout.SenderPostalCode.Font.FontSize = AddressCardLayout.SenderPostalCodeFontSizeDefaultValue;
                     break;
 
                 case "SenderPostalCode.SpaceBetweenMailWardAndTownWard":

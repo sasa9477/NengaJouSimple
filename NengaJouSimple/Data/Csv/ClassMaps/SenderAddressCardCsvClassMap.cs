@@ -15,11 +15,11 @@ namespace NengaJouSimple.Data.Csv.ClassMaps
             Map(e => e.MainNameKana).TypeConverter<CsvJsonConverter<PersonName>>().Index(2).Name(nameof(SenderAddressCard.MainNameKana));
             Map(e => e.PostalCode).Index(3).Name(nameof(SenderAddressCard.PostalCode));
             Map(e => e.Address).Index(4).Name(nameof(SenderAddressCard.Address));
-            Map(e => e.Renmei1).TypeConverter<CsvJsonConverter<PersonName>>().Index(7).Name(nameof(SenderAddressCard.Renmei1));
-            Map(e => e.Renmei2).TypeConverter<CsvJsonConverter<PersonName>>().Index(8).Name(nameof(SenderAddressCard.Renmei2));
-            Map(e => e.Renmei3).TypeConverter<CsvJsonConverter<PersonName>>().Index(9).Name(nameof(SenderAddressCard.Renmei3));
-            Map(e => e.Renmei4).TypeConverter<CsvJsonConverter<PersonName>>().Index(10).Name(nameof(SenderAddressCard.Renmei4));
-            Map(e => e.Renmei5).TypeConverter<CsvJsonConverter<PersonName>>().Index(11).Name(nameof(SenderAddressCard.Renmei5));
+            Map(e => e.Renmei1).TypeConverter<CsvJsonConverter<Renmei>>().Index(7).Name(nameof(SenderAddressCard.Renmei1));
+            Map(e => e.Renmei2).TypeConverter<CsvJsonConverter<Renmei>>().Index(8).Name(nameof(SenderAddressCard.Renmei2));
+            Map(e => e.Renmei3).TypeConverter<CsvJsonConverter<Renmei>>().Index(9).Name(nameof(SenderAddressCard.Renmei3));
+            Map(e => e.Renmei4).TypeConverter<CsvJsonConverter<Renmei>>().Index(10).Name(nameof(SenderAddressCard.Renmei4));
+            Map(e => e.Renmei5).TypeConverter<CsvJsonConverter<Renmei>>().Index(11).Name(nameof(SenderAddressCard.Renmei5));
         }
     }
 }

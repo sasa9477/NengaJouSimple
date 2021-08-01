@@ -39,7 +39,7 @@ namespace NengaJouSimple.Data.Web
 
                     if (address != null)
                     {
-                        return $"{address.Address1}{address.Address2}{address.Address3}";
+                        return $"{address.Address1}{address.Address2}\n{address.Address3}";
                     }
                 }
             }

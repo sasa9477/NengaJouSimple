@@ -7,11 +7,15 @@ namespace NengaJouSimple.Models.Layouts
 {
     public class AddressCardLayout : EntityBase
     {
+        public const double PostalCodeFontSizeDefaultValue = 20;
+
         public const double PostalCodeSpaceBetweenMainWardAndTownWardDefaultValue = 3;
 
         public const double PostalCodeSpaceBetweenMailWardEachWardDefaultValue = 7.8;
 
         public const double PostalCodeSpaceBetweenTownWardEachWardDefaultValue = 7.4;
+
+        public const double SenderPostalCodeFontSizeDefaultValue = 14;
 
         public const double SenderPostalCodeSpaceBetweenMainWardAndTownWardDefaultValue = 4.5;
 
@@ -28,7 +32,7 @@ namespace NengaJouSimple.Models.Layouts
                 TextLayoutKind = TextLayoutKind.PostalCode,
                 Font = new Font
                 {
-                    FontSize = 20,
+                    FontSize = PostalCodeFontSizeDefaultValue,
                 },
                 Position = new Position(165, 48),
                 SpaceBetweenMailWardAndTownWard = PostalCodeSpaceBetweenMainWardAndTownWardDefaultValue,
@@ -61,7 +65,7 @@ namespace NengaJouSimple.Models.Layouts
                 TextLayoutKind = TextLayoutKind.SenderPostalCode,
                 Font = new Font
                 {
-                    FontSize = 14,
+                    FontSize = SenderPostalCodeFontSizeDefaultValue,
                 },
                 Position = new Position(23, 464),
                 SpaceBetweenMailWardAndTownWard = SenderPostalCodeSpaceBetweenMainWardAndTownWardDefaultValue,

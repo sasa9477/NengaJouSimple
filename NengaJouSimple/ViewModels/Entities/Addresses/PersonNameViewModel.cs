@@ -29,6 +29,13 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             return $"{FamilyName}{space}{GivenName}{Honorific}";
         }
 
+        public string ToString(int spaceLength)
+        {
+            var space = new string(' ', spaceLength);
+
+            return $"{FamilyName}{space}{GivenName}{Honorific}";
+        }
+
         public PersonNameViewModel Clone()
         {
             return new PersonNameViewModel

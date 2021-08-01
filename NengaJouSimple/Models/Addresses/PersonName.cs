@@ -25,15 +25,5 @@ namespace NengaJouSimple.Models.Addresses
 
             return $"{FamilyName}{space}{GivenName}{Honorific}";
         }
-
-        public PersonName Clone()
-        {
-            return new PersonName
-            {
-                FamilyName = FamilyName,
-                GivenName = GivenName,
-                Honorific = Honorific
-            };
-        }
     }
 }

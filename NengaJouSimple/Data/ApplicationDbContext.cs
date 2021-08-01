@@ -55,6 +55,10 @@ namespace NengaJouSimple.Data
                     v => JsonSerializer.Serialize(v, null),
                     v => JsonSerializer.Deserialize<PersonName>(v, null));
 
+            var renmeiConverter = new ValueConverter<Renmei, string>(
+                    v => JsonSerializer.Serialize(v, null),
+                    v => JsonSerializer.Deserialize<Renmei>(v, null));
+
             modelBuilder.Entity<AddressCard>(builder =>
             {
                 builder.Property(e => e.MainName)
@@ -64,19 +68,19 @@ namespace NengaJouSimple.Data
                     .HasConversion(personNameConverter);
 
                 builder.Property(e => e.Renmei1)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
 
                 builder.Property(e => e.Renmei2)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
 
                 builder.Property(e => e.Renmei3)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
 
                 builder.Property(e => e.Renmei4)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
 
                 builder.Property(e => e.Renmei5)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
             });
 
             modelBuilder.Entity<SenderAddressCard>(builder =>
@@ -88,19 +92,19 @@ namespace NengaJouSimple.Data
                     .HasConversion(personNameConverter);
 
                 builder.Property(e => e.Renmei1)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
 
                 builder.Property(e => e.Renmei2)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
 
                 builder.Property(e => e.Renmei3)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
 
                 builder.Property(e => e.Renmei4)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
 
                 builder.Property(e => e.Renmei5)
-                    .HasConversion(personNameConverter);
+                    .HasConversion(renmeiConverter);
             });
 
             var positionConverter = new ValueConverter<Position, string>(

@@ -236,7 +236,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding SenderAddressCard.Renmei1.FamilyName}"
@@ -245,6 +246,12 @@
                 Grid.Column="1"
                 Text="{Binding SenderAddressCard.Renmei1.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
+            <CheckBox
+                Grid.Column="2"
+                IsChecked="{Binding SenderAddressCard.Renmei1.IsPrinting}"/>
+            <Label
+                Grid.Column="3"
+                Content="印刷する"/>
         </Grid>
 
         <!-- 連名２ -->
@@ -257,7 +264,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding SenderAddressCard.Renmei2.FamilyName}"
@@ -266,6 +274,12 @@
                 Grid.Column="1"
                 Text="{Binding SenderAddressCard.Renmei2.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
+            <CheckBox
+                Grid.Column="2"
+                IsChecked="{Binding SenderAddressCard.Renmei2.IsPrinting}"/>
+            <Label
+                Grid.Column="3"
+                Content="印刷する"/>
         </Grid>
 
         <!-- 連名３ -->
@@ -278,7 +292,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding SenderAddressCard.Renmei3.FamilyName}"
@@ -287,6 +302,12 @@
                 Grid.Column="1"
                 Text="{Binding SenderAddressCard.Renmei3.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
+            <CheckBox
+                Grid.Column="2"
+                IsChecked="{Binding SenderAddressCard.Renmei3.IsPrinting}"/>
+            <Label
+                Grid.Column="3"
+                Content="印刷する"/>
         </Grid>
 
         <!-- 連名４ -->
@@ -299,7 +320,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding SenderAddressCard.Renmei4.FamilyName}"
@@ -308,6 +330,12 @@
                 Grid.Column="1"
                 Text="{Binding SenderAddressCard.Renmei4.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
+            <CheckBox
+                Grid.Column="2"
+                IsChecked="{Binding SenderAddressCard.Renmei4.IsPrinting}"/>
+            <Label
+                Grid.Column="3"
+                Content="印刷する"/>
         </Grid>
 
         <!-- 連名５ -->
@@ -320,7 +348,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Text="{Binding SenderAddressCard.Renmei5.FamilyName}"
@@ -329,6 +358,12 @@
                 Grid.Column="1"
                 Text="{Binding SenderAddressCard.Renmei5.GivenName}"
                 Style="{StaticResource NameTextBox}"/>
+            <CheckBox
+                Grid.Column="2"
+                IsChecked="{Binding SenderAddressCard.Renmei5.IsPrinting}"/>
+            <Label
+                Grid.Column="3"
+                Content="印刷する"/>
         </Grid>
 
         <!-- 登録ボタン -->

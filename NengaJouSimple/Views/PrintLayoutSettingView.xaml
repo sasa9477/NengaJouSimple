@@ -12,6 +12,13 @@
              d:DataContext="{d:DesignInstance Type={x:Type vm:PrintLayoutSettingViewModel}}"
              d:DesignHeight="720" d:DesignWidth="1280">
 
+    <UserControl.Resources>
+        <Style TargetType="{x:Type GroupBox}">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="0,5"/>
+        </Style>
+    </UserControl.Resources>
+
     <Grid
         d:Background="White">
 
@@ -114,117 +121,124 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel>
-                <GroupBox
-                    Header="郵便番号"
-                    FontSize="16"
-                    Padding="0,5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="190"/>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+            <GroupBox
+                Header="送り先">
+                <StackPanel>
+                    <GroupBox
+                        Header="郵便番号">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                        <Label
+                            <Label
                             Content="フォントサイズ"/>
-                        <TextBox
+                            <TextBox
                             Grid.Column="1"
                             Text="{Binding SelectedAddressCardLayout.PostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Label
+                            <Button
+                            Grid.Column="2"
+                            Content="規定値に戻す"
+                            Command="{Binding SetDefaultValueCommand}"
+                            CommandParameter="PostalCode.FontSize"/>
+
+                            <Label
                             Grid.Row="1"
                             Content="ハイフン間スペース"/>
-                        <TextBox
+                            <TextBox
                             Grid.Row="1"
                             Grid.Column="1"
                             Text="{Binding SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardAndTownWard, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
 
-                        <Button
+                            <Button
                             Grid.Row="1"
                             Grid.Column="2"
                             Content="規定値に戻す"
                             Command="{Binding SetDefaultValueCommand}"
                             CommandParameter="PostalCode.SpaceBetweenMailWardAndTownWard"/>
 
-                        <Label
+                            <Label
                             Grid.Row="2"
                             Content="郵便番号１文字間スペース"/>
-                        <TextBox
+                            <TextBox
                             Grid.Row="2"
                             Grid.Column="1"
                             Text="{Binding SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardEachWard, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
 
-                        <Button
+                            <Button
                             Grid.Row="2"
                             Grid.Column="2"
                             Content="規定値に戻す"
                             Command="{Binding SetDefaultValueCommand}"
                             CommandParameter="PostalCode.SpaceBetweenMailWardEachWard"/>
 
-                        <Label
+                            <Label
                             Grid.Row="3"
                             Content="郵便番号２文字間スペース"/>
-                        <TextBox
+                            <TextBox
                             Grid.Row="3"
                             Grid.Column="1"
                             Text="{Binding SelectedAddressCardLayout.PostalCode.SpaceBetweenTownWardEachWard, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
 
-                        <Button
+                            <Button
                             Grid.Row="3"
                             Grid.Column="2"
                             Content="規定値に戻す"
                             Command="{Binding SetDefaultValueCommand}"
                             CommandParameter="PostalCode.SpaceBetweenTownWardEachWard"/>
 
-                    </Grid>
-                </GroupBox>
+                        </Grid>
+                    </GroupBox>
 
-                <GroupBox
-                    Header="宛先住所"
-                    FontSize="16"
-                    Padding="0,5">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="190"/>
-                            <ColumnDefinition Width="80"/>
-                        </Grid.ColumnDefinitions>
+                    <GroupBox
+                        Header="住所">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                        <Label
-                            Content="フォントサイズ"/>
-                        <TextBox
-                            Grid.Column="1"
-                            Text="{Binding SelectedAddressCardLayout.Address.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
-                    </Grid>
-                </GroupBox>
+                            <Label
+                                Grid.Row="1"
+                                Content="フォントサイズ"/>
+                            <TextBox
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Text="{Binding SelectedAddressCardLayout.Address.Font.FontSize, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
 
-                <GroupBox
-                    Header="宛先氏名"
-                    FontSize="16"
-                    Padding="0,5">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="190"/>
-                            <ColumnDefinition Width="80"/>
-                        </Grid.ColumnDefinitions>
+                         </Grid>
+                    </GroupBox>
 
-                        <Label
-                            Content="フォントサイズ"/>
-                        <TextBox
-                            Grid.Column="1"
-                            Text="{Binding SelectedAddressCardLayout.Addressee.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
-                    </Grid>
-                </GroupBox>
-            </StackPanel>
-
+                    <GroupBox
+                        Header="氏名">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Label
+                                Content="フォントサイズ"/>
+                            <TextBox
+                                Grid.Column="1"
+                                Text="{Binding SelectedAddressCardLayout.Addressee.Font.FontSize, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
+                        </Grid>
+                    </GroupBox>
+                </StackPanel>
+            </GroupBox>
 
             <StackPanel
                 Grid.Column="1">
@@ -252,6 +266,12 @@
                         <TextBox
                             Grid.Column="1"
                             Text="{Binding SelectedAddressCardLayout.SenderPostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button
+                            Grid.Column="2"
+                            Content="規定値に戻す"
+                            Command="{Binding SetDefaultValueCommand}"
+                            CommandParameter="SenderPostalCode.FontSize"/>
 
                         <Label
                             Grid.Row="1"
@@ -316,7 +336,7 @@
                             Content="フォントサイズ"/>
                         <TextBox
                             Grid.Column="1"
-                            Text="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontSize, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
                     </Grid>
                 </GroupBox>
 
@@ -334,7 +354,7 @@
                             Content="フォントサイズ"/>
                         <TextBox
                             Grid.Column="1"
-                            Text="{Binding SelectedAddressCardLayout.Sender.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding SelectedAddressCardLayout.Sender.Font.FontSize, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
                     </Grid>
                 </GroupBox>
             </StackPanel>

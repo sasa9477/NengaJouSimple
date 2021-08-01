@@ -34,6 +34,11 @@
             <Setter Property="FontSize" Value="24"/>
         </Style>
         
+        <!-- CheckBoxes -->
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
         <!-- GridViewColumnHeaders -->
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Left"/>

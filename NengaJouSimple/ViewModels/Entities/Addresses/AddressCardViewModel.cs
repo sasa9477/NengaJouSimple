@@ -13,11 +13,11 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             MainNameKana = new PersonNameViewModel();
             PostalCode = new PostalCodeViewModel();
             Address = string.Empty;
-            Renmei1 = new PersonNameViewModel();
-            Renmei2 = new PersonNameViewModel();
-            Renmei3 = new PersonNameViewModel();
-            Renmei4 = new PersonNameViewModel();
-            Renmei5 = new PersonNameViewModel();
+            Renmei1 = new RenmeiViewModel();
+            Renmei2 = new RenmeiViewModel();
+            Renmei3 = new RenmeiViewModel();
+            Renmei4 = new RenmeiViewModel();
+            Renmei5 = new RenmeiViewModel();
             SenderAddressCard = new SenderAddressCardViewModel();
             IsPrintTarget = true;
         }
@@ -30,15 +30,15 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
 
         public string Address { get; set; }
 
-        public PersonNameViewModel Renmei1 { get; set; }
+        public RenmeiViewModel Renmei1 { get; set; }
 
-        public PersonNameViewModel Renmei2 { get; set; }
+        public RenmeiViewModel Renmei2 { get; set; }
 
-        public PersonNameViewModel Renmei3 { get; set; }
+        public RenmeiViewModel Renmei3 { get; set; }
 
-        public PersonNameViewModel Renmei4 { get; set; }
+        public RenmeiViewModel Renmei4 { get; set; }
 
-        public PersonNameViewModel Renmei5 { get; set; }
+        public RenmeiViewModel Renmei5 { get; set; }
 
         public SenderAddressCardViewModel SenderAddressCard { get; set; }
 
@@ -79,11 +79,11 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             MainNameKana = new PersonNameViewModel();
             PostalCode = new PostalCodeViewModel();
             Address = string.Empty;
-            Renmei1 = new PersonNameViewModel();
-            Renmei2 = new PersonNameViewModel();
-            Renmei3 = new PersonNameViewModel();
-            Renmei4 = new PersonNameViewModel();
-            Renmei5 = new PersonNameViewModel();
+            Renmei1 = new RenmeiViewModel();
+            Renmei2 = new RenmeiViewModel();
+            Renmei3 = new RenmeiViewModel();
+            Renmei4 = new RenmeiViewModel();
+            Renmei5 = new RenmeiViewModel();
             SenderAddressCard = new SenderAddressCardViewModel();
             IsPrintTarget = true;
         }
