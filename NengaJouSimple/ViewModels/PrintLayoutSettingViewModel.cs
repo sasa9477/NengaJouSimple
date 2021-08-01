@@ -198,6 +198,10 @@ namespace NengaJouSimple.ViewModels
 
             IsLetterCanvasVisible = false;
 
+            SelectedAddressCardLayout.IsAlreadyPrinted = false;
+
+            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
+
             addressCardLayoutService.Register(SelectedAddressCardLayout);
 
             var isPrinted = printService.Print(element, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);

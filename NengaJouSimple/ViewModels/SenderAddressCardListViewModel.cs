@@ -84,13 +84,12 @@ namespace NengaJouSimple.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             // 他の画面からこの画面に遷移したときの処理
-            ClearSelectedSenderAddress();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             // 画面のインスタンスを使いまわす
-            return true;
+            return false;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
