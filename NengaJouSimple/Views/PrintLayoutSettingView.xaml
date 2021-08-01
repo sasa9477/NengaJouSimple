@@ -362,12 +362,18 @@
                 Grid.ColumnSpan="2"
                 Header="全体レイアウト">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="80"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="80"/>
                     </Grid.ColumnDefinitions>
+                    
+                    
 
                     <Label
                         Content="印刷位置横方向"/>
@@ -429,7 +435,7 @@
                     </Button.Style>
                 </Button>
 
-                <Button
+                <!--<Button
                     Grid.Row="3"
                     Content="連続印刷"
                     IsEnabled="{Binding IsPreparedPrinter}"
@@ -443,7 +449,7 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-                </Button>
+                </Button>-->
             </Grid>
         </Grid>
     </Grid>

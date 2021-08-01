@@ -48,7 +48,7 @@ namespace NengaJouSimple.Data.Repositories
             return applicationDbContext.AddressCards.Any();
         }
 
-        public void AddRanges(IEnumerable<AddressCard> addressCards)
+        public void AddInitialData(IEnumerable<AddressCard> addressCards)
         {
             applicationDbContext.ChangeTracker.Clear();
 
@@ -59,7 +59,7 @@ namespace NengaJouSimple.Data.Repositories
 
             applicationDbContext.AddRange(addressCards);
 
-            applicationDbContext.SaveChanges();
+            applicationDbContext.SaveChangesAsync();
         }
     }
 }

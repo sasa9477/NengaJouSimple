@@ -39,14 +39,10 @@ namespace NengaJouSimple
                     .IncludeBase<PersonNameViewModel, PersonName>();
 
                 config.CreateMap<SenderAddressCardViewModel, SenderAddressCard>()
-                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.ToString()))
-                    .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
-                    .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
+                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.ToString()));
 
                 config.CreateMap<AddressCardViewModel, AddressCard>()
-                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.ToString()))
-                    .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
-                    .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
+                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.ToString()));
 
 
                 config.CreateMap<Font, FontViewModel>()

@@ -72,7 +72,7 @@ namespace NengaJouSimple.Services
         {
             var addressCards = addressCardCsvService.ReadAddressCardCsv();
 
-            addressCardRepository.AddRanges(addressCards);
+            addressCardRepository.AddInitialData(addressCards);
         }
 
         private void WriteCsvFile()

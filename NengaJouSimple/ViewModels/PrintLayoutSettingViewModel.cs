@@ -212,6 +212,8 @@ namespace NengaJouSimple.ViewModels
 
                 addressCard.IsAlreadyPrinted = true;
 
+                addressCard.PrintedDateTime = DateTime.Now;
+
                 addressCardService.Register(addressCard);
 
                 SelectedAddressCardLayout.IsAlreadyPrinted = true;

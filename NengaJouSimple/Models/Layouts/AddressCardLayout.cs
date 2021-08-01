@@ -25,7 +25,7 @@ namespace NengaJouSimple.Models.Layouts
 
         public AddressCardLayout()
         {
-            FontFamilyName = "Yu Mincho";
+            FontFamilyName = "Yu Mincho - SemiBold";
 
             PostalCode = new PostalCodeTextLayout
             {

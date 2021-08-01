@@ -8,10 +8,16 @@
         xmlns:local="clr-namespace:NengaJouSimple.Views"
         xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
         xmlns:vc="clr-namespace:NengaJouSimple.Views.Components"
+        xmlns:converters="clr-namespace:NengaJouSimple.Views.Converters"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance Type={x:Type vm:SenderAddressCardListViewModel}}"
         d:DesignHeight="720" d:DesignWidth="1280">
+
+    <UserControl.Resources>
+        <converters:RenmeiPrintingConverter x:Key="RenmeiPrintingConverter"/>
+        <converters:DatetimeToJapaneseStringConverter x:Key="DatetimeToJapaneseStringConverter"/>
+    </UserControl.Resources>
 
     <Grid
         d:Background="White">
@@ -49,10 +55,17 @@
                         <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding PostalCode}" Width="80"/>
                         <GridViewColumn Header="住所" DisplayMemberBinding="{Binding Address}" Width="200"/>
                         <GridViewColumn Header="連名１" DisplayMemberBinding="{Binding Renmei1}" Width="100"/>
+                        <GridViewColumn Header="印刷" DisplayMemberBinding="{Binding Renmei1.IsPrinting, Converter={StaticResource RenmeiPrintingConverter}}" Width="Auto"/>
                         <GridViewColumn Header="連名２" DisplayMemberBinding="{Binding Renmei2}" Width="100"/>
+                        <GridViewColumn Header="印刷" DisplayMemberBinding="{Binding Renmei2.IsPrinting, Converter={StaticResource RenmeiPrintingConverter}}" Width="Auto"/>
                         <GridViewColumn Header="連名３" DisplayMemberBinding="{Binding Renmei3}" Width="100"/>
+                        <GridViewColumn Header="印刷" DisplayMemberBinding="{Binding Renmei3.IsPrinting, Converter={StaticResource RenmeiPrintingConverter}}" Width="Auto"/>
                         <GridViewColumn Header="連名４" DisplayMemberBinding="{Binding Renmei4}" Width="100"/>
+                        <GridViewColumn Header="印刷" DisplayMemberBinding="{Binding Renmei4.IsPrinting, Converter={StaticResource RenmeiPrintingConverter}}" Width="Auto"/>
                         <GridViewColumn Header="連名５" DisplayMemberBinding="{Binding Renmei5}" Width="100"/>
+                        <GridViewColumn Header="印刷" DisplayMemberBinding="{Binding Renmei5.IsPrinting, Converter={StaticResource RenmeiPrintingConverter}}" Width="Auto"/>
+                        <GridViewColumn Header="登録日時" DisplayMemberBinding="{Binding RegisterdDateTime, Converter={StaticResource DatetimeToJapaneseStringConverter}}" Width="200"/>
+                        <GridViewColumn Header="更新日時" DisplayMemberBinding="{Binding UpdatedDateTime, Converter={StaticResource DatetimeToJapaneseStringConverter}}" Width="200"/>
                     </GridView>
                 </ListView.View>
                 <bh:Interaction.Triggers>

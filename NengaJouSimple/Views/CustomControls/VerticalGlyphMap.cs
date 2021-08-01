@@ -12,7 +12,7 @@ namespace NengaJouSimple.Views.CustomControls
              有効なフォント
             Yu Gothic UI
             BIZ UDGothic
-            Source Han Code JP
+            Source Han Code JP (Not system font)
             UD Digi Kyokasho NK-R
             Yu Mincho - SemiBold*/
 

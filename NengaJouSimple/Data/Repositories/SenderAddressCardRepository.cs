@@ -47,13 +47,13 @@ namespace NengaJouSimple.Data.Repositories
             return applicationDbContext.SenderAddressCards.Any();
         }
 
-        public void AddRanges(IEnumerable<SenderAddressCard> senderAddressCards)
+        public void AddInitialData(IEnumerable<SenderAddressCard> senderAddressCards)
         {
             applicationDbContext.ChangeTracker.Clear();
 
             applicationDbContext.AddRange(senderAddressCards);
 
-            applicationDbContext.SaveChanges();
+            applicationDbContext.SaveChangesAsync();
         }
     }
 }
