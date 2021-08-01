@@ -72,5 +72,14 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             Renmei4 = new RenmeiViewModel();
             Renmei5 = new RenmeiViewModel();
         }
+
+        public IEnumerable<RenmeiViewModel> EnumerateRenmeis()
+        {
+            yield return Renmei1;
+            yield return Renmei2;
+            yield return Renmei3;
+            yield return Renmei4;
+            yield return Renmei5;
+        }
     }
 }

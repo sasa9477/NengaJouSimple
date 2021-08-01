@@ -87,5 +87,14 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             SenderAddressCard = new SenderAddressCardViewModel();
             IsPrintTarget = true;
         }
+
+        public IEnumerable<RenmeiViewModel> EnumerateRenmeis()
+        {
+            yield return Renmei1;
+            yield return Renmei2;
+            yield return Renmei3;
+            yield return Renmei4;
+            yield return Renmei5;
+        }
     }
 }

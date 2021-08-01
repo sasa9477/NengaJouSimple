@@ -1,6 +1,7 @@
 ﻿using NengaJouSimple.ViewModels.Entities.Addresses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Media;
 
@@ -59,60 +60,22 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
 
         private string BuildAddressee(AddressCardViewModel addressCard)
         {
-            var maxFamilyNameLength = addressCard.MainName.FamilyName.Length;
+            var printRenmeis = addressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
 
-            if (addressCard.Renmei1.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(addressCard.Renmei1.FamilyName.Length, maxFamilyNameLength);
-            }
+            var maxFamilyNameLengthInRenmeis = printRenmeis
+                    .Select(r => r.FamilyName.Length)
+                    .Aggregate((maxValue, length) => maxValue = Math.Max(maxValue, length));
 
-            if (addressCard.Renmei2.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(addressCard.Renmei2.FamilyName.Length, maxFamilyNameLength);
-            }
+            var maxFamilyNameLength = Math.Max(maxFamilyNameLengthInRenmeis, addressCard.MainName.FamilyName.Length);
 
-            if (addressCard.Renmei3.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(addressCard.Renmei3.FamilyName.Length, maxFamilyNameLength);
-            }
-
-            if (addressCard.Renmei4.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(addressCard.Renmei4.FamilyName.Length, maxFamilyNameLength);
-            }
-
-            if (addressCard.Renmei5.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(addressCard.Renmei5.FamilyName.Length, maxFamilyNameLength);
-            }
 
             var sb = new StringBuilder();
 
             sb.AppendLine(addressCard.MainName.ToString(maxFamilyNameLength - addressCard.MainName.FamilyName.Length + 1));
 
-            if (addressCard.Renmei1.IsPrinting)
+            foreach (var renmei in printRenmeis)
             {
-                sb.AppendLine(addressCard.Renmei1.ToString(maxFamilyNameLength - addressCard.Renmei1.FamilyName.Length + 1));
-            }
-
-            if (addressCard.Renmei2.IsPrinting)
-            {
-                sb.AppendLine(addressCard.Renmei2.ToString(maxFamilyNameLength - addressCard.Renmei2.FamilyName.Length + 1));
-            }
-
-            if (addressCard.Renmei3.IsPrinting)
-            {
-                sb.AppendLine(addressCard.Renmei3.ToString(maxFamilyNameLength - addressCard.Renmei3.FamilyName.Length + 1));
-            }
-
-            if (addressCard.Renmei4.IsPrinting)
-            {
-                sb.AppendLine(addressCard.Renmei4.ToString(maxFamilyNameLength - addressCard.Renmei4.FamilyName.Length + 1));
-            }
-
-            if (addressCard.Renmei5.IsPrinting)
-            {
-                sb.AppendLine(addressCard.Renmei5.ToString(maxFamilyNameLength - addressCard.Renmei5.FamilyName.Length + 1));
+                sb.AppendLine(renmei.ToString(maxFamilyNameLength - renmei.FamilyName.Length + 1));
             }
 
             return sb.ToString();
@@ -120,60 +83,22 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
 
         private string BuildSender(SenderAddressCardViewModel senderAddressCard)
         {
-            var maxFamilyNameLength = senderAddressCard.MainName.FamilyName.Length;
+            var printRenmeis = senderAddressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
 
-            if (senderAddressCard.Renmei1.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(senderAddressCard.Renmei1.FamilyName.Length, maxFamilyNameLength);
-            }
+            var maxFamilyNameLengthInRenmeis = printRenmeis
+                    .Select(r => r.FamilyName.Length)
+                    .Aggregate((maxValue, length) => maxValue = Math.Max(maxValue, length));
 
-            if (senderAddressCard.Renmei2.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(senderAddressCard.Renmei2.FamilyName.Length, maxFamilyNameLength);
-            }
+            var maxFamilyNameLength = Math.Max(maxFamilyNameLengthInRenmeis, senderAddressCard.MainName.FamilyName.Length);
 
-            if (senderAddressCard.Renmei3.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(senderAddressCard.Renmei3.FamilyName.Length, maxFamilyNameLength);
-            }
-
-            if (senderAddressCard.Renmei4.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(senderAddressCard.Renmei4.FamilyName.Length, maxFamilyNameLength);
-            }
-
-            if (senderAddressCard.Renmei5.IsPrinting)
-            {
-                maxFamilyNameLength = Math.Max(senderAddressCard.Renmei5.FamilyName.Length, maxFamilyNameLength);
-            }
 
             var sb = new StringBuilder();
 
             sb.AppendLine(senderAddressCard.MainName.ToString(maxFamilyNameLength - senderAddressCard.MainName.FamilyName.Length + 1));
 
-            if (senderAddressCard.Renmei1.IsPrinting)
+            foreach (var renmei in printRenmeis)
             {
-                sb.AppendLine(senderAddressCard.Renmei1.ToString(maxFamilyNameLength - senderAddressCard.Renmei1.FamilyName.Length + 1));
-            }
-
-            if (senderAddressCard.Renmei2.IsPrinting)
-            {
-                sb.AppendLine(senderAddressCard.Renmei2.ToString(maxFamilyNameLength - senderAddressCard.Renmei2.FamilyName.Length + 1));
-            }
-
-            if (senderAddressCard.Renmei3.IsPrinting)
-            {
-                sb.AppendLine(senderAddressCard.Renmei3.ToString(maxFamilyNameLength - senderAddressCard.Renmei3.FamilyName.Length + 1));
-            }
-
-            if (senderAddressCard.Renmei4.IsPrinting)
-            {
-                sb.AppendLine(senderAddressCard.Renmei4.ToString(maxFamilyNameLength - senderAddressCard.Renmei4.FamilyName.Length + 1));
-            }
-
-            if (senderAddressCard.Renmei5.IsPrinting)
-            {
-                sb.AppendLine(senderAddressCard.Renmei5.ToString(maxFamilyNameLength - senderAddressCard.Renmei5.FamilyName.Length + 1));
+                sb.AppendLine(renmei.ToString(maxFamilyNameLength - renmei.FamilyName.Length + 1));
             }
 
             return sb.ToString();
