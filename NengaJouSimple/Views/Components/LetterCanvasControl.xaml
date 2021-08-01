@@ -24,10 +24,12 @@
         <Canvas
             Width="10cm"
             Height="14.8cm"
+            x:Name="RootCanvas"
             ClipToBounds="True">
 
             <local:NengaJouTemplateControl
-                IsEnabled="False"/>
+                IsEnabled="False"
+                Visibility="{Binding IsLetterCanvasVisible, Converter={StaticResource BooleanToVisilityConverter}}"/>
 
             <cc:PostalCodeTextBlockControl
                 MailWardText="{Binding SelectedAddressCardLayout.PostalCode.MailWard}"
@@ -138,6 +140,22 @@
                         Y="{Binding SelectedAddressCardLayout.Sender.Position.Y, Mode=TwoWay}"/>
                 </bh:Interaction.Behaviors>
             </cc:VerticalTextBlockControl>
+
+            <Rectangle
+                Fill="DimGray"
+                Opacity="0.5"
+                Width="{Binding ActualWidth, ElementName=RootCanvas}"
+                Height="{Binding ActualHeight, ElementName=RootCanvas}"
+                Visibility="{Binding SelectedAddressCardLayout.IsAlreadyPrinted, Converter={StaticResource BooleanToVisilityConverter}}"/>
+
+            <Label
+                Canvas.Left="122"
+                Canvas.Top="254"
+                Content="印刷済み"
+                FontSize="32"
+                Background="WhiteSmoke"
+                IsHitTestVisible="False"
+                Visibility="{Binding SelectedAddressCardLayout.IsAlreadyPrinted, Converter={StaticResource BooleanToVisilityConverter}}"/>
         </Canvas>
     </Grid>
 </UserControl>

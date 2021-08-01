@@ -7,7 +7,7 @@ using System.Windows.Data;
 
 namespace NengaJouSimple.Views.Converters
 {
-    public class PostalCodeConverter : IMultiValueConverter
+    public class PostalCodeCombineConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

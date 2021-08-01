@@ -43,6 +43,11 @@ namespace NengaJouSimple.Data.Repositories
             applicationDbContext.SaveChanges();
         }
 
+        public bool IsRegisterAnyAddressCard()
+        {
+            return applicationDbContext.AddressCards.Any();
+        }
+
         public void AddRanges(IEnumerable<AddressCard> addressCards)
         {
             applicationDbContext.ChangeTracker.Clear();

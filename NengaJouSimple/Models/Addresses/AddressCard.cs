@@ -11,9 +11,7 @@ namespace NengaJouSimple.Models.Addresses
             MainName = new PersonName();
             MainNameKana = new PersonName();
             PostalCode = string.Empty;
-            Address1 = string.Empty;
-            Address2 = string.Empty;
-            Address3 = string.Empty;
+            Address = string.Empty;
             Renmei1 = new PersonName();
             Renmei2 = new PersonName();
             Renmei3 = new PersonName();
@@ -28,11 +26,7 @@ namespace NengaJouSimple.Models.Addresses
 
         public string PostalCode { get; set; }
 
-        public string Address1 { get; set; }
-
-        public string Address2 { get; set; }
-
-        public string Address3 { get; set; }
+        public string Address { get; set; }
 
         public PersonName Renmei1 { get; set; }
 
@@ -47,5 +41,9 @@ namespace NengaJouSimple.Models.Addresses
         public SenderAddressCard SenderAddressCard { get; set; }
 
         public bool IsPrintTarget { get; set; }
+
+        public bool IsAlreadyPrinted { get; set; }
+
+        public DateTime? PrintedDateTime { get; set; }
     }
 }

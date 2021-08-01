@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NengaJouSimple.Data;
 using NengaJouSimple.Data.Csv;
+using NengaJouSimple.Data.Devices;
 using NengaJouSimple.Data.Repositories;
 using NengaJouSimple.Data.Web;
 using NengaJouSimple.Services;
@@ -51,12 +52,17 @@ namespace NengaJouSimple
             // Webs
             containerRegistry.RegisterSingleton<AddressWebService>();
 
+            // Devices
+            containerRegistry.RegisterSingleton<Printer>();
+
             // Services
             containerRegistry.RegisterSingleton<AddressCardService>();
 
             containerRegistry.RegisterSingleton<SenderAddressCardService>();
 
             containerRegistry.RegisterSingleton<AddressCardLayoutService>();
+
+            containerRegistry.RegisterSingleton<PrintService>();
 
             // Dialogs
             containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>();

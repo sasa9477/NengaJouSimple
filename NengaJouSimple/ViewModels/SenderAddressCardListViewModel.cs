@@ -12,7 +12,7 @@ using Prism.Regions;
 
 namespace NengaJouSimple.ViewModels
 {
-    public class SenderAddressCardListViewModel : BindableBase
+    public class SenderAddressCardListViewModel : BindableBase, INavigationAware
     {
         private readonly IRegionManager regionManager;
 
@@ -81,6 +81,22 @@ namespace NengaJouSimple.ViewModels
 
         public DelegateCommand EditAddressCardsCommand { get; }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            // 他の画面からこの画面に遷移したときの処理
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            // 画面のインスタンスを使いまわす
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            // この画面から他の画面に遷移するときの処理
+        }
+
         private void ClearSelectedSenderAddress()
         {
             SenderAddressCard.Clear();
@@ -122,7 +138,7 @@ namespace NengaJouSimple.ViewModels
             }
             else
             {
-                SenderAddressCard.Address.Address1 = response;
+                SenderAddressCard.Address = response + SenderAddressCard.Address;
 
                 RaisePropertyChanged(nameof(SenderAddressCard));
             }
@@ -195,14 +211,9 @@ namespace NengaJouSimple.ViewModels
                 sb.AppendLine("郵便番号を入力してください。");
             }
 
-            if (string.IsNullOrWhiteSpace(SenderAddressCard.Address.Address1))
+            if (string.IsNullOrWhiteSpace(SenderAddressCard.Address))
             {
-                sb.AppendLine("住所１を入力してください。");
-            }
-
-            if (string.IsNullOrWhiteSpace(SenderAddressCard.Address.Address2))
-            {
-                sb.AppendLine("住所２を入力してください。");
+                sb.AppendLine("住所を入力してください。");
             }
 
             return sb.ToString();

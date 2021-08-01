@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NengaJouSimple.Extensions
 {
@@ -11,7 +12,11 @@ namespace NengaJouSimple.Extensions
         {
             var buttonResult = ButtonResult.None;
 
-            dialogService.ShowDialog("AlertDialog", new DialogParameters($"Message={message}"), result =>
+            var dialogParameters = new DialogParameters();
+
+            dialogParameters.Add("Message", message);
+
+            dialogService.ShowDialog("AlertDialog", dialogParameters, result =>
             {
                 buttonResult = result.Result;
             });
@@ -23,7 +28,11 @@ namespace NengaJouSimple.Extensions
         {
             var buttonResult = ButtonResult.None;
 
-            dialogService.ShowDialog("ConfirmDialog", new DialogParameters($"Message={message}"), result =>
+            var dialogParameters = new DialogParameters();
+
+            dialogParameters.Add("Message", message);
+
+            dialogService.ShowDialog("ConfirmDialog", dialogParameters, result =>
             {
                 buttonResult = result.Result;
             });

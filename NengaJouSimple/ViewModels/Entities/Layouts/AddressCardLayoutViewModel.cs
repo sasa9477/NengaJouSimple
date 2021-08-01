@@ -31,6 +31,8 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
 
         public TextLayoutViewModel SenderAddress { get; set; }
 
+        public bool IsAlreadyPrinted { get; set; }
+
         public void AttachAddressCard(AddressCardViewModel addressCard)
         {
             PostalCode.MailWard = addressCard.PostalCode.MailWard;
@@ -41,6 +43,7 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
             SenderPostalCode.TownWard = addressCard.PostalCode.TownWard;
             Sender.Text = addressCard.SenderAddressCard.MainName.ToString();
             SenderAddress.Text = addressCard.SenderAddressCard.Address.ToString();
+            IsAlreadyPrinted = addressCard.IsAlreadyPrinted;
         }
     }
 }

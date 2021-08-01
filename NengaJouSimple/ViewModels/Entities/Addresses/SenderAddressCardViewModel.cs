@@ -12,7 +12,7 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             MainName = new PersonNameViewModel();
             MainNameKana = new PersonNameViewModel();
             PostalCode = new PostalCodeViewModel();
-            Address = new AddressViewModel();
+            Address = string.Empty;
             Renmei1 = new PersonNameViewModel();
             Renmei2 = new PersonNameViewModel();
             Renmei3 = new PersonNameViewModel();
@@ -26,7 +26,7 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
 
         public PostalCodeViewModel PostalCode { get; set; }
 
-        public AddressViewModel Address { get; set; }
+        public string Address { get; set; }
 
         public PersonNameViewModel Renmei1 { get; set; }
 
@@ -48,7 +48,7 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
                 MainName = MainName.Clone(),
                 MainNameKana = MainNameKana.Clone(),
                 PostalCode = PostalCode.Clone(),
-                Address = Address.Clone(),
+                Address = Address,
                 Renmei1 = Renmei1.Clone(),
                 Renmei2 = Renmei2.Clone(),
                 Renmei3 = Renmei3.Clone(),
@@ -65,7 +65,7 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             MainName = new PersonNameViewModel();
             MainNameKana = new PersonNameViewModel();
             PostalCode = new PostalCodeViewModel();
-            Address = new AddressViewModel();
+            Address = string.Empty;
             Renmei1 = new PersonNameViewModel();
             Renmei2 = new PersonNameViewModel();
             Renmei3 = new PersonNameViewModel();

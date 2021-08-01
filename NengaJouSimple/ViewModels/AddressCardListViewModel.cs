@@ -13,7 +13,7 @@ using Prism.Regions;
 
 namespace NengaJouSimple.ViewModels
 {
-    public class AddressCardListViewModel : BindableBase
+    public class AddressCardListViewModel : BindableBase, INavigationAware
     {
         private readonly IRegionManager regionManager;
 
@@ -110,6 +110,22 @@ namespace NengaJouSimple.ViewModels
 
         public DelegateCommand PrintAddressCardsCommand { get; }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            // 他の画面からこの画面に遷移したときの処理
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            // 画面のインスタンスを使いまわす
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            // この画面から他の画面に遷移するときの処理
+        }
+
         private void ClearSelectedAddress()
         {
             AddressCard.Clear();
@@ -160,7 +176,7 @@ namespace NengaJouSimple.ViewModels
             }
             else
             {
-                AddressCard.Address.Address1 = response;
+                AddressCard.Address = response + AddressCard.Address;
 
                 RaisePropertyChanged(nameof(AddressCard));
             }
@@ -242,14 +258,9 @@ namespace NengaJouSimple.ViewModels
                 sb.AppendLine("郵便番号を入力してください。");
             }
 
-            if (string.IsNullOrWhiteSpace(AddressCard.Address.Address1))
+            if (string.IsNullOrWhiteSpace(AddressCard.Address))
             {
-                sb.AppendLine("住所１を入力してください。");
-            }
-
-            if (string.IsNullOrWhiteSpace(AddressCard.Address.Address2))
-            {
-                sb.AppendLine("住所２を入力してください。");
+                sb.AppendLine("住所を入力してください。");
             }
 
             return sb.ToString();
@@ -262,6 +273,13 @@ namespace NengaJouSimple.ViewModels
 
         private void PrintAddressCards()
         {
+            if (!addressCardService.IsRegisterdAnyAddressCard())
+            {
+                dialogService.ShowInformationDialog("宛先を一人以上登録してください。");
+
+                return;
+            }
+
             regionManager.RequestNavigate(RegionNames.ContentRegion, "PrintLayoutSettingView");
         }
     }

@@ -40,7 +40,7 @@
 
         <!-- Converters -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converters:PostalCodeConverter x:Key="PostalCodeConverter"/>
+        <converters:PostalCodeCombineConverter x:Key="PostalCodeCombineConverter"/>
     </UserControl.Resources>
 
     <Grid
@@ -49,7 +49,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -181,7 +181,7 @@
                 Content="郵便番号から住所を検索"
                 Command="{Binding SearchByPostalCodeCommand}">
                 <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource PostalCodeConverter}">
+                    <MultiBinding Converter="{StaticResource PostalCodeCombineConverter}">
                         <Binding Path="Text" ElementName="MailWard"/>
                         <Binding Path="Text" ElementName="TownWard"/>
                     </MultiBinding>
@@ -201,13 +201,14 @@
         <!-- 住所１ -->
         <Label
             Grid.Row="3"
-            Content="住所１"/>
+            Content="住所"/>
         <TextBox
             Grid.Row="3"
             Grid.Column="1"
-            x:Name="Address1">
+            x:Name="Address"
+            AcceptsReturn="True">
             <TextBox.Text>
-                <Binding Path="SenderAddressCard.Address.Address1" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="SenderAddressCard.Address" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
                     </Binding.ValidationRules>
@@ -215,6 +216,7 @@
             </TextBox.Text>
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Setter Property="VerticalContentAlignment" Value="Top"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
                             <Setter Property="IsEnabled" Value="False"/>
@@ -223,33 +225,6 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-
-        <!-- 住所２ -->
-        <Label
-            Grid.Row="4"
-            Content="住所２"/>
-        <TextBox
-            Grid.Row="4"
-            Grid.Column="1"
-            x:Name="Address2">
-            <TextBox.Text>
-                <Binding Path="SenderAddressCard.Address.Address2" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-
-
-        <!-- 住所３ -->
-        <Label
-            Grid.Row="5"
-            Content="住所３"/>
-        <TextBox
-            Grid.Row="5"
-            Grid.Column="1"
-            Text="{Binding SenderAddressCard.Address.Address3}"/>
 
         <!-- 連名１ -->
         <Label

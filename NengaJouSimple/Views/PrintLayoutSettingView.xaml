@@ -41,7 +41,8 @@
                 BorderThickness="1"
                 Background="WhiteSmoke"
                 Padding="20,10">
-                <vc:LetterCanvasControl/>
+                <vc:LetterCanvasControl
+                    x:Name="LetterCanvasControl"/>
             </Border>
 
             <Grid
@@ -62,6 +63,33 @@
                     Command="{Binding PreviousViewAddressCardCommnad}"
                     Style="{StaticResource LargeButton}"/>
 
+                <Grid
+                    Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <WrapPanel
+                            Grid.Row="1"
+                            Grid.Column="1">
+                        <Label
+                            d:Content="1"
+                            Content="{Binding CurrentAddressCardIndex}"/>
+                        <Label
+                            Content="/"/>
+                        <Label
+                            d:Content="3"
+                            Content="{Binding AddressCards.Count}"/>
+                    </WrapPanel>
+                </Grid>
+                
                 <Button
                     Grid.Column="3"
                     Content="▶"
@@ -69,6 +97,7 @@
                     IsEnabled="{Binding IsEnableNextViewAddressCard}"
                     Command="{Binding NextViewAddressCardCommand}"
                     Style="{StaticResource LargeButton}"/>
+
             </Grid>
         </Grid>
 
@@ -317,6 +346,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -328,6 +359,46 @@
                     IsDefault="True"
                     Command="{Binding GoBackAddressCardViewCommand}"
                     Style="{StaticResource LargeButton}"/>
+
+                <Button
+                    Grid.Row="1"
+                    Content="レイアウトを保存"
+                    Command="{Binding SaveLayoutCommand}"
+                    Style="{StaticResource LargeButton}"/>
+
+                <Button
+                    Grid.Row="2"
+                    Content="印刷"
+                    IsEnabled="{Binding IsPreparedPrinter}"
+                    ToolTipService.ShowOnDisabled="True"
+                    Command="{Binding PrintCommand}"
+                    CommandParameter="{Binding ElementName=LetterCanvasControl}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="ToolBar.ToolTip" Value="印刷の準備中です。"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button
+                    Grid.Row="3"
+                    Content="連続印刷"
+                    IsEnabled="{Binding IsPreparedPrinter}"
+                    ToolTipService.ShowOnDisabled="True">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="ToolBar.ToolTip" Value="印刷の準備中です。"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
         </Grid>
     </Grid>

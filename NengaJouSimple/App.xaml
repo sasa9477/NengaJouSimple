@@ -39,6 +39,5 @@
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="FontSize" Value="16"/>
         </Style>
-
     </Application.Resources>
 </prism:PrismApplication>
