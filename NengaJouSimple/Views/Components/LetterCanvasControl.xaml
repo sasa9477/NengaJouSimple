@@ -20,17 +20,30 @@
         <converters:EachWardSpaceAndMarginConverter x:Key="EachWardSpaceAndMarginConverter"/>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid
+        Width="{Binding ActualWidth, ElementName=RootCanvas}"
+        Height="{Binding ActualHeight, ElementName=RootCanvas}">
+        <local:NengaJouTemplateControl
+                IsEnabled="False"
+                Visibility="{Binding IsLetterCanvasTemplateVisible, Converter={StaticResource BooleanToVisilityConverter}}"/>
+
+        <Rectangle
+                Width="{Binding ActualWidth, ElementName=RootCanvas}"
+                Height="1"
+                Fill="LightGray"
+                Visibility="{Binding IsLetterCanvasTemplateVisible, Converter={StaticResource BooleanToVisilityConverter}}"/>
+
+        <Rectangle
+                Width="1"
+                Height="{Binding ActualHeight, ElementName=RootCanvas}"
+                Fill="LightGray"
+                Visibility="{Binding IsLetterCanvasTemplateVisible, Converter={StaticResource BooleanToVisilityConverter}}"/>
+
         <Canvas
             Width="10cm"
             Height="14.8cm"
             x:Name="RootCanvas"
             ClipToBounds="True">
-
-            <local:NengaJouTemplateControl
-                IsEnabled="False"
-                Visibility="{Binding IsLetterCanvasVisible, Converter={StaticResource BooleanToVisilityConverter}}"/>
-
             <cc:PostalCodeTextBlockControl
                 MailWardText="{Binding SelectedAddressCardLayout.PostalCode.MailWard}"
                 TownWardText="{Binding SelectedAddressCardLayout.PostalCode.TownWard}"
@@ -76,7 +89,7 @@
                 FontWeight="{Binding SelectedAddressCardLayout.Addressee.Font.FontWeight}"
                 FontStyle="{Binding SelectedAddressCardLayout.Addressee.Font.FontStyle}"
                 VerticalAlignment="{Binding SelectedAddressCardLayout.Addressee.Font.VerticalAlignment}"
-                d:Text="田中 太郎様"
+                d:Text="工藤　勝則様"
                 d:FontSize="43"
                 d:Canvas.Left="167" d:Canvas.Top="110">
                 <bh:Interaction.Behaviors>
@@ -141,19 +154,12 @@
                 </bh:Interaction.Behaviors>
             </cc:VerticalTextBlockControl>
 
-            <Rectangle
-                Fill="DimGray"
-                Opacity="0.5"
-                Width="{Binding ActualWidth, ElementName=RootCanvas}"
-                Height="{Binding ActualHeight, ElementName=RootCanvas}"
-                Visibility="{Binding SelectedAddressCardLayout.IsAlreadyPrinted, Converter={StaticResource BooleanToVisilityConverter}}"/>
-
             <Label
-                Canvas.Left="122"
-                Canvas.Top="254"
+                Canvas.Left="10"
+                Canvas.Top="10"
                 Content="印刷済み"
-                FontSize="32"
-                Background="WhiteSmoke"
+                FontSize="24"
+                Background="LightGray"
                 IsHitTestVisible="False"
                 Visibility="{Binding SelectedAddressCardLayout.IsAlreadyPrinted, Converter={StaticResource BooleanToVisilityConverter}}"/>
         </Canvas>

@@ -50,8 +50,8 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
             Address.Text = addressCard.Address;
             Addressee.Text = BuildAddressee(addressCard);
 
-            SenderPostalCode.MailWard = addressCard.PostalCode.MailWard;
-            SenderPostalCode.TownWard = addressCard.PostalCode.TownWard;
+            SenderPostalCode.MailWard = addressCard.SenderAddressCard.PostalCode.MailWard;
+            SenderPostalCode.TownWard = addressCard.SenderAddressCard.PostalCode.TownWard;
             SenderAddress.Text = addressCard.SenderAddressCard.Address;
             Sender.Text = BuildSender(addressCard.SenderAddressCard);
             
@@ -62,9 +62,14 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
         {
             var printRenmeis = addressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
 
-            var maxFamilyNameLengthInRenmeis = printRenmeis
-                    .Select(r => r.FamilyName.Length)
-                    .Aggregate((maxValue, length) => maxValue = Math.Max(maxValue, length));
+            var maxFamilyNameLengthInRenmeis = 0;
+
+            if (printRenmeis.Any())
+            {
+                maxFamilyNameLengthInRenmeis = printRenmeis
+                .Select(r => r.FamilyName.Length)
+                .Aggregate((maxValue, length) => maxValue = Math.Max(maxValue, length));
+            }
 
             var maxFamilyNameLength = Math.Max(maxFamilyNameLengthInRenmeis, addressCard.MainName.FamilyName.Length);
 
@@ -85,9 +90,14 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
         {
             var printRenmeis = senderAddressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
 
-            var maxFamilyNameLengthInRenmeis = printRenmeis
-                    .Select(r => r.FamilyName.Length)
-                    .Aggregate((maxValue, length) => maxValue = Math.Max(maxValue, length));
+            var maxFamilyNameLengthInRenmeis = 0;
+
+            if (printRenmeis.Any())
+            {
+                maxFamilyNameLengthInRenmeis = printRenmeis
+                .Select(r => r.FamilyName.Length)
+                .Aggregate((maxValue, length) => maxValue = Math.Max(maxValue, length));
+            }
 
             var maxFamilyNameLength = Math.Max(maxFamilyNameLengthInRenmeis, senderAddressCard.MainName.FamilyName.Length);
 

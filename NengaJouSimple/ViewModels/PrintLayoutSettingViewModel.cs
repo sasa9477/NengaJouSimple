@@ -33,7 +33,7 @@ namespace NengaJouSimple.ViewModels
 
         private AddressCardLayoutViewModel selectedAddressCardLayout;
 
-        private bool isLetterCanvasVisible;
+        private bool isLetterCanvasTemplateVisible;
 
         private int currentAddressCardIndex;
 
@@ -70,7 +70,7 @@ namespace NengaJouSimple.ViewModels
 
             CurrentAddressCardIndex = 1;
 
-            IsLetterCanvasVisible = true;
+            IsLetterCanvasTemplateVisible = true;
 
             GoBackAddressCardViewCommand = new DelegateCommand(GoBackAddressCardView);
 
@@ -95,10 +95,10 @@ namespace NengaJouSimple.ViewModels
             set { SetProperty(ref selectedAddressCardLayout, value); }
         }
 
-        public bool IsLetterCanvasVisible
+        public bool IsLetterCanvasTemplateVisible
         {
-            get { return isLetterCanvasVisible; }
-            set { SetProperty(ref isLetterCanvasVisible, value); }
+            get { return isLetterCanvasTemplateVisible; }
+            set { SetProperty(ref isLetterCanvasTemplateVisible, value); }
         }
 
         public int CurrentAddressCardIndex
@@ -196,7 +196,7 @@ namespace NengaJouSimple.ViewModels
         {
             if (element == null) return;
 
-            IsLetterCanvasVisible = false;
+            IsLetterCanvasTemplateVisible = false;
 
             SelectedAddressCardLayout.IsAlreadyPrinted = false;
 
@@ -219,7 +219,7 @@ namespace NengaJouSimple.ViewModels
                 RaisePropertyChanged(nameof(SelectedAddressCardLayout));
             }
 
-            IsLetterCanvasVisible = true;
+            IsLetterCanvasTemplateVisible = true;
         }
 
         private void SetDefaultValue(string targetName)
