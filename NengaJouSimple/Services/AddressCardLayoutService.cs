@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NengaJouSimple.Data.Csv;
-using NengaJouSimple.Data.Csv.Entities;
+using NengaJouSimple.Data.Jsons;
+using NengaJouSimple.Data.Jsons.Entities;
 using NengaJouSimple.Data.Repositories;
 using NengaJouSimple.Models.Layouts;
 using NengaJouSimple.ViewModels.Entities.Layouts;
@@ -14,17 +15,17 @@ namespace NengaJouSimple.Services
     {
         private readonly AddressCardLayoutRepository addressCardLayoutRepository;
 
-        private readonly TextLayoutCsvService textLayoutCsvService;
+        private readonly AddressCardLayoutJsonService addressCardLayoutJsonService;
 
         private readonly IMapper mapper;
 
         public AddressCardLayoutService(
             AddressCardLayoutRepository addressCardLayoutRepository,
-            TextLayoutCsvService textLayoutCsvService,
+            AddressCardLayoutJsonService addressCardLayoutJsonService,
             IMapper mapper)
         {
             this.addressCardLayoutRepository = addressCardLayoutRepository;
-            this.textLayoutCsvService = textLayoutCsvService;
+            this.addressCardLayoutJsonService = addressCardLayoutJsonService;
             this.mapper = mapper;
         }
 
@@ -41,25 +42,30 @@ namespace NengaJouSimple.Services
 
             addressCardLayoutRepository.Register(addressCardLayout);
 
-            WriteCsvFile();
+            WriteJsonFile();
         }
 
-        public void ReadCsvFile()
+        public void ReadJsonFile()
         {
-            var textLayouts = textLayoutCsvService.ReadTextLayoutCsv();
+            var addressCardLayout = new AddressCardLayout();
 
-            var addressCardLayout = new AddressCardLayout(textLayouts, mapper);
+            var addressCardLayoutJsonDTO = addressCardLayoutJsonService.ReadAddressCardLayoutJson();
+
+            if (addressCardLayoutJsonDTO != null)
+            {
+                addressCardLayout = mapper.Map<AddressCardLayout>(addressCardLayoutJsonDTO);
+            }
 
             addressCardLayoutRepository.Register(addressCardLayout);
         }
 
-        private void WriteCsvFile()
+        private void WriteJsonFile()
         {
             var addressCardLayout = addressCardLayoutRepository.Load();
 
-            var textLayouts = new List<TextLayoutCsvDTO>(addressCardLayout.ConvertToCsvDTO(mapper));
+            var addressCardLayoutJsonDTO = mapper.Map<AddressCardLayoutJsonDTO>(addressCardLayout);
 
-            textLayoutCsvService.WriteTextLayoutCsv(textLayouts);
+            addressCardLayoutJsonService.WriteAddressCardLayoutJson(addressCardLayoutJsonDTO);
         }
     }
 }

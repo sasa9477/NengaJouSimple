@@ -18,12 +18,6 @@ namespace NengaJouSimple.Data
 
         public DbSet<AddressCardLayout> AddressCardLayouts => Set<AddressCardLayout>();
 
-        public DbSet<TextLayout> TextLayouts => Set<TextLayout>();
-
-        public DbSet<Font> Fonts => Set<Font>();
-
-        public DbSet<PostalCodeTextLayout> PostalCodeTextLayouts => Set<PostalCodeTextLayout>();
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
@@ -109,14 +103,71 @@ namespace NengaJouSimple.Data
                     .HasConversion(personNameConverter);
             });
 
-            modelBuilder.Entity<TextLayout>(builder =>
-            {
-                builder.Property(e => e.Position)
-                    .HasConversion(
-                        v => JsonSerializer.Serialize(v, null),
-                        v => JsonSerializer.Deserialize<Position>(v, null));
+            var positionConverter = new ValueConverter<Position, string>(
+                    v => JsonSerializer.Serialize(v, null),
+                    v => JsonSerializer.Deserialize<Position>(v, null));
 
-                builder.OwnsOne(e => e.Font);
+            modelBuilder.Entity<AddressCardLayout>(builder =>
+            {
+                builder.OwnsOne(
+                    e => e.PostalCode,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+
+                        o.OwnsOne(e2 => e2.Font);
+                    });
+
+                builder.OwnsOne(
+                    e => e.Address,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+
+                        o.OwnsOne(e2 => e2.Font);
+                    });
+
+                builder.OwnsOne(
+                    e => e.Addressee,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+
+                        o.OwnsOne(e2 => e2.Font);
+                    });
+
+                builder.OwnsOne(
+                    e => e.SenderPostalCode,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+
+                        o.OwnsOne(e2 => e2.Font);
+                    });
+
+                builder.OwnsOne(
+                    e => e.SenderAddress,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+
+                        o.OwnsOne(e2 => e2.Font);
+                    });
+
+                builder.OwnsOne(
+                    e => e.Sender,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+
+                        o.OwnsOne(e2 => e2.Font);
+                    });
             });
 
 

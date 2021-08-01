@@ -12,16 +12,16 @@ namespace NengaJouSimple.Data.Csv
 {
     public class AddressCardCsvService
     {
-        public const string AddressCsvFilePath = @"AddressCards.csv";
+        public const string AddressCsvFileName = @"AddressCards.csv";
 
         public List<AddressCard> ReadAddressCardCsv()
         {
-            if (!File.Exists(AddressCsvFilePath))
+            if (!File.Exists(AddressCsvFileName))
             {
                 return new List<AddressCard>();
             }
 
-            using var reader = new StreamReader(AddressCsvFilePath);
+            using var reader = new StreamReader(AddressCsvFileName);
             using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
 
             csvReader.Context.RegisterClassMap<AddressCardCsvClassMap>();
@@ -31,7 +31,7 @@ namespace NengaJouSimple.Data.Csv
 
         public void WriteAddressCardCsv(IEnumerable<AddressCard> addressCards)
         {
-            using var writer = new StreamWriter(AddressCsvFilePath);
+            using var writer = new StreamWriter(AddressCsvFileName);
             using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
             csvWriter.Context.RegisterClassMap<AddressCardCsvClassMap>();

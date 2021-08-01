@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NengaJouSimple.Data.Csv.Entities;
+using NengaJouSimple.Data.Jsons.Entities;
 using NengaJouSimple.Models.Addresses;
 using NengaJouSimple.Models.Layouts;
 using NengaJouSimple.ViewModels.Entities.Addresses;
@@ -43,11 +43,6 @@ namespace NengaJouSimple
 
 
                 config.CreateMap<Font, FontViewModel>()
-                    .ForMember(dest => dest.FontFamily, opt =>
-                    {
-                        opt.PreCondition(src => !string.IsNullOrEmpty(src.FontFamilyName));
-                        opt.MapFrom(src => new FontFamily(src.FontFamilyName));
-                    })
                     .ForMember(dest => dest.FontStyle, opt => opt.MapFrom(src => src.FontStyle.ToFontStyle()))
                     .ForMember(dest => dest.FontWeight, opt => opt.MapFrom(src => src.FontWeight.ToFontWeight()));
 
@@ -61,60 +56,39 @@ namespace NengaJouSimple
                     .ForMember(dest => dest.TownWard, opt => opt.Ignore());
 
                 config.CreateMap<AddressCardLayout, AddressCardLayoutViewModel>()
+                    .ForMember(dest => dest.FontFamily, opt =>
+                    {
+                        opt.PreCondition(src => !string.IsNullOrEmpty(src.FontFamilyName));
+                        opt.MapFrom(src => new FontFamily(src.FontFamilyName));
+                    })
                     .ForMember(dest => dest.IsAlreadyPrinted, opt => opt.Ignore());
 
 
                 config.CreateMap<FontViewModel, Font>()
-                    .ForMember(dest => dest.FontFamilyName, opt => opt.MapFrom(src => src.FontFamily.Source))
                     .ForMember(dest => dest.FontStyle, opt => opt.MapFrom(src => src.FontStyle.ToFontStyleKind()))
                     .ForMember(dest => dest.FontWeight, opt => opt.MapFrom(src => src.FontWeight.ToFontWeightKind()));
 
                 config.CreateMap<PositionViewModel, Position>();
 
                 config.CreateMap<TextLayoutViewModel, TextLayout>()
-                    .ForMember(dest => dest.Id, opt => opt.Ignore())
-                    .ForMember(dest => dest.TextLayoutKind, opt => opt.Ignore())
-                    .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
-                    .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
+                    .ForMember(dest => dest.TextLayoutKind, opt => opt.Ignore());
 
                 config.CreateMap<PostalCodeTextLayoutViewModel, PostalCodeTextLayout>()
-                    .ForMember(dest => dest.Id, opt => opt.Ignore())
-                    .ForMember(dest => dest.TextLayoutKind, opt => opt.Ignore())
-                    .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
-                    .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
+                    .ForMember(dest => dest.TextLayoutKind, opt => opt.Ignore());
 
                 config.CreateMap<AddressCardLayoutViewModel, AddressCardLayout>()
+                    .ForMember(dest => dest.FontFamilyName, opt => opt.MapFrom(src => src.FontFamily.Source))
                     .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
                     .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
 
 
-                config.CreateMap<TextLayout, TextLayoutCsvDTO>()
-                    .ForMember(dest => dest.FontFamilyName, opt => opt.MapFrom(src => src.Font.FontFamilyName))
-                    .ForMember(dest => dest.FontSize, opt => opt.MapFrom(src => src.Font.FontSize))
-                    .ForMember(dest => dest.FontStyle, opt => opt.MapFrom(src => src.Font.FontStyle))
-                    .ForMember(dest => dest.FontWeight, opt => opt.MapFrom(src => src.Font.FontWeight))
-                    .ForMember(dest => dest.VerticalAlignment, opt => opt.MapFrom(src => src.Font.VerticalAlignment))
-                    .ForMember(dest => dest.SpaceBetweenMailWardAndTownWard, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpaceBetweenMailWardEachWard, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpaceBetweenTownWardEachWard, opt => opt.Ignore());
+                config.CreateMap<AddressCardLayout, AddressCardLayoutJsonDTO>();
 
-                config.CreateMap<PostalCodeTextLayout, TextLayoutCsvDTO>()
-                    .IncludeBase<TextLayout, TextLayoutCsvDTO>()
-                    .ForMember(dest => dest.SpaceBetweenMailWardAndTownWard, opt => opt.MapFrom(src => src.SpaceBetweenMailWardAndTownWard))
-                    .ForMember(dest => dest.SpaceBetweenMailWardEachWard, opt => opt.MapFrom(src => src.SpaceBetweenMailWardEachWard))
-                    .ForMember(dest => dest.SpaceBetweenTownWardEachWard, opt => opt.MapFrom(src => src.SpaceBetweenTownWardEachWard));
-
-                config.CreateMap<TextLayoutCsvDTO, TextLayout>()
+                config.CreateMap<AddressCardLayoutJsonDTO, AddressCardLayout>()
                     .ForMember(dest => dest.Id, opt => opt.Ignore())
-                    .ForMember(dest => dest.Font, opt => opt.MapFrom(src => new Font(src.FontFamilyName, src.FontSize, src.FontStyle, src.FontWeight, src.VerticalAlignment)))
-                    .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
-                    .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore()); ;
-
-                config.CreateMap<TextLayoutCsvDTO, PostalCodeTextLayout>()
-                    .ForMember(dest => dest.Id, opt => opt.Ignore())
-                    .ForMember(dest => dest.Font, opt => opt.MapFrom(src => new Font(src.FontFamilyName, src.FontSize, src.FontStyle, src.FontWeight, src.VerticalAlignment)))
                     .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
                     .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
+
             });
 
             try

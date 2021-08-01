@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace NengaJouSimple.Models.Layouts
 {
-    public class TextLayout : EntityBase
+    public class TextLayout
     {
         public TextLayout()
         {

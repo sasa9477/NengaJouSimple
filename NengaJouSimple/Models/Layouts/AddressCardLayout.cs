@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using NengaJouSimple.Data.Csv.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,6 +21,8 @@ namespace NengaJouSimple.Models.Layouts
 
         public AddressCardLayout()
         {
+            FontFamilyName = "Yu Mincho";
+
             PostalCode = new PostalCodeTextLayout
             {
                 TextLayoutKind = TextLayoutKind.PostalCode,
@@ -89,41 +90,7 @@ namespace NengaJouSimple.Models.Layouts
             };
         }
 
-        public AddressCardLayout(IEnumerable<TextLayoutCsvDTO> textLayouts, IMapper mapper) : base()
-        {
-            foreach (var textLayout in textLayouts)
-            {
-                switch (textLayout.TextLayoutKind)
-                {
-                    case TextLayoutKind.PostalCode:
-                        PostalCode = mapper.Map<PostalCodeTextLayout>(textLayout);
-                        break;
-
-                    case TextLayoutKind.Address:
-                        Address = mapper.Map<TextLayout>(textLayout);
-                        break;
-
-                    case TextLayoutKind.Addressee:
-                        Addressee = mapper.Map<TextLayout>(textLayout);
-                        break;
-
-                    case TextLayoutKind.SenderPostalCode:
-                        SenderPostalCode = mapper.Map<PostalCodeTextLayout>(textLayout);
-                        break;
-
-                    case TextLayoutKind.SenderAddress:
-                        SenderAddress = mapper.Map<TextLayout>(textLayout);
-                        break;
-
-                    case TextLayoutKind.Sender:
-                        Sender = mapper.Map<TextLayout>(textLayout);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
+        public string FontFamilyName { get; set; }
 
         public PostalCodeTextLayout PostalCode { get; set; }
 
@@ -133,19 +100,12 @@ namespace NengaJouSimple.Models.Layouts
 
         public PostalCodeTextLayout SenderPostalCode { get; set; }
 
-        public TextLayout Sender { get; set; }
-
         public TextLayout SenderAddress { get; set; }
 
+        public TextLayout Sender { get; set; }
 
-        public IEnumerable<TextLayoutCsvDTO> ConvertToCsvDTO(IMapper mapper)
-        {
-            yield return mapper.Map<TextLayoutCsvDTO>(PostalCode);
-            yield return mapper.Map<TextLayoutCsvDTO>(Address);
-            yield return mapper.Map<TextLayoutCsvDTO>(Addressee);
-            yield return mapper.Map<TextLayoutCsvDTO>(SenderPostalCode);
-            yield return mapper.Map<TextLayoutCsvDTO>(Sender);
-            yield return mapper.Map<TextLayoutCsvDTO>(SenderAddress);
-        }
+        public double PrintMarginLeft { get; set; }
+
+        public double PrintMarginTop { get; set; }
     }
 }

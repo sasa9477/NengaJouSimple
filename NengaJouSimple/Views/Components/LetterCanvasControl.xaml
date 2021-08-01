@@ -55,7 +55,7 @@
             <cc:VerticalTextBlockControl
                 Text="{Binding SelectedAddressCardLayout.Address.Text}"
                 FontSize="{Binding SelectedAddressCardLayout.Address.Font.FontSize}"
-                FontFamily="{Binding SelectedAddressCardLayout.Address.Font.FontFamily}"
+                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
                 FontWeight="{Binding SelectedAddressCardLayout.Address.Font.FontWeight}"
                 FontStyle="{Binding SelectedAddressCardLayout.Address.Font.FontStyle}"
                 VerticalAlignment="{Binding SelectedAddressCardLayout.Address.Font.VerticalAlignment}"
@@ -72,7 +72,7 @@
             <cc:VerticalTextBlockControl
                 Text="{Binding SelectedAddressCardLayout.Addressee.Text}"
                 FontSize="{Binding SelectedAddressCardLayout.Addressee.Font.FontSize}"
-                FontFamily="{Binding SelectedAddressCardLayout.Addressee.Font.FontFamily}"
+                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
                 FontWeight="{Binding SelectedAddressCardLayout.Addressee.Font.FontWeight}"
                 FontStyle="{Binding SelectedAddressCardLayout.Addressee.Font.FontStyle}"
                 VerticalAlignment="{Binding SelectedAddressCardLayout.Addressee.Font.VerticalAlignment}"
@@ -110,7 +110,7 @@
             <cc:VerticalTextBlockControl
                 Text="{Binding SelectedAddressCardLayout.SenderAddress.Text}"
                 FontSize="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontSize}"
-                FontFamily="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontFamily}"
+                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
                 FontWeight="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontWeight}"
                 FontStyle="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontStyle}"
                 VerticalAlignment="{Binding SelectedAddressCardLayout.SenderAddress.Font.VerticalAlignment}"
@@ -127,7 +127,7 @@
             <cc:VerticalTextBlockControl
                 Text="{Binding SelectedAddressCardLayout.Sender.Text}"
                 FontSize="{Binding SelectedAddressCardLayout.Sender.Font.FontSize}"
-                FontFamily="{Binding SelectedAddressCardLayout.Sender.Font.FontFamily}"
+                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
                 FontWeight="{Binding SelectedAddressCardLayout.Sender.Font.FontWeight}"
                 FontStyle="{Binding SelectedAddressCardLayout.Sender.Font.FontStyle}"
                 VerticalAlignment="{Binding SelectedAddressCardLayout.Sender.Font.VerticalAlignment}"

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media;
 
 namespace NengaJouSimple.ViewModels.Entities.Layouts
 {
@@ -9,6 +10,8 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
     {
         public AddressCardLayoutViewModel()
         {
+            FontFamily = new FontFamily();
+
             PostalCode = new PostalCodeTextLayoutViewModel();
             Address = new TextLayoutViewModel();
             Addressee = new TextLayoutViewModel();
@@ -18,6 +21,8 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
         }
 
         public int Id { get; set; }
+
+        public FontFamily FontFamily { get; set; }
 
         public PostalCodeTextLayoutViewModel PostalCode { get; set; }
 
@@ -30,6 +35,10 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
         public TextLayoutViewModel Sender { get; set; }
 
         public TextLayoutViewModel SenderAddress { get; set; }
+
+        public double PrintMarginLeft { get; set; }
+
+        public double PrintMarginTop { get; set; }
 
         public bool IsAlreadyPrinted { get; set; }
 

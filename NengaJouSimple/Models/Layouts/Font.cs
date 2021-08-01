@@ -11,23 +11,11 @@ namespace NengaJouSimple.Models.Layouts
     {
         public Font()
         {
-            FontFamilyName = string.Empty;
-            FontSize = 12;
+            FontSize = 14;
             FontStyle = FontStyleKind.Normal;
             FontWeight = FontWeightKind.Normal;
             VerticalAlignment = VerticalAlignment.Top;
         }
-
-        public Font(string fontFamilyName, double fontSize, FontStyleKind fontStyle, FontWeightKind fontWeight, VerticalAlignment verticalAlignment)
-        {
-            FontFamilyName = fontFamilyName;
-            FontSize = fontSize;
-            FontStyle = fontStyle;
-            FontWeight = fontWeight;
-            VerticalAlignment = verticalAlignment;
-        }
-
-        public string FontFamilyName { get; set; }
 
         public double FontSize { get; set; }
 

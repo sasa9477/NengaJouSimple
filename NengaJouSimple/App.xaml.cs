@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NengaJouSimple.Data;
 using NengaJouSimple.Data.Csv;
 using NengaJouSimple.Data.Devices;
+using NengaJouSimple.Data.Jsons;
 using NengaJouSimple.Data.Repositories;
 using NengaJouSimple.Data.Web;
 using NengaJouSimple.Services;
@@ -23,7 +24,7 @@ namespace NengaJouSimple
     {
         protected override Window CreateShell()
         {
-            InitializeDataFromCsv();
+            InitializeDataFromFiles();
 
             return Container.Resolve<MainWindow>();
         }
@@ -40,7 +41,8 @@ namespace NengaJouSimple
 
             containerRegistry.RegisterSingleton<SenderAddressCardCsvService>();
 
-            containerRegistry.RegisterSingleton<TextLayoutCsvService>();
+            // Jsons
+            containerRegistry.RegisterSingleton<AddressCardLayoutJsonService>();
 
             // Repositories
             containerRegistry.RegisterSingleton<AddressCardRepository>();
@@ -99,7 +101,7 @@ namespace NengaJouSimple
             return dbConnection;
         }
 
-        private void InitializeDataFromCsv()
+        private void InitializeDataFromFiles()
         {
             var senderAddressCardService = Container.Resolve<SenderAddressCardService>();
 
@@ -111,7 +113,7 @@ namespace NengaJouSimple
 
             var addressCardLayoutService = Container.Resolve<AddressCardLayoutService>();
 
-            addressCardLayoutService.ReadCsvFile();
+            addressCardLayoutService.ReadJsonFile();
         }
     }
 }

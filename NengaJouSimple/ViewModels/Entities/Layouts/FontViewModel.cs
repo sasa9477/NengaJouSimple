@@ -11,14 +11,11 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
     {
         public FontViewModel()
         {
-            FontFamily = SystemFonts.MessageFontFamily;
-            FontSize = 12;
+            FontSize = 14;
             FontStyle = FontStyles.Normal;
             FontWeight = FontWeights.Normal;
             VerticalAlignment = VerticalAlignment.Top;
         }
-
-        public FontFamily FontFamily { get; set; }
 
         public double FontSize { get; set; }
 

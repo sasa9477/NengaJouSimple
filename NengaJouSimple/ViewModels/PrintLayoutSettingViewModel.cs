@@ -14,7 +14,6 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using Prism.Events;
-using NengaJouSimple.ViewModels.PubSubEvents;
 using System.Threading.Tasks;
 using NengaJouSimple.Common;
 
@@ -25,8 +24,6 @@ namespace NengaJouSimple.ViewModels
         private readonly IRegionManager regionManager;
 
         private readonly IDialogService dialogService;
-
-        private readonly IEventAggregator eventAggregator;
 
         private readonly AddressCardLayoutService addressCardLayoutService;
 
@@ -49,7 +46,6 @@ namespace NengaJouSimple.ViewModels
         public PrintLayoutSettingViewModel(
             IRegionManager regionManager,
             IDialogService dialogService,
-            IEventAggregator eventAggregator,
             AddressCardLayoutService addressCardLayoutService,
             AddressCardService addressCardService,
             PrintService printService)
@@ -57,8 +53,6 @@ namespace NengaJouSimple.ViewModels
             this.regionManager = regionManager;
 
             this.dialogService = dialogService;
-
-            this.eventAggregator = eventAggregator;
 
             this.addressCardLayoutService = addressCardLayoutService;
 
@@ -184,6 +178,8 @@ namespace NengaJouSimple.ViewModels
         private void SaveLayout()
         {
             addressCardLayoutService.Register(SelectedAddressCardLayout);
+
+            dialogService.ShowInformationDialog("レイアウトを保存しました。");
         }
 
         private void PreparePrinter()
@@ -202,9 +198,9 @@ namespace NengaJouSimple.ViewModels
 
             IsLetterCanvasVisible = false;
 
-            SaveLayout();
+            addressCardLayoutService.Register(SelectedAddressCardLayout);
 
-            var isPrinted = printService.Print(element, 0, 0);
+            var isPrinted = printService.Print(element, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
 
             if (isPrinted)
             {
