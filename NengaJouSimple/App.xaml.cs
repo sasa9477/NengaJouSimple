@@ -87,8 +87,6 @@ namespace NengaJouSimple
 
             dbContext.Database.EnsureCreated();
 
-            // ApplicationDbContextSeed.SeedData(dbContext);
-
             return dbContext;
         }
 
