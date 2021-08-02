@@ -14,7 +14,7 @@ namespace NengaJouSimple.Extensions
 
             var dialogParameters = new DialogParameters();
 
-            dialogParameters.Add("Message", message);
+            dialogParameters.Add("message", message);
 
             dialogService.ShowDialog("AlertDialog", dialogParameters, result =>
             {
@@ -30,7 +30,7 @@ namespace NengaJouSimple.Extensions
 
             var dialogParameters = new DialogParameters();
 
-            dialogParameters.Add("Message", message);
+            dialogParameters.Add("message", message);
 
             dialogService.ShowDialog("ConfirmDialog", dialogParameters, result =>
             {

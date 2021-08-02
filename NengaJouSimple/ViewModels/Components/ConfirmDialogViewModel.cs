@@ -45,7 +45,7 @@ namespace NengaJouSimple.ViewModels.Components
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            Message = parameters.GetValue<string>("Message");
+            Message = parameters.GetValue<string>("message");
         }
 
         private void CloseDialog(string parameter)
