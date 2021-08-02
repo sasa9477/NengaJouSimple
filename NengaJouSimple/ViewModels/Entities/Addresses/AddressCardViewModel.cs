@@ -75,6 +75,7 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
 
         public void Clear()
         {
+            Id = 0;
             MainName = new PersonNameViewModel();
             MainNameKana = new PersonNameViewModel();
             PostalCode = new PostalCodeViewModel();
