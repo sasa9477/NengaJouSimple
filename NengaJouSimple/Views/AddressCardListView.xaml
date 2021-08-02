@@ -167,6 +167,7 @@
                 <Button
                     Grid.Row="1"
                     Content="印刷"
+                    IsDefault="True"
                     Command="{Binding PrintAddressCardsCommand}"
                     Style="{StaticResource LargeButton}"/>
             </Grid>

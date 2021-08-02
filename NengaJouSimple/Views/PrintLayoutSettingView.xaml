@@ -361,33 +361,52 @@
                 Grid.Row="1"
                 Grid.ColumnSpan="2"
                 Header="全体レイアウト">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
 
-                    <Label
-                        Content="印刷位置横方向"/>
-                    <TextBox
-                        Grid.Column="1"
-                        Text="{Binding SelectedAddressCardLayout.PrintMarginLeft, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
+                        <Label
+                            Content="フォント"/>
+                        <ComboBox
+                            Grid.Column="1"
+                            SelectedValue="{Binding SelectedFontFamilyId, Mode=TwoWay}"
+                            SelectedValuePath="Id"
+                            DisplayMemberPath="JapaneseName"
+                            ItemsSource="{Binding AvailableFontFamilyNames}">
+                            <bh:Interaction.Triggers>
+                                <bh:EventTrigger EventName="SelectionChanged">
+                                    <bh:InvokeCommandAction Command="{Binding SelectFontFamilyNameCommand}"/>
+                                </bh:EventTrigger>
+                            </bh:Interaction.Triggers>
+                        </ComboBox>
+                    </Grid>
 
-                    <Label
-                        Grid.Column="2"
-                        Content="印刷位置縦方向"/>
-                    <TextBox
-                        Grid.Column="3"
-                        Text="{Binding SelectedAddressCardLayout.PrintMarginTop, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
-                </Grid>
+                    <Grid
+                        Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Content="印刷位置横方向"/>
+                        <TextBox
+                            Grid.Column="1"
+                            Text="{Binding SelectedAddressCardLayout.PrintMarginLeft, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
+
+                        <Label
+                            Grid.Column="2"
+                            Content="印刷位置縦方向"/>
+                        <TextBox
+                            Grid.Column="3"
+                            Text="{Binding SelectedAddressCardLayout.PrintMarginTop, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
+                    </Grid>
+                </StackPanel>
             </GroupBox>
 
             <!-- アクション -->
@@ -407,7 +426,6 @@
                 
                 <Button
                     Content="宛先一覧画面に戻る"
-                    IsDefault="True"
                     Command="{Binding GoBackAddressCardViewCommand}"
                     Style="{StaticResource LargeButton}"/>
 
@@ -421,6 +439,7 @@
                     Grid.Row="2"
                     Content="印刷"
                     IsEnabled="{Binding IsPreparedPrinter}"
+                    IsDefault="True"
                     ToolTipService.ShowOnDisabled="True"
                     Command="{Binding PrintCommand}"
                     CommandParameter="{Binding ElementName=LetterCanvasControl}">

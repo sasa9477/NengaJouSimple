@@ -16,6 +16,7 @@ using System.Windows;
 using Prism.Events;
 using System.Threading.Tasks;
 using NengaJouSimple.Common;
+using System.Windows.Media;
 
 namespace NengaJouSimple.ViewModels
 {
@@ -42,6 +43,8 @@ namespace NengaJouSimple.ViewModels
         private bool isEnableNextViewAddressCard;
 
         private bool isPreparedPrinter;
+
+        private int selectedFontFamilyId;
 
         public PrintLayoutSettingViewModel(
             IRegionManager regionManager,
@@ -72,9 +75,17 @@ namespace NengaJouSimple.ViewModels
 
             IsLetterCanvasTemplateVisible = true;
 
+            AvailableFontFamilyNames = AvailableFontFamilyName.AvailableFontFamilyNames;
+
+            var fontFamilyName = AvailableFontFamilyNames.FirstOrDefault(f => f.EnglishName == SelectedAddressCardLayout.FontFamily.Source);
+
+            SelectedFontFamilyId = fontFamilyName?.Id ?? 0;
+
             GoBackAddressCardViewCommand = new DelegateCommand(GoBackAddressCardView);
 
             SetDefaultValueCommand = new DelegateCommand<string>(SetDefaultValue);
+
+            SelectFontFamilyNameCommand = new DelegateCommand(SelectFontFamilyName);
 
             SaveLayoutCommand = new DelegateCommand(SaveLayout);
 
@@ -125,11 +136,21 @@ namespace NengaJouSimple.ViewModels
             set { SetProperty(ref isPreparedPrinter, value); }
         }
 
+        public int SelectedFontFamilyId
+        {
+            get { return selectedFontFamilyId; }
+            set { SetProperty(ref selectedFontFamilyId, value); }
+        }
+
         public ObservableCollection<AddressCardViewModel> AddressCards { get; }
+
+        public List<AvailableFontFamilyName> AvailableFontFamilyNames { get; }
 
         public DelegateCommand GoBackAddressCardViewCommand { get; }
 
         public DelegateCommand<string> SetDefaultValueCommand { get; }
+
+        public DelegateCommand SelectFontFamilyNameCommand { get; }
 
         public DelegateCommand SaveLayoutCommand { get; }
 
@@ -263,6 +284,15 @@ namespace NengaJouSimple.ViewModels
                 default:
                     return;
             }
+
+            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
+        }
+
+        private void SelectFontFamilyName()
+        {
+            var selectedFontFamilyName = AvailableFontFamilyNames[SelectedFontFamilyId];
+
+            SelectedAddressCardLayout.FontFamily = new FontFamily(selectedFontFamilyName.EnglishName);
 
             RaisePropertyChanged(nameof(SelectedAddressCardLayout));
         }
