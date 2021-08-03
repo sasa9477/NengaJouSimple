@@ -16,14 +16,19 @@ namespace NengaJouSimple.Services
             this.printer = printer;
         }
 
-        public void PreparePrinting()
+        public async Task PreparePrinting()
         {
-            printer.PreparePrinting();
+            await printer.PreparePrinting();
         }
 
-        public bool Print(FrameworkElement element, double printMarginLeft, double printMarginTop)
+        public bool ConfirmPrinting()
         {
-            return printer.Print(element, printMarginLeft, printMarginTop);
+            return printer.ConfirmPrinting();
+        }
+
+        public void Print(FrameworkElement element, double printMarginLeft, double printMarginTop)
+        {
+            printer.Print(element, printMarginLeft, printMarginTop);
         }
     }
 }

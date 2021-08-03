@@ -439,7 +439,6 @@
                     Grid.Row="2"
                     Content="印刷"
                     IsEnabled="{Binding IsPreparedPrinter}"
-                    IsDefault="True"
                     ToolTipService.ShowOnDisabled="True"
                     Command="{Binding PrintCommand}"
                     CommandParameter="{Binding ElementName=LetterCanvasControl}">
@@ -454,11 +453,13 @@
                     </Button.Style>
                 </Button>
 
-                <!--<Button
+                <Button
                     Grid.Row="3"
                     Content="連続印刷"
                     IsEnabled="{Binding IsPreparedPrinter}"
-                    ToolTipService.ShowOnDisabled="True">
+                    IsDefault="True"
+                    ToolTipService.ShowOnDisabled="True"
+                    Command="{Binding PrintSequenceStartCommand}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
                             <Style.Triggers>
@@ -468,7 +469,7 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-                </Button>-->
+                </Button>
             </Grid>
         </Grid>
     </Grid>

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Printing;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,18 +11,38 @@ namespace NengaJouSimple.Data.Devices
     {
         private PrintDialog printDialog;
 
-        public void PreparePrinting()
+        private bool isInitializedPrinting;
+
+        public Task PreparePrinting()
         {
             // ページメディアサイズの設定に時間がかかるため準備メソッドを用意
+            
             printDialog = new PrintDialog();
+            
             printDialog.PrintTicket.PageMediaSize = new PageMediaSize(PageMediaSizeName.JapanHagakiPostcard);
+
+            return Task.CompletedTask;
         }
 
-        public bool Print(FrameworkElement element, double printMarginLeft, double printMarginTop)
+        public bool ConfirmPrinting()
         {
-            // 再度インスタンスの設定が必要
+            // メインスレッドで FrameworkElementを VisualBrushに変換するため、再度インスタンスを作成する
+
             printDialog = new PrintDialog();
+            
             printDialog.PrintTicket.PageMediaSize = new PageMediaSize(PageMediaSizeName.JapanHagakiPostcard);
+
+            isInitializedPrinting = printDialog.ShowDialog() ?? false;
+
+            return isInitializedPrinting;
+        }
+
+        public void Print(FrameworkElement element, double printMarginLeft, double printMarginTop)
+        {
+            if (!isInitializedPrinting)
+            {
+                throw new InvalidOperationException("Call ConfirmPrinting method, before call Print method.");
+            }
 
             var visualBrush = new VisualBrush(element)
             {
@@ -38,14 +56,7 @@ namespace NengaJouSimple.Data.Devices
                 Background = visualBrush,
             };
 
-            var isClickedPrintButton = printDialog.ShowDialog() ?? false;
-
-            if (isClickedPrintButton)
-            {
-                printDialog.PrintVisual(canvas, "年賀状");
-            }
-
-            return isClickedPrintButton;
+            printDialog.PrintVisual(canvas, "年賀状");
         }
     }
 }

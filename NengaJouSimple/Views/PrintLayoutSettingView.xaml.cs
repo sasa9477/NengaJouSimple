@@ -1,4 +1,7 @@
-﻿using System;
+﻿using NengaJouSimple.ViewModels;
+using NengaJouSimple.ViewModels.PubSubEvents;
+using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -19,9 +22,19 @@ namespace NengaJouSimple.Views
     /// </summary>
     public partial class PrintLayoutSettingView : UserControl
     {
-        public PrintLayoutSettingView()
+        public PrintLayoutSettingView(IEventAggregator eventAggregator)
         {
             InitializeComponent();
+
+            eventAggregator.GetEvent<PrintSeqenceEvent>().Subscribe(() =>
+            {
+                var vm = DataContext as PrintLayoutSettingViewModel;
+
+                if (vm != null)
+                {
+                    vm.PrintSequenceCommand.Execute(LetterCanvasControl);
+                }
+            });
         }
     }
 }
