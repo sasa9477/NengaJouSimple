@@ -238,7 +238,7 @@ namespace NengaJouSimple.ViewModels
             });
         }
 
-        private void OnPrint(FrameworkElement element)
+        private void OnPrint(FrameworkElement printElement)
         {
             addressCardLayoutService.Register(SelectedAddressCardLayout);
 
@@ -250,7 +250,7 @@ namespace NengaJouSimple.ViewModels
 
                 RaisePropertyChanged(nameof(SelectedAddressCardLayout));
 
-                Print(element);
+                Print(printElement);
 
                 SelectedAddressCardLayout.IsAlreadyPrinted = true;
 
@@ -281,9 +281,9 @@ namespace NengaJouSimple.ViewModels
             dialogService.ShowInformationDialog("印刷が完了していない宛先がありませんでした。");
         }
 
-        private void OnPrintSequence(FrameworkElement element)
+        private void OnPrintSequence(FrameworkElement printElement)
         {
-            Print(element);
+            Print(printElement);
 
             if (FindNextPrintTarget())
             {
@@ -322,13 +322,15 @@ namespace NengaJouSimple.ViewModels
             return false;
         }
 
-        private void Print(FrameworkElement element)
+        private void Print(FrameworkElement printElement)
         {
-            if (element is null) throw new ArgumentException("on printing arags element is null.");
+            if (printElement is null) throw new ArgumentException("on printing arags element is null.");
 
             IsLetterCanvasTemplateVisible = false;
 
             printService.Print(element, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
+
+            // dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, false);
 
             var addressCard = AddressCards[CurrentAddressCardIndex - 1];
 

@@ -4,13 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:cc="clr-namespace:NengaJouSimple.Views.CustomControls"
              xmlns:vmc="clr-namespace:NengaJouSimple.ViewModels.Components"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             Width="640" Height="360"
-             x:Name="Root"
-             d:DataContext="{d:DesignInstance Type={x:Type vmc:AlertDialogViewModel}}">
+             Width="500" Height="250"
+             d:DataContext="{d:DesignInstance Type={x:Type vmc:PrintDialogViewModel}}">
 
     <prism:Dialog.WindowStyle>
         <Style TargetType="{x:Type Window}">
@@ -26,79 +24,23 @@
         </Style>
 
         <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0,2,4,2"/>
         </Style>
 
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Padding" Value="10,2"/>
-            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
         </Style>
 
-        <Style TargetType="{x:Type Rectangle}">
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="Stroke" Value="Red"/>
-        </Style>
-
-        <Style x:Key="MailAddressNumerMailWardRectangle" TargetType="{x:Type Rectangle}" BasedOn="{StaticResource {x:Type Rectangle}}">
-            <Setter Property="Width" Value="0.57cm"/>
-            <Setter Property="Height" Value="0.84cm"/>
-            <Setter Property="StrokeThickness" Value="2"/>
-        </Style>
-
-        <Style x:Key="PostalCodeTownWardRectangle" TargetType="{x:Type Rectangle}" BasedOn="{StaticResource MailAddressNumerMailWardRectangle}">
-            <Setter Property="Height" Value="0.82cm"/>
-            <Setter Property="StrokeThickness" Value="1.5"/>
-        </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
 
-    <UserControl.Triggers>
-        <EventTrigger RoutedEvent="UserControl.Loaded">
-            <BeginStoryboard>
-                <Storyboard RepeatBehavior="Forever">
-                    <StringAnimationUsingKeyFrames
-                        Storyboard.TargetName="HorizontalPrintLocationTextBox"
-                        Storyboard.TargetProperty="(TextBlock.Text)"
-                        Duration="0:0:01">
-                        <DiscreteStringKeyFrame Value="3.00" KeyTime="0:0:01" />
-                    </StringAnimationUsingKeyFrames>
-                    <DoubleAnimation
-                        Storyboard.TargetName="PostalCodeTextBlockControl"
-                        Storyboard.TargetProperty="(Canvas.Left)"
-                        To="35.5"
-                        BeginTime="0:0:1"
-                        Duration="0:0:0"/>
-                    <StringAnimationUsingKeyFrames
-                        Storyboard.TargetName="VerticalPrintLocationTextBox"
-                        Storyboard.TargetProperty="(TextBlock.Text)"
-                        BeginTime="0:0:2"
-                        Duration="0:0:01">
-                        <DiscreteStringKeyFrame Value="-3.00" KeyTime="0:0:01" />
-                    </StringAnimationUsingKeyFrames>
-                    <DoubleAnimation
-                        Storyboard.TargetName="PostalCodeTextBlockControl"
-                        Storyboard.TargetProperty="(Canvas.Top)"
-                        To="47.2"
-                        BeginTime="0:0:3"
-                        Duration="0:0:0"/>
-                    <DoubleAnimation
-                        Storyboard.TargetName="HorizontalPrintLocationTextBox"
-                        Storyboard.TargetProperty="(TextBlock.Opacity)"
-                        From="1.0"
-                        To="1.0"
-                        BeginTime="0:0:3"
-                        Duration="0:0:2"/>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </UserControl.Triggers>
-
-    <Grid
-        Background="White">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
@@ -107,168 +49,29 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid
-            Grid.ColumnSpan="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock
-                Grid.ColumnSpan="3">
-                印刷時に郵便番号の印字位置がずれていた場合は、全体レイアウトの印刷位置横方向と<LineBreak/>
-                印刷位置縦方向の位置を入力して調整してください。<LineBreak/>
-                印刷位置横方向に正の値を入力すると右方向に、負の値を入力すると左方向に全体の印字位置<LineBreak/>
-                が移動します。<LineBreak/>
-                印刷位置縦方向に正の値を入力すると下方向に、負の値を入力すると上方向に全体の印字位置<LineBreak/>
-                が移動します。
-            </TextBlock>
-
-            <Border
-                Grid.Row="1"
-                BorderBrush="Gray"
-                BorderThickness="1"
-                Margin="5">
-                <Canvas
-                    Grid.Row="1"
-                    Width="250"
-                    Height="150"
-                    Background="White">
-
-                    <TextBlock
-                        Text="郵　便　は　が　き"
-                        Foreground="Red"
-                        Canvas.Left="1cm"
-                        Canvas.Top="0.5cm">
-                    </TextBlock>
-
-                    <Rectangle
-                        Style="{StaticResource MailAddressNumerMailWardRectangle}"
-                        Canvas.Left="1cm"
-                        Canvas.Top="1.18cm"/>
-
-                    <Rectangle
-                        Style="{StaticResource MailAddressNumerMailWardRectangle}"
-                        Canvas.Left="1.7cm"
-                        Canvas.Top="1.18cm"/>
-
-                    <Rectangle
-                        Style="{StaticResource MailAddressNumerMailWardRectangle}"
-                        Canvas.Left="2.4cm"
-                        Canvas.Top="1.18cm"/>
-
-                    <Line
-                        StrokeThickness="1.5"
-                        X1="2.97cm"
-                        X2="3.17cm"
-                        Y1="1.60cm"
-                        Y2="1.60cm"
-                        Stroke="Red"/>
-
-                    <Rectangle
-                        Style="{StaticResource PostalCodeTownWardRectangle}"
-                        Canvas.Left="3.17cm"
-                        Canvas.Top="1.19cm"/>
-
-                    <Rectangle
-                        Style="{StaticResource PostalCodeTownWardRectangle}"
-                        Canvas.Left="3.87cm"
-                        Canvas.Top="1.19cm"/>
-
-                    <Rectangle
-                        Style="{StaticResource PostalCodeTownWardRectangle}"
-                        Canvas.Left="4.57cm"
-                        Canvas.Top="1.19cm"/>
-
-                    <Rectangle
-                        Style="{StaticResource PostalCodeTownWardRectangle}"
-                        Canvas.Left="5.27cm"
-                        Canvas.Top="1.19cm"/>
-
-                    <cc:PostalCodeTextBlockControl
-                        x:Name="PostalCodeTextBlockControl"
-                        Canvas.Left="25"
-                        Canvas.Top="55"
-                        MailWardText="100"
-                        TownWardText="0001"
-                        FontSize="20"
-                        MailWardAndTownWardMargin="0,0,3,0"
-                        MailWardEachWardMargin="7.8,0"
-                        TownWardEachWardMargin="7.8,0"/>
-                </Canvas>
-            </Border>
-
-            <GroupBox
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="5"
-                Header="全体レイアウト">
-                <StackPanel>
-                    <Grid
-                        Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="80"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label
-                            Content="印刷位置横方向"/>
-
-                        <Border
-                            Grid.Column="1"
-                            BorderBrush="Gray"
-                            BorderThickness="1"
-                            Margin="0,2,4,2">
-                            <TextBlock
-                                x:Name="HorizontalPrintLocationTextBox"
-                                Text="0.00"
-                                Margin="2,0"/>
-                        </Border>
-
-                        <Label
-                            Grid.Row="1"
-                            Content="印刷位置縦方向"/>
-                        
-                        <Border
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            BorderBrush="Gray"
-                            BorderThickness="1"
-                            Margin="0,2,4,2">
-                            <TextBlock
-                                x:Name="VerticalPrintLocationTextBox"
-                                Text="0.00"
-                                Margin="2,0"/>
-                        </Border>
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-        </Grid>
-
         <TextBlock
-            Grid.ColumnSpan="3"
+            Grid.ColumnSpan="4"
             Text="{Binding Message}"/>
 
-        <!--<Button
-             Grid.Row="1"
-             Grid.Column="1"
-             Content="印刷"
-             Command="{Binding PrintCommand}"/>-->
+        <Button
+            Grid.Row="1"
+            Grid.Column="1"
+            Content="印刷位置がズレている場合"
+            Visibility="{Binding IsVisibleChangePrintingLocationHelperDialogShowButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Command="{Binding ShowChangePrintingLocationHelperDialogCommand}"/>
 
         <Button
             Grid.Row="1"
             Grid.Column="2"
-            Content="OK"
+            Content="キャンセル"
             Command="{Binding CloseDialogCommand}"
-            IsDefault="True"/>
+            CommandParameter="false"/>
+
+        <Button
+            Grid.Row="1"
+            Grid.Column="3"
+            Content="印刷"
+            IsDefault="True"
+            Command="{Binding PrintCommand}"/>
     </Grid>
 </UserControl>

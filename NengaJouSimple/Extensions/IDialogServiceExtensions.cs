@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NengaJouSimple.Extensions
 {
@@ -12,9 +13,10 @@ namespace NengaJouSimple.Extensions
         {
             var buttonResult = ButtonResult.None;
 
-            var dialogParameters = new DialogParameters();
-
-            dialogParameters.Add("message", message);
+            var dialogParameters = new DialogParameters
+            {
+                { "message", message }
+            };
 
             dialogService.ShowDialog("AlertDialog", dialogParameters, result =>
             {
@@ -28,9 +30,10 @@ namespace NengaJouSimple.Extensions
         {
             var buttonResult = ButtonResult.None;
 
-            var dialogParameters = new DialogParameters();
-
-            dialogParameters.Add("message", message);
+            var dialogParameters = new DialogParameters
+            {
+                { "message", message }
+            };
 
             dialogService.ShowDialog("ConfirmDialog", dialogParameters, result =>
             {
@@ -40,11 +43,30 @@ namespace NengaJouSimple.Extensions
             return buttonResult;
         }
 
-        public static ButtonResult ShowPrintDialog(this IDialogService dialogService)
+        public static ButtonResult ShowPrintDialog(
+            this IDialogService dialogService,
+            FrameworkElement printElement,
+            double printMarginLeft,
+            double printMarginTop,
+            bool isPrintSeqenceRequest
+            )
         {
-            dialogService.ShowDialog("PrintDialog");
+            var buttonResult = ButtonResult.None;
 
-            return ButtonResult.None;
+            var dialogParameters = new DialogParameters
+            {
+                { "printElement", printElement },
+                { "printMarginLeft", printMarginLeft },
+                { "printMarginTop", printMarginTop },
+                { "isPrintSeqenceRequest", isPrintSeqenceRequest }
+            };
+
+            dialogService.ShowDialog("PrintDialog", dialogParameters, result =>
+            {
+                buttonResult = result.Result;
+            });
+
+            return buttonResult;
         }
 
         public static ButtonResult ShowChangePrintingLocationHelperDialog(this IDialogService dialogService)
