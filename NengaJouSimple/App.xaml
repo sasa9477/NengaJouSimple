@@ -33,6 +33,29 @@
         <Style x:Key="LargeButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="FontSize" Value="24"/>
         </Style>
+
+        <Style x:Key="CircleButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Border
+                                BorderThickness="1"
+                                BorderBrush="SkyBlue"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=Self}}" >
+                                <ContentPresenter
+                                    Content="{TemplateBinding Content}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="MinWidth" Value="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}"/>
+            <Setter Property="MinHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}}"/>
+        </Style>
         
         <!-- CheckBoxes -->
         <Style TargetType="{x:Type CheckBox}">

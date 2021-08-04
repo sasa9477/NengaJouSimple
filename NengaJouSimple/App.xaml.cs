@@ -87,6 +87,10 @@ namespace NengaJouSimple
 
             containerRegistry.RegisterDialog<ConfirmDialog, ConfirmDialogViewModel>();
 
+            containerRegistry.RegisterDialog<PrintDialog, PrintDialogViewModel>();
+
+            containerRegistry.RegisterDialog<ChangePrintingLocationHelperDialog, ChangePrintingLocationHelperDialogViewModel>();
+
             // Views
             containerRegistry.RegisterForNavigation<AddressCardListView>();
 

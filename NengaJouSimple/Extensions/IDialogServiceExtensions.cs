@@ -39,5 +39,24 @@ namespace NengaJouSimple.Extensions
 
             return buttonResult;
         }
+
+        public static ButtonResult ShowPrintDialog(this IDialogService dialogService)
+        {
+            dialogService.ShowDialog("PrintDialog");
+
+            return ButtonResult.None;
+        }
+
+        public static ButtonResult ShowChangePrintingLocationHelperDialog(this IDialogService dialogService)
+        {
+            var buttonResult = ButtonResult.None;
+
+            dialogService.ShowDialog("ChangePrintingLocationHelperDialog", null, result =>
+            {
+                buttonResult = result.Result;
+            });
+
+            return buttonResult;
+        }
     }
 }
