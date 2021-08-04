@@ -328,7 +328,7 @@ namespace NengaJouSimple.ViewModels
 
             IsLetterCanvasTemplateVisible = false;
 
-            printService.Print(element, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
+            printService.Print(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
 
             // dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, false);
 
