@@ -280,6 +280,13 @@ namespace NengaJouSimple.ViewModels
         {
             addressCardLayoutService.Register(SelectedAddressCardLayout);
 
+            var confirmResult = dialogService.ShowConfirmDialog("連続印刷を実行しますか？");
+
+            if (confirmResult != ButtonResult.Yes)
+            {
+                return;
+            }
+
             CurrentAddressCardIndex = 1;
 
             if (FindNextPrintTarget())
@@ -305,19 +312,26 @@ namespace NengaJouSimple.ViewModels
             {
                 var printDialogResult = dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, true);
 
-                if (printDialogResult == PrintDialogResult.Done)
+                switch (printDialogResult)
                 {
-                    RegisterPrintedCurrentIndexAddressCard();
+                    case PrintDialogResult.Done:
+                        RegisterPrintedCurrentIndexAddressCard();
 
-                    SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
-                }
-                else if (printDialogResult == PrintDialogResult.ExecuteSeqencePrinting)
-                {
-                    RegisterPrintedCurrentIndexAddressCard();
+                        SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
+                        break;
 
-                    SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
+                    case PrintDialogResult.ExecuteSeqencePrinting:
+                        RegisterPrintedCurrentIndexAddressCard();
 
-                    isBeginedSeqencePrinting = true;
+                        SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
+
+                        isBeginedSeqencePrinting = true;
+                        break;
+
+                    case PrintDialogResult.Cancel:
+                    case PrintDialogResult.None:
+                    default:
+                        return;
                 }
             }
             else
@@ -364,25 +378,6 @@ namespace NengaJouSimple.ViewModels
             }
 
             return false;
-        }
-
-        private void Print(FrameworkElement printElement, bool isPrintSeqenceRequest)
-        {
-            if (printElement is null) throw new ArgumentException("on printing arags element is null.");
-
-            IsLetterCanvasTemplateVisible = false;
-
-            dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, isPrintSeqenceRequest);
-
-            var addressCard = AddressCards[CurrentAddressCardIndex - 1];
-
-            addressCard.IsAlreadyPrinted = true;
-
-            addressCard.PrintedDateTime = DateTime.Now;
-
-            AddressCards[CurrentAddressCardIndex - 1] = addressCard;
-
-            addressCardService.Register(addressCard);
         }
 
         private void SetDefaultValue(string targetName)

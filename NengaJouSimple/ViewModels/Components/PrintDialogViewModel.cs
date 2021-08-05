@@ -16,7 +16,7 @@ namespace NengaJouSimple.ViewModels.Components
     {
         private const string FirstMessage = "始めの一枚目のプリントはテスト用紙を使用してください。\n出力用紙設定が はがきになっていることを確認してください。\nOKボタンを押すことで印刷を実行します。";
 
-        private const string SecondMessage = "印刷が成功した場合は はがきをプリンターにセットし\n再度印刷を実行してください。\nOKボタンを押すことで印刷を実行します。";
+        private const string SecondMessage = "印刷が成功した場合は「はがき」をプリンターにセットし\n再度印刷を実行してください。\nOKボタンを押すことで印刷を実行します。";
 
         private const string RetryPrintingMessage = "再度印刷を実行しますか？";
 
