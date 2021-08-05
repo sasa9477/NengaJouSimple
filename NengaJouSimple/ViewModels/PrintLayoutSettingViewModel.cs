@@ -108,8 +108,6 @@ namespace NengaJouSimple.ViewModels
 
             NextViewAddressCardCommand = new DelegateCommand(NextViewAddressCard);
 
-            ShowChangePrintingLocationHelperDialogCommnad = new DelegateCommand(ShowChangePrintingLocationHelperDialog);
-
             ValidViewAddressCardButtons();
 
             PreparePrinter();
@@ -185,8 +183,6 @@ namespace NengaJouSimple.ViewModels
         public DelegateCommand PreviousViewAddressCardCommnad { get; }
 
         public DelegateCommand NextViewAddressCardCommand { get; }
-
-        public DelegateCommand ShowChangePrintingLocationHelperDialogCommnad { get; }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
@@ -474,11 +470,6 @@ namespace NengaJouSimple.ViewModels
             SelectedAddressCardLayout.AttachAddressCard(selectedAddressCard);
 
             RaisePropertyChanged(nameof(SelectedAddressCardLayout));
-        }
-
-        private void ShowChangePrintingLocationHelperDialog()
-        {
-            dialogService.ShowChangePrintingLocationHelperDialog();
         }
     }
 }
