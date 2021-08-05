@@ -37,14 +37,14 @@ namespace NengaJouSimple.Data.Devices
             return isInitializedPrinting;
         }
 
-        public void Print(FrameworkElement element, double printMarginLeft, double printMarginTop)
+        public void Print(FrameworkElement printElement, double printMarginLeft, double printMarginTop)
         {
             if (!isInitializedPrinting)
             {
                 throw new InvalidOperationException("Call ConfirmPrinting method, before call Print method.");
             }
 
-            var visualBrush = new VisualBrush(element)
+            var visualBrush = new VisualBrush(printElement)
             {
                 Transform = new TranslateTransform(printMarginLeft, printMarginTop),
             };

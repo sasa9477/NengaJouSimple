@@ -88,9 +88,9 @@ namespace NengaJouSimple
 
                 config.CreateMap<AddressCardLayoutJsonDTO, AddressCardLayout>()
                     .ForMember(dest => dest.Id, opt => opt.Ignore())
+                    .ForMember(dest => dest.IsPrintedFirstPrinting, opt => opt.Ignore())
                     .ForMember(dest => dest.RegisterdDateTime, opt => opt.Ignore())
                     .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
-
             });
 
             try

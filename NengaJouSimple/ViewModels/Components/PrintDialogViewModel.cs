@@ -1,4 +1,6 @@
-﻿using NengaJouSimple.Services;
+﻿using NengaJouSimple.Extensions;
+using NengaJouSimple.Services;
+using NengaJouSimple.ViewModels.Components.DialogResults;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -12,13 +14,15 @@ namespace NengaJouSimple.ViewModels.Components
 {
     public class PrintDialogViewModel : BindableBase, IDialogAware
     {
-        private const string FirstMessage = "始めの一枚目のプリントはテスト用紙を使用してください。\nOKボタンを押すことで印刷を実行します。";
+        private const string FirstMessage = "始めの一枚目のプリントはテスト用紙を使用してください。\n出力用紙設定が はがきになっていることを確認してください。\nOKボタンを押すことで印刷を実行します。";
 
         private const string SecondMessage = "印刷が成功した場合は はがきをプリンターにセットし\n再度印刷を実行してください。\nOKボタンを押すことで印刷を実行します。";
 
         private const string RetryPrintingMessage = "再度印刷を実行しますか？";
 
         private const string ExecuteSeqencePrintingMessage = "連続印刷を実行しますか？";
+
+        private readonly IDialogService dialogService;
 
         private readonly PrintService printService;
 
@@ -38,8 +42,16 @@ namespace NengaJouSimple.ViewModels.Components
 
         private bool isVisibleChangePrintingLocationHelperDialogShowButton;
 
-        public PrintDialogViewModel(PrintService printService)
+        private bool isConfirmedPrinting;
+
+        private bool isPrintExecuted;
+
+        public PrintDialogViewModel(
+            IDialogService dialogService,
+            PrintService printService)
         {
+            this.dialogService = dialogService;
+
             this.printService = printService;
 
             message = FirstMessage;
@@ -48,7 +60,9 @@ namespace NengaJouSimple.ViewModels.Components
 
             PrintCommand = new DelegateCommand(Print);
 
-            CloseDialogCommand = new DelegateCommand<string>(CloseDialog);
+            CancelAndCloseDialogCommand = new DelegateCommand(CancelAndCloseDialog);
+
+            ShowChangePrintingLocationHelperDialogCommand = new DelegateCommand(ShowChangePrintingLocationHelperDialog);
         }
 
         public string Message
@@ -77,7 +91,7 @@ namespace NengaJouSimple.ViewModels.Components
 
         public DelegateCommand PrintCommand { get; }
 
-        public DelegateCommand<string> CloseDialogCommand { get; }
+        public DelegateCommand CancelAndCloseDialogCommand { get; }
 
         public DelegateCommand ShowChangePrintingLocationHelperDialogCommand { get; }
 
@@ -106,6 +120,24 @@ namespace NengaJouSimple.ViewModels.Components
 
         private void Print()
         {
+
+            if (Message == ExecuteSeqencePrintingMessage)
+            {
+                CloseAndExecuteSeqencePrinting();
+            }
+
+            if (!isConfirmedPrinting)
+            {
+                isConfirmedPrinting = printService.ConfirmPrinting();
+
+                if (!isConfirmedPrinting)
+                {
+                    CancelAndCloseDialog();
+
+                    return;
+                }
+            }
+
             printService.Print(printElement, printMarginLeft, printMarginTop);
 
             if (Message == FirstMessage)
@@ -119,6 +151,8 @@ namespace NengaJouSimple.ViewModels.Components
 
             if (Message == SecondMessage)
             {
+                isPrintExecuted = true;
+
                 ExecuteButtonText = "はい";
 
                 if (!isPrintSeqenceRequest)
@@ -132,10 +166,27 @@ namespace NengaJouSimple.ViewModels.Components
             }
         }
 
-        private void CloseDialog(string parameter)
+        private void ShowChangePrintingLocationHelperDialog()
         {
-            ButtonResult buttonResult = parameter?.ToLower() == "true" ? ButtonResult.OK : ButtonResult.Cancel;
-            RaiseRequestClose(new DialogResult(buttonResult));
+            dialogService.ShowChangePrintingLocationHelperDialog();
+        }
+
+        private void CancelAndCloseDialog()
+        {
+            var dialogParameters = new DialogParameters();
+
+            dialogParameters.Add("printDialogResult", isPrintExecuted ? PrintDialogResult.Done : PrintDialogResult.Cancel);
+
+            RaiseRequestClose(new DialogResult(ButtonResult.None, dialogParameters));
+        }
+
+        private void CloseAndExecuteSeqencePrinting()
+        {
+            var dialogParameters = new DialogParameters();
+
+            dialogParameters.Add("printDialogResult", PrintDialogResult.ExecuteSeqencePrinting);
+
+            RaiseRequestClose(new DialogResult(ButtonResult.None, dialogParameters));
         }
 
         private void RaiseRequestClose(IDialogResult dialogResult)

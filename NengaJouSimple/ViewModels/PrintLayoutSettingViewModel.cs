@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using NengaJouSimple.Common;
 using System.Windows.Media;
 using NengaJouSimple.ViewModels.PubSubEvents;
+using NengaJouSimple.ViewModels.Components.DialogResults;
 
 namespace NengaJouSimple.ViewModels
 {
@@ -48,6 +49,8 @@ namespace NengaJouSimple.ViewModels
         private bool isPreparedPrinter;
 
         private int selectedFontFamilyId;
+
+        private bool isBeginedSeqencePrinting;
 
         public PrintLayoutSettingViewModel(
             IRegionManager regionManager,
@@ -188,27 +191,12 @@ namespace NengaJouSimple.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             // 他の画面からこの画面に遷移したときの処理
-
-            AddressCards.Clear();
-
-            var allAddressCards = addressCardService.LoadAll();
-
-            foreach (var addressCard in allAddressCards)
-            {
-                AddressCards.Add(addressCard);
-            }
-
-            CurrentAddressCardIndex = 1;
-
-            ChangeSelectedAddressCard();
-
-            ValidViewAddressCardButtons();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             // 画面のインスタンスを使いまわす
-            return true;
+            return false;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
@@ -242,15 +230,34 @@ namespace NengaJouSimple.ViewModels
         {
             addressCardLayoutService.Register(SelectedAddressCardLayout);
 
-            var isConfirmedPrinting = printService.ConfirmPrinting();
+            SelectedAddressCardLayout.IsAlreadyPrinted = false;
 
-            if (isConfirmedPrinting)
+            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
+
+            IsLetterCanvasTemplateVisible = false;
+
+            if (!SelectedAddressCardLayout.IsPrintedFirstPrinting)
             {
-                SelectedAddressCardLayout.IsAlreadyPrinted = false;
+                var printDialogResult = dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, false);
 
-                RaisePropertyChanged(nameof(SelectedAddressCardLayout));
+                if (printDialogResult == PrintDialogResult.Done)
+                {
+                    SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
 
-                Print(printElement);
+                    RegisterPrintedCurrentIndexAddressCard();
+
+                    SelectedAddressCardLayout.IsAlreadyPrinted = true;
+
+                    SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
+
+                    RaisePropertyChanged(nameof(SelectedAddressCardLayout));
+                }
+            }
+            else
+            {
+                printService.Print(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
+
+                RegisterPrintedCurrentIndexAddressCard();
 
                 SelectedAddressCardLayout.IsAlreadyPrinted = true;
 
@@ -258,6 +265,19 @@ namespace NengaJouSimple.ViewModels
             }
 
             IsLetterCanvasTemplateVisible = true;
+        }
+
+        private void RegisterPrintedCurrentIndexAddressCard()
+        {
+            var addressCard = AddressCards[CurrentAddressCardIndex - 1];
+
+            addressCard.IsAlreadyPrinted = true;
+
+            addressCard.PrintedDateTime = DateTime.Now;
+
+            AddressCards[CurrentAddressCardIndex - 1] = addressCard;
+
+            addressCardService.Register(addressCard); ;
         }
 
         private void OnPrintSequenceStart()
@@ -268,12 +288,7 @@ namespace NengaJouSimple.ViewModels
 
             if (FindNextPrintTarget())
             {
-                var isConfirmedPrinting = printService.ConfirmPrinting();
-
-                if (isConfirmedPrinting)
-                {
-                    eventAggregator.GetEvent<PrintSeqenceEvent>().Publish();
-                }
+                eventAggregator.GetEvent<PrintSeqenceEvent>().Publish();
 
                 return;
             }
@@ -283,20 +298,53 @@ namespace NengaJouSimple.ViewModels
 
         private void OnPrintSequence(FrameworkElement printElement)
         {
-            Print(printElement);
+            IsLetterCanvasTemplateVisible = false;
+
+            if (SelectedAddressCardLayout.IsPrintedFirstPrinting && !isBeginedSeqencePrinting)
+            {
+                isBeginedSeqencePrinting = true;
+            }
+
+            if (!isBeginedSeqencePrinting)
+            {
+                var printDialogResult = dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, true);
+
+                if (printDialogResult == PrintDialogResult.Done)
+                {
+                    RegisterPrintedCurrentIndexAddressCard();
+
+                    SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
+                }
+                else if (printDialogResult == PrintDialogResult.ExecuteSeqencePrinting)
+                {
+                    RegisterPrintedCurrentIndexAddressCard();
+
+                    SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
+
+                    isBeginedSeqencePrinting = true;
+                }
+            }
+            else
+            {
+                printService.Print(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
+
+                RegisterPrintedCurrentIndexAddressCard();
+            }
 
             if (FindNextPrintTarget())
             {
                 eventAggregator.GetEvent<PrintSeqenceEvent>().Publish();
-
-                return;
             }
+            else
+            {
+                SelectedAddressCardLayout.IsAlreadyPrinted = true;
 
-            SelectedAddressCardLayout.IsAlreadyPrinted = true;
+                RaisePropertyChanged(nameof(SelectedAddressCardLayout));
 
-            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
+                IsLetterCanvasTemplateVisible = true;
 
-            IsLetterCanvasTemplateVisible = true;
+                isBeginedSeqencePrinting = false;
+            }
         }
 
         private bool FindNextPrintTarget()
@@ -322,15 +370,13 @@ namespace NengaJouSimple.ViewModels
             return false;
         }
 
-        private void Print(FrameworkElement printElement)
+        private void Print(FrameworkElement printElement, bool isPrintSeqenceRequest)
         {
             if (printElement is null) throw new ArgumentException("on printing arags element is null.");
 
             IsLetterCanvasTemplateVisible = false;
 
-            printService.Print(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
-
-            // dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, false);
+            dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, isPrintSeqenceRequest);
 
             var addressCard = AddressCards[CurrentAddressCardIndex - 1];
 

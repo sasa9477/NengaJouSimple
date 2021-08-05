@@ -111,5 +111,7 @@ namespace NengaJouSimple.Models.Layouts
         public double PrintMarginLeft { get; set; }
 
         public double PrintMarginTop { get; set; }
+
+        public bool IsPrintedFirstPrinting { get; set; }
     }
 }

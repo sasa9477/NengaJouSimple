@@ -26,9 +26,9 @@ namespace NengaJouSimple.Services
             return printer.ConfirmPrinting();
         }
 
-        public void Print(FrameworkElement element, double printMarginLeft, double printMarginTop)
+        public void Print(FrameworkElement printElement, double printMarginLeft, double printMarginTop)
         {
-            printer.Print(element, printMarginLeft, printMarginTop);
+            printer.Print(printElement, printMarginLeft, printMarginTop);
         }
     }
 }
