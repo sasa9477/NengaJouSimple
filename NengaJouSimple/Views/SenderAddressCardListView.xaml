@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:local="clr-namespace:NengaJouSimple.Views"
         xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
         xmlns:vc="clr-namespace:NengaJouSimple.Views.Components"
         xmlns:converters="clr-namespace:NengaJouSimple.Views.Converters"
@@ -15,6 +14,10 @@
         d:DesignHeight="720" d:DesignWidth="1280">
 
     <UserControl.Resources>
+        <Style TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource {x:Type GridViewColumnHeader}}">
+            <Setter Property="Padding" Value="4,2"/>
+        </Style>
+
         <converters:RenmeiPrintingConverter x:Key="RenmeiPrintingConverter"/>
         <converters:DatetimeToJapaneseStringConverter x:Key="DatetimeToJapaneseStringConverter"/>
     </UserControl.Resources>
@@ -23,7 +26,7 @@
         d:Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="510"/>
         </Grid.ColumnDefinitions>
 
         <!-- 差出人一覧 -->
@@ -33,8 +36,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label
-                Content="差出人一覧"
+            <TextBlock
+                Text="差出人一覧"
                 FontSize="24"/>
             <ListView
                 Grid.Row="1"
@@ -44,7 +47,7 @@
                 SelectionMode="Single"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <ListView.Resources>
-                    <Style TargetType="{x:Type TextBlock}">
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Setter Property="FontSize" Value="16"/>
                     </Style>
                 </ListView.Resources>
@@ -93,15 +96,15 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label
-                    Content="差出人カード登録"
+                <TextBlock
+                    Text="差出人カード登録"
                     FontSize="24"/>
                 <Button
                     Grid.Column="1"
                     Content="新規登録"
                     Command="{Binding ClearSelectedSenderAddressCommand}">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
                                     <Setter Property="IsEnabled" Value="False"/>
@@ -142,8 +145,7 @@
 
                 <Button
                     Content="宛先編集"
-                    Command="{Binding EditAddressCardsCommand}"
-                    Style="{StaticResource LargeButton}"/>
+                    Command="{Binding EditAddressCardsCommand}"/>
             </Grid>
         </Grid>
     </Grid>

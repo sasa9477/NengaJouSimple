@@ -4,41 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
              xmlns:converters="clr-namespace:NengaJouSimple.Views.Converters"
              xmlns:validationRules="clr-namespace:NengaJouSimple.Views.ValidationRules"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="450"
+             d:DesignHeight="500" d:DesignWidth="480"
              d:DataContext="{d:DesignInstance Type={x:Type vm:SenderAddressCardListViewModel}}">
     <UserControl.Resources>
-        <!-- Styles -->
-
-        <!-- TextBoxes -->
-        <Style x:Key="MainNameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Width" Value="120"/>
-        </Style>
-
-        <Style x:Key="NameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="Width" Value="120"/>
-        </Style>
-
-        <Style x:Key="PostalCodeTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="Width" Value="50"/>
-        </Style>
-
-        <!-- Buttons -->
-        <Style x:Key="SearchButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Margin" Value="5,0"/>
-        </Style>
-
-        <!-- ComboBoxes -->
-        <Style x:Key="MainHonorificComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Margin" Value="0,2,4,2"/>
-        </Style>
-
-        <!-- Converters -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:PostalCodeCombineConverter x:Key="PostalCodeCombineConverter"/>
     </UserControl.Resources>
@@ -65,8 +38,8 @@
         </Grid.ColumnDefinitions>
 
         <!-- 氏名 -->
-        <Label
-            Content="氏名"/>
+        <TextBlock
+            Text="氏名"/>
         <Grid
             Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -100,9 +73,9 @@
         </Grid>
 
         <!-- フリガナ -->
-        <Label
+        <TextBlock
             Grid.Row="1"
-            Content="フリガナ"/>
+            Text="フリガナ"/>
         <Grid
             Grid.Row="1"
             Grid.Column="1">
@@ -134,9 +107,9 @@
         </Grid>
 
         <!-- 郵便番号 -->
-        <Label
+        <TextBlock
             Grid.Row="2"
-            Content="郵便番号"/>
+            Text="郵便番号"/>
         <Grid
             Grid.Row="2"
             Grid.Column="1">
@@ -147,9 +120,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+
             <!-- 全角入力不可 InputMethod.IsInputMethodEnabled="False" -->
             <TextBox
                 x:Name="MailWard"
+                materialDesign:HintAssist.Hint="100"
                 InputMethod.IsInputMethodEnabled="False"
                 Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
@@ -160,12 +135,13 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <Label
+            <TextBlock
                 Grid.Column="1"
-                Content=" - "/>
+                Text=" - "/>
             <TextBox
                 Grid.Column="2"
                 x:Name="TownWard"
+                materialDesign:HintAssist.Hint="0001"
                 InputMethod.IsInputMethodEnabled="False"
                 Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
@@ -177,6 +153,7 @@
                 </TextBox.Text>
             </TextBox>
             <Button
+                Grid.RowSpan="3"
                 Grid.Column="4"
                 Content="郵便番号から住所を検索"
                 Command="{Binding SearchByPostalCodeCommand}">
@@ -187,7 +164,7 @@
                     </MultiBinding>
                 </Button.CommandParameter>
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SearchButton}">
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
                                 <Setter Property="IsEnabled" Value="False"/>
@@ -198,10 +175,10 @@
             </Button>
         </Grid>
 
-        <!-- 住所１ -->
-        <Label
+        <!-- 住所 -->
+        <TextBlock
             Grid.Row="3"
-            Content="住所"/>
+            Text="住所"/>
         <TextBox
             Grid.Row="3"
             Grid.Column="1"
@@ -215,8 +192,7 @@
                 </Binding>
             </TextBox.Text>
             <TextBox.Style>
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource AddressTextBox}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
                             <Setter Property="IsEnabled" Value="False"/>
@@ -227,9 +203,9 @@
         </TextBox>
 
         <!-- 連名１ -->
-        <Label
+        <TextBlock
             Grid.Row="6"
-            Content="連名１"/>
+            Text="連名１"/>
         <Grid
             Grid.Row="6"
             Grid.Column="1">
@@ -255,9 +231,9 @@
         </Grid>
 
         <!-- 連名２ -->
-        <Label
+        <TextBlock
             Grid.Row="7"
-            Content="連名２"/>
+            Text="連名２"/>
         <Grid
             Grid.Row="7"
             Grid.Column="1">
@@ -283,9 +259,9 @@
         </Grid>
 
         <!-- 連名３ -->
-        <Label
+        <TextBlock
             Grid.Row="8"
-            Content="連名３"/>
+            Text="連名３"/>
         <Grid
             Grid.Row="8"
             Grid.Column="1">
@@ -311,9 +287,9 @@
         </Grid>
 
         <!-- 連名４ -->
-        <Label
+        <TextBlock
             Grid.Row="9"
-            Content="連名４"/>
+            Text="連名４"/>
         <Grid
             Grid.Row="9"
             Grid.Column="1">
@@ -339,9 +315,9 @@
         </Grid>
 
         <!-- 連名５ -->
-        <Label
+        <TextBlock
             Grid.Row="10"
-            Content="連名５"/>
+            Text="連名５"/>
         <Grid
             Grid.Row="10"
             Grid.Column="1">
@@ -379,8 +355,7 @@
                 Grid.Column="1"
                 Content="削除"
                 Command="{Binding DeleteSenderAddressCommand}"
-                Visibility="{Binding SenderAddressCard.IsRegisterdCard, Converter={StaticResource BooleanToVisibilityConverter}}"
-                Style="{StaticResource LargeButton}"/>
+                Visibility="{Binding SenderAddressCard.IsRegisterdCard, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <Button
                 Grid.Column="2"
@@ -388,7 +363,8 @@
                 Command="{Binding RegisterSenderAddressCommand}"
                 Click="RegisterButton_Click">
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Setter Property="Margin" Value="4"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
                                 <Setter Property="IsEnabled" Value="False"/>

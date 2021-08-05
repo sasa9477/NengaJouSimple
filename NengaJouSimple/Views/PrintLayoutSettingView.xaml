@@ -67,8 +67,7 @@
                     Content="◀"
                     Margin="5"
                     IsEnabled="{Binding IsEnablePreviousViewAddressCard}"
-                    Command="{Binding PreviousViewAddressCardCommnad}"
-                    Style="{StaticResource LargeButton}"/>
+                    Command="{Binding PreviousViewAddressCardCommnad}"/>
 
                 <Grid
                     Grid.Column="2">
@@ -102,8 +101,7 @@
                     Content="▶"
                     Margin="5"
                     IsEnabled="{Binding IsEnableNextViewAddressCard}"
-                    Command="{Binding NextViewAddressCardCommand}"
-                    Style="{StaticResource LargeButton}"/>
+                    Command="{Binding NextViewAddressCardCommand}"/>
 
             </Grid>
         </Grid>
@@ -146,7 +144,7 @@
                                 Content="フォントサイズ"/>
                             <TextBox
                                 Grid.Column="1"
-                                Text="{Binding SelectedAddressCardLayout.PostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                                Text="{Binding SelectedAddressCardLayout.PostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
 
                             <Button
                                 Grid.Column="2"
@@ -266,7 +264,7 @@
                                 Content="フォントサイズ"/>
                             <TextBox
                                 Grid.Column="1"
-                                Text="{Binding SelectedAddressCardLayout.SenderPostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged}"/>
+                                Text="{Binding SelectedAddressCardLayout.SenderPostalCode.Font.FontSize, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
 
                             <Button
                                 Grid.Column="2"
@@ -417,34 +415,21 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                
-                <Button
-                    Content="宛先一覧画面に戻る"
-                    Command="{Binding GoBackAddressCardViewCommand}"
-                    Style="{StaticResource LargeButton}"/>
 
                 <Button
-                    Grid.Row="1"
-                    Content="レイアウトを保存"
-                    Command="{Binding SaveLayoutCommand}"
-                    Style="{StaticResource LargeButton}"/>
-
-                <Button
-                    Grid.Row="2"
                     Content="印刷"
                     IsEnabled="{Binding IsPreparedPrinter}"
                     ToolTipService.ShowOnDisabled="True"
                     Command="{Binding PrintCommand}"
                     CommandParameter="{Binding ElementName=LetterCanvasControl}">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="ToolBar.ToolTip" Value="印刷の準備中です。"/>
@@ -455,14 +440,14 @@
                 </Button>
 
                 <Button
-                    Grid.Row="3"
+                    Grid.Row="1"
                     Content="連続印刷"
                     IsEnabled="{Binding IsPreparedPrinter}"
                     IsDefault="True"
                     ToolTipService.ShowOnDisabled="True"
                     Command="{Binding PrintSequenceStartCommand}">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="ToolBar.ToolTip" Value="印刷の準備中です。"/>
@@ -471,6 +456,17 @@
                         </Style>
                     </Button.Style>
                 </Button>
+
+                <Button
+                    Grid.Column="1"
+                    Content="宛先一覧画面に戻る"
+                    Command="{Binding GoBackAddressCardViewCommand}"/>
+
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Content="レイアウトを保存"
+                    Command="{Binding SaveLayoutCommand}"/>
             </Grid>
         </Grid>
     </Grid>

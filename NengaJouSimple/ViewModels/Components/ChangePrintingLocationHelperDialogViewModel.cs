@@ -9,8 +9,6 @@ namespace NengaJouSimple.ViewModels.Components
 {
     public class ChangePrintingLocationHelperDialogViewModel : BindableBase, IDialogAware
     {
-        private string message;
-
         private string title = "ヘルプ";
 
         public ChangePrintingLocationHelperDialogViewModel()

@@ -11,10 +11,13 @@
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListViewModel}}"
-        d:DesignHeight="720" d:DesignWidth="1280"
-        x:Name="Root">
+        d:DesignHeight="720" d:DesignWidth="1280">
 
     <UserControl.Resources>
+        <Style TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource {x:Type GridViewColumnHeader}}">
+            <Setter Property="Padding" Value="4,2"/>
+        </Style>
+
         <converters:RenmeiPrintingConverter x:Key="RenmeiPrintingConverter"/>
         <converters:DatetimeToJapaneseStringConverter x:Key="DatetimeToJapaneseStringConverter"/>
     </UserControl.Resources>
@@ -34,8 +37,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             
-            <Label
-                Content="宛先一覧"
+            <TextBlock
+                Text="宛先一覧"
                 FontSize="24"/>
             <ListView
                 Grid.Row="1"
@@ -45,7 +48,7 @@
                 SelectionMode="Single"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <ListView.Resources>
-                    <Style TargetType="{x:Type TextBlock}">
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Setter Property="FontSize" Value="16"/>
                     </Style>
                 </ListView.Resources>
@@ -111,15 +114,15 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label
-                    Content="宛先カード登録"
+                <TextBlock
+                    Text="宛先カード登録"
                     FontSize="24"/>
                 <Button
                     Grid.Column="1"
                     Content="新規登録"
                     Command="{Binding ClearSelectedAddressCommand}">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LargeButton}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
                                     <Setter Property="IsEnabled" Value="False"/>
@@ -161,15 +164,13 @@
 
                 <Button
                     Content="差出人編集"
-                    Command="{Binding EditSenderAddressCardsCommand}"
-                    Style="{StaticResource LargeButton}"/>
+                    Command="{Binding EditSenderAddressCardsCommand}"/>
 
                 <Button
                     Grid.Row="1"
                     Content="印刷"
                     IsDefault="True"
-                    Command="{Binding PrintAddressCardsCommand}"
-                    Style="{StaticResource LargeButton}"/>
+                    Command="{Binding PrintAddressCardsCommand}"/>
             </Grid>
         </Grid>
     </Grid>

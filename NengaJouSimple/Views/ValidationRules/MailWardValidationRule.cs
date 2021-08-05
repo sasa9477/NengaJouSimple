@@ -13,7 +13,7 @@ namespace NengaJouSimple.Views.ValidationRules
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return MailWardRegex.IsMatch(value as string) ? ValidationResult.ValidResult : new ValidationResult(false, "");
+            return MailWardRegex.IsMatch(value as string) ? ValidationResult.ValidResult : new ValidationResult(false, "必須入力");
         }
     }
 }

@@ -60,6 +60,7 @@
                                 <DataTemplate>
                                     <TextBlock
                                         Text="{Binding}"
+                                        FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"
                                         Margin="{Binding MailWardEachWardMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -79,6 +80,7 @@
                                 <DataTemplate>
                                     <TextBlock
                                         Text="{Binding}"
+                                        FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"
                                         Margin="{Binding TownWardEachWardMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PostalCodeTextBlockControl}}}"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

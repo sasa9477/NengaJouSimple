@@ -4,68 +4,92 @@
              xmlns:local="clr-namespace:NengaJouSimple"
              xmlns:prism="http://prismlibrary.com/" >
     <Application.Resources>
-        <!-- Labels -->
-        <Style TargetType="{x:Type Label}">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
 
-        <!-- TextBoxes -->
-        <Style TargetType="{x:Type TextBox}">
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0,2,4,2"/>
-        </Style>
-        
-        <!-- ComboBoxes -->
-        <Style TargetType="{x:Type ComboBox}">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0,2,4,2"/>
-        </Style>
+                <!-- MahApps -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Orange.xaml" />
 
-        <!-- Buttons -->
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="4,2,0,2"/>
-            <Setter Property="Padding" Value="4,2"/>
-        </Style>
+                <!-- Material Design -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Deeporange.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Deeporange.xaml" />
 
-        <Style x:Key="LargeButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="FontSize" Value="24"/>
-        </Style>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
 
-        <Style x:Key="CircleButton" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid>
-                            <Border
-                                BorderThickness="1"
-                                BorderBrush="SkyBlue"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=Self}}" >
-                                <ContentPresenter
-                                    Content="{TemplateBinding Content}"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="MinWidth" Value="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}"/>
-            <Setter Property="MinHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}}"/>
-        </Style>
-        
-        <!-- CheckBoxes -->
-        <Style TargetType="{x:Type CheckBox}">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
+                <!-- Material Design: MahApps Compatibility -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Flyout.xaml" />
 
-        <!-- GridViewColumnHeaders -->
-        <Style TargetType="{x:Type GridViewColumnHeader}">
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="Margin" Value="4"/>
+            </Style>
+
+            <Style x:Key="ButtonBase" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="Margin" Value="4"/>
+            </Style>
+            
+
+            <Style x:Key="TextBoxBase" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+
+            <Style x:Key="MainNameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBase}">
+                <Setter Property="Width" Value="120"/>
+                <Setter Property="FontSize" Value="24"/>
+            </Style>
+
+            <Style x:Key="NameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBase}">
+                <Setter Property="Width" Value="120"/>
+            </Style>
+
+            <Style x:Key="PostalCodeTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBase}">
+                <Setter Property="Width" Value="50"/>
+            </Style>
+
+            <Style x:Key="AddressTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBase}">
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+            </Style>
+            
+
+            <Style x:Key="ComboBoxBase" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+
+            <Style x:Key="MainNameHonorificComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource ComboBoxBase}">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="Margin" Value="4,2"/>
+            </Style>
+
+            
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="TextBlockBase" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="DialogTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+
+
+            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="CheckBoxBase" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            
+        </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

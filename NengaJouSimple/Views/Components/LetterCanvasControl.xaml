@@ -56,7 +56,7 @@
                 d:MailWardAndTownWardMargin="0,0,3,0"
                 d:MailWardEachWardMargin="7.8,0"
                 d:TownWardEachWardMargin="7.4,0"
-                d:FontSize="20"
+                d:FontSize="22"
                 d:Canvas.Left="165" d:Canvas.Top="48">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior

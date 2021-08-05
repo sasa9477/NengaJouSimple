@@ -17,24 +17,8 @@
             <Setter Property="SizeToContent" Value="WidthAndHeight" />
         </Style>
     </prism:Dialog.WindowStyle>
-
-    <UserControl.Resources>
-        <Style TargetType="{x:Type Grid}">
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-
-        <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="4,0"/>
-            <Setter Property="Padding" Value="10,2"/>
-        </Style>
-    </UserControl.Resources>
-
-    <Grid>
+    <Grid
+        Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
@@ -46,8 +30,9 @@
         </Grid.RowDefinitions>
 
         <TextBlock
-            Grid.ColumnSpan="2"
-            Text="{Binding Message}"/>
+            Grid.ColumnSpan="3"
+            Text="{Binding Message}"
+            Style="{StaticResource DialogTextBlock}"/>
 
         <Button
             Grid.Column="1"

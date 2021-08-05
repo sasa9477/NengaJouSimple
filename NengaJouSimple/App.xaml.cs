@@ -97,6 +97,9 @@ namespace NengaJouSimple
             containerRegistry.RegisterForNavigation<SenderAddressCardListView>();
 
             containerRegistry.RegisterForNavigation<PrintLayoutSettingView>();
+
+            // Windows
+            containerRegistry.RegisterDialogWindow<PrismMetroDialogWindow>();
         }
 
         private static ApplicationDbContext CreateDbContext()
@@ -146,7 +149,7 @@ namespace NengaJouSimple
         /// <summary>
         /// バックグラウンドで発生した処理されていない例外を検知します。
         /// </summary>
-        private void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             logger.Error(e.Exception, "バッググランドでハンドルされていない例外が発生しました。");
             ExitByUnhandledException();
