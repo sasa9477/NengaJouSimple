@@ -1,0 +1,167 @@
+﻿<UserControl x:Class="NengaJouSimple.Views.Components.LetterCanvasControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
+             xmlns:local="clr-namespace:NengaJouSimple.Views.Components"
+             xmlns:cc="clr-namespace:NengaJouSimple.Views.CustomControls"
+             xmlns:bhlocal="clr-namespace:NengaJouSimple.Views.Behaviors"
+             xmlns:converters="clr-namespace:NengaJouSimple.Views.Converters"
+             mc:Ignorable="d"
+             x:Name="Root"
+             d:DesignHeight="600" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:PrintLayoutSettingViewModel}}">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisilityConverter"/>
+        <converters:SpaceBetweenMailWardAndTownWardMarginConverter x:Key="SpaceBetweenMailWardAndTownWardMarginConverter"/>
+        <converters:EachWardSpaceAndMarginConverter x:Key="EachWardSpaceAndMarginConverter"/>
+    </UserControl.Resources>
+
+    <Grid
+        Width="{Binding ActualWidth, ElementName=RootCanvas}"
+        Height="{Binding ActualHeight, ElementName=RootCanvas}">
+        <local:NengaJouTemplateControl
+                IsEnabled="False"
+                Visibility="{Binding IsLetterCanvasTemplateVisible, Converter={StaticResource BooleanToVisilityConverter}}"/>
+
+        <Rectangle
+                Width="{Binding ActualWidth, ElementName=RootCanvas}"
+                Height="1"
+                Fill="LightGray"
+                Visibility="{Binding IsLetterCanvasTemplateVisible, Converter={StaticResource BooleanToVisilityConverter}}"/>
+
+        <Rectangle
+                Width="1"
+                Height="{Binding ActualHeight, ElementName=RootCanvas}"
+                Fill="LightGray"
+                Visibility="{Binding IsLetterCanvasTemplateVisible, Converter={StaticResource BooleanToVisilityConverter}}"/>
+
+        <Canvas
+            Width="10cm"
+            Height="14.8cm"
+            x:Name="RootCanvas"
+            ClipToBounds="True">
+            <cc:PostalCodeTextBlockControl
+                MailWardText="{Binding SelectedAddressCardLayout.PostalCode.MailWard}"
+                TownWardText="{Binding SelectedAddressCardLayout.PostalCode.TownWard}"
+                FontSize="{Binding SelectedAddressCardLayout.PostalCode.Font.FontSize}"
+                MailWardAndTownWardMargin="{Binding SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardAndTownWard, Converter={StaticResource SpaceBetweenMailWardAndTownWardMarginConverter}}"
+                MailWardEachWardMargin="{Binding SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
+                TownWardEachWardMargin="{Binding SelectedAddressCardLayout.PostalCode.SpaceBetweenTownWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
+                d:MailWardText="888"
+                d:TownWardText="8888"
+                d:MailWardAndTownWardMargin="0,0,3,0"
+                d:MailWardEachWardMargin="7.8,0"
+                d:TownWardEachWardMargin="7.4,0"
+                d:FontSize="22"
+                d:Canvas.Left="165" d:Canvas.Top="48">
+                <bh:Interaction.Behaviors>
+                    <bhlocal:MouseDragAndKeyMoveBehavior
+                        X="{Binding SelectedAddressCardLayout.PostalCode.Position.X, Mode=TwoWay}"
+                        Y="{Binding SelectedAddressCardLayout.PostalCode.Position.Y, Mode=TwoWay}"/>
+                </bh:Interaction.Behaviors>
+            </cc:PostalCodeTextBlockControl>
+
+            <cc:VerticalTextBlockControl
+                Text="{Binding SelectedAddressCardLayout.Address.Text}"
+                FontSize="{Binding SelectedAddressCardLayout.Address.Font.FontSize}"
+                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
+                FontWeight="{Binding SelectedAddressCardLayout.Address.Font.FontWeight}"
+                FontStyle="{Binding SelectedAddressCardLayout.Address.Font.FontStyle}"
+                VerticalAlignment="{Binding SelectedAddressCardLayout.Address.Font.VerticalAlignment}"
+                d:Text="東京都江東区荒川一ー十五&#xA;若草荘 ２０３号室"
+                d:FontSize="20"
+                d:Canvas.Left="300" d:Canvas.Top="110" d:FontFamily="Yu Mincho">
+                <bh:Interaction.Behaviors>
+                    <bhlocal:MouseDragAndKeyMoveBehavior
+                        X="{Binding SelectedAddressCardLayout.Address.Position.X, Mode=TwoWay}"
+                        Y="{Binding SelectedAddressCardLayout.Address.Position.Y, Mode=TwoWay}"/>
+                </bh:Interaction.Behaviors>
+            </cc:VerticalTextBlockControl>
+
+            <cc:VerticalTextBlockControl
+                Text="{Binding SelectedAddressCardLayout.Addressee.Text}"
+                FontSize="{Binding SelectedAddressCardLayout.Addressee.Font.FontSize}"
+                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
+                FontWeight="{Binding SelectedAddressCardLayout.Addressee.Font.FontWeight}"
+                FontStyle="{Binding SelectedAddressCardLayout.Addressee.Font.FontStyle}"
+                VerticalAlignment="{Binding SelectedAddressCardLayout.Addressee.Font.VerticalAlignment}"
+                d:Text="工藤　勝則様"
+                d:FontSize="43"
+                d:Canvas.Left="167" d:Canvas.Top="110">
+                <bh:Interaction.Behaviors>
+                    <bhlocal:MouseDragAndKeyMoveBehavior
+                        X="{Binding SelectedAddressCardLayout.Addressee.Position.X, Mode=TwoWay}"
+                        Y="{Binding SelectedAddressCardLayout.Addressee.Position.Y, Mode=TwoWay}"/>
+                </bh:Interaction.Behaviors>
+            </cc:VerticalTextBlockControl>
+
+            <cc:PostalCodeTextBlockControl
+                MailWardText="{Binding SelectedAddressCardLayout.SenderPostalCode.MailWard}"
+                TownWardText="{Binding SelectedAddressCardLayout.SenderPostalCode.TownWard}"
+                FontSize="{Binding SelectedAddressCardLayout.SenderPostalCode.Font.FontSize}"
+                MailWardAndTownWardMargin="{Binding SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenMailWardAndTownWard, Converter={StaticResource SpaceBetweenMailWardAndTownWardMarginConverter}}"
+                MailWardEachWardMargin="{Binding SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenMailWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
+                TownWardEachWardMargin="{Binding SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenTownWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
+                d:MailWardText="888"
+                d:TownWardText="8888"
+                d:MailWardAndTownWardMargin="0,0,4.5,0"
+                d:MailWardEachWardMargin="3.7,0"
+                d:TownWardEachWardMargin="3.7,0"
+                d:FontSize="14"
+                d:Canvas.Left="23" d:Canvas.Top="464">
+                <bh:Interaction.Behaviors>
+                    <bhlocal:MouseDragAndKeyMoveBehavior
+                        X="{Binding SelectedAddressCardLayout.SenderPostalCode.Position.X, Mode=TwoWay}"
+                        Y="{Binding SelectedAddressCardLayout.SenderPostalCode.Position.Y, Mode=TwoWay}"/>
+                </bh:Interaction.Behaviors>
+            </cc:PostalCodeTextBlockControl>
+
+            <cc:VerticalTextBlockControl
+                Text="{Binding SelectedAddressCardLayout.SenderAddress.Text}"
+                FontSize="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontSize}"
+                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
+                FontWeight="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontWeight}"
+                FontStyle="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontStyle}"
+                VerticalAlignment="{Binding SelectedAddressCardLayout.SenderAddress.Font.VerticalAlignment}"
+                d:Text="東京都江東区荒川一の十六"
+                d:FontSize="15"
+                d:Canvas.Left="110" d:Canvas.Top="200">
+                <bh:Interaction.Behaviors>
+                    <bhlocal:MouseDragAndKeyMoveBehavior
+                        X="{Binding SelectedAddressCardLayout.SenderAddress.Position.X, Mode=TwoWay}"
+                        Y="{Binding SelectedAddressCardLayout.SenderAddress.Position.Y, Mode=TwoWay}"/>
+                </bh:Interaction.Behaviors>
+            </cc:VerticalTextBlockControl>
+
+            <cc:VerticalTextBlockControl
+                Text="{Binding SelectedAddressCardLayout.Sender.Text}"
+                FontSize="{Binding SelectedAddressCardLayout.Sender.Font.FontSize}"
+                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
+                FontWeight="{Binding SelectedAddressCardLayout.Sender.Font.FontWeight}"
+                FontStyle="{Binding SelectedAddressCardLayout.Sender.Font.FontStyle}"
+                VerticalAlignment="{Binding SelectedAddressCardLayout.Sender.Font.VerticalAlignment}"
+                d:Text="佐藤 弘樹"
+                d:FontSize="24"
+                d:Canvas.Left="55" d:Canvas.Top="260">
+                <bh:Interaction.Behaviors>
+                    <bhlocal:MouseDragAndKeyMoveBehavior
+                        X="{Binding SelectedAddressCardLayout.Sender.Position.X, Mode=TwoWay}"
+                        Y="{Binding SelectedAddressCardLayout.Sender.Position.Y, Mode=TwoWay}"/>
+                </bh:Interaction.Behaviors>
+            </cc:VerticalTextBlockControl>
+
+            <Label
+                Canvas.Left="10"
+                Canvas.Top="10"
+                Content="印刷済み"
+                FontSize="24"
+                Background="LightGray"
+                IsHitTestVisible="False"
+                Visibility="{Binding SelectedAddressCardLayout.IsAlreadyPrinted, Converter={StaticResource BooleanToVisilityConverter}}"/>
+        </Canvas>
+    </Grid>
+</UserControl>

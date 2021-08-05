@@ -3,43 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:vm="clr-namespace:NengaJouSimple.ViewModels"
              xmlns:converters="clr-namespace:NengaJouSimple.Views.Converters"
              xmlns:validationRules="clr-namespace:NengaJouSimple.Views.ValidationRules"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="450"
-             d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListWindowViewModel}}"
-             x:Name="Root">
+             d:DesignHeight="640" d:DesignWidth="480"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:AddressCardListViewModel}}">
     <UserControl.Resources>
-        <!-- Styles -->
-
-        <!-- TextBoxes -->
-        <Style x:Key="MainNameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Width" Value="100"/>
-        </Style>
-
-        <Style x:Key="NameTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="Width" Value="100"/>
-        </Style>
-
-        <Style x:Key="AddressNumberTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="Width" Value="50"/>
-        </Style>
-
-        <!-- ComboBoxes -->
-        <Style x:Key="MainHonorificComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Margin" Value="0,2,4,2"/>
-        </Style>
-
-        <!-- Buttons -->
-        <Style x:Key="RegisterButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="FontSize" Value="24"/>
-        </Style>
-
-        <!-- Converters -->
-        <converters:AddressNumberConverter x:Key="AddressNumberConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:PostalCodeCombineConverter x:Key="PostalCodeCombineConverter"/>
     </UserControl.Resources>
 
     <Grid
@@ -48,6 +22,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -64,17 +39,19 @@
         </Grid.ColumnDefinitions>
 
         <!-- 氏名 -->
-        <Label
-            Content="氏名"/>
+        <TextBlock
+            Text="氏名"/>
         <Grid
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="70"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBox
+                x:Name="MainNameFamilyName"
+
                 Style="{StaticResource MainNameTextBox}">
                 <TextBox.Text>
                     <Binding Path="AddressCard.MainName.FamilyName" UpdateSourceTrigger="PropertyChanged">
@@ -86,6 +63,7 @@
             </TextBox>
             <TextBox
                 Grid.Column="1"
+                x:Name="MainNameGivenName"
                 Style="{StaticResource MainNameTextBox}">
                 <TextBox.Text>
                     <Binding Path="AddressCard.MainName.GivenName" UpdateSourceTrigger="PropertyChanged">
@@ -98,14 +76,14 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.MainName.Honorific}"
-                ItemsSource="{Binding Honorifics, ElementName=Root}"
-                Style="{StaticResource MainHonorificComboBox}"/>
+                ItemsSource="{Binding Honorifics}"
+                Style="{StaticResource MainNameHonorificComboBox}"/>
         </Grid>
 
         <!-- フリガナ -->
-        <Label
+        <TextBlock
             Grid.Row="1"
-            Content="フリガナ"/>
+            Text="フリガナ"/>
         <Grid
             Grid.Row="1"
             Grid.Column="1">
@@ -137,9 +115,9 @@
         </Grid>
 
         <!-- 郵便番号 -->
-        <Label
+        <TextBlock
             Grid.Row="2"
-            Content="郵便番号"/>
+            Text="郵便番号"/>
         <Grid
             Grid.Row="2"
             Grid.Column="1">
@@ -150,99 +128,99 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+
             <!-- 全角入力不可 InputMethod.IsInputMethodEnabled="False" -->
             <TextBox
-                x:Name="AddressNumber1"
+                x:Name="MailWard"
+                materialDesign:HintAssist.Hint="100"
                 InputMethod.IsInputMethodEnabled="False"
-                Style="{StaticResource AddressNumberTextBox}">
+                Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.AddressNumber.AddressNumber1" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="AddressCard.PostalCode.MailWard" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validationRules:AddressNumber1ValidationRule/>
+                            <validationRules:MailWardValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <Label
+            <TextBlock
                 Grid.Column="1"
-                Content=" - "/>
+                Text=" - "/>
             <TextBox
                 Grid.Column="2"
-                x:Name="AddressNumber2"
+                x:Name="TownWard"
+                materialDesign:HintAssist.Hint="0001"
                 InputMethod.IsInputMethodEnabled="False"
-                Style="{StaticResource AddressNumberTextBox}">
+                Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
-                    <Binding Path="AddressCard.AddressNumber.AddressNumber2" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="AddressCard.PostalCode.TownWard" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validationRules:AddressNumber2ValidationRule/>
+                            <validationRules:TownWardValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
             <Button
+                Grid.RowSpan="3"
                 Grid.Column="4"
                 Content="郵便番号から住所を検索"
-                Command="{Binding SearchByAddressNumberCommand, ElementName=Root}">
+                Command="{Binding SearchByPostalCodeCommand}">
                 <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource AddressNumberConverter}">
-                        <Binding Path="Text" ElementName="AddressNumber1"/>
-                        <Binding Path="Text" ElementName="AddressNumber2"/>
+                    <MultiBinding Converter="{StaticResource PostalCodeCombineConverter}">
+                        <Binding Path="Text" ElementName="MailWard"/>
+                        <Binding Path="Text" ElementName="TownWard"/>
                     </MultiBinding>
                 </Button.CommandParameter>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
             </Button>
         </Grid>
 
-        <!-- 住所１ -->
-        <Label
+        <!-- 住所 -->
+        <TextBlock
             Grid.Row="3"
-            Content="住所１"/>
+            Text="住所"/>
         <TextBox
             Grid.Row="3"
-            Grid.Column="1">
-            <TextBox.Text>
-                <Binding Path="AddressCard.Address.Address1" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-
-        <!-- 住所２ -->
-        <Label
-            Grid.Row="4"
-            Content="住所２"/>
-        <TextBox
-            Grid.Row="4"
-            Grid.Column="1">
-            <TextBox.Text>
-                <Binding Path="AddressCard.Address.Address2" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-
-
-        <!-- 住所３ -->
-        <Label
-            Grid.Row="5"
-            Content="住所３"/>
-        <TextBox
-            Grid.Row="5"
             Grid.Column="1"
-            Text="{Binding AddressCard.Address.Address3}"/>
+            x:Name="Address"
+            AcceptsReturn="True">
+            <TextBox.Text>
+                <Binding Path="AddressCard.Address" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource AddressTextBox}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
 
         <!-- 連名１ -->
-        <Label
+        <TextBlock
             Grid.Row="6"
-            Content="連名１"/>
+            Text="連名１"/>
         <Grid
             Grid.Row="6"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="70"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
@@ -256,18 +234,26 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei1.Honorific}"
-                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+                ItemsSource="{Binding Honorifics}"/>
+            <CheckBox
+                Grid.Column="3"
+                IsChecked="{Binding AddressCard.Renmei1.IsPrinting}"/>
+            <Label
+                Grid.Column="4"
+                Content="印刷する"/>
         </Grid>
 
         <!-- 連名２ -->
-        <Label
+        <TextBlock
             Grid.Row="7"
-            Content="連名２"/>
+            Text="連名２"/>
         <Grid
             Grid.Row="7"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="70"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
@@ -281,18 +267,26 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei2.Honorific}"
-                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+                ItemsSource="{Binding Honorifics}"/>
+            <CheckBox
+                Grid.Column="3"
+                IsChecked="{Binding AddressCard.Renmei2.IsPrinting}"/>
+            <Label
+                Grid.Column="4"
+                Content="印刷する"/>
         </Grid>
 
         <!-- 連名３ -->
-        <Label
+        <TextBlock
             Grid.Row="8"
-            Content="連名３"/>
+            Text="連名３"/>
         <Grid
             Grid.Row="8"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="70"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
@@ -306,18 +300,26 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei3.Honorific}"
-                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+                ItemsSource="{Binding Honorifics}"/>
+            <CheckBox
+                Grid.Column="3"
+                IsChecked="{Binding AddressCard.Renmei3.IsPrinting}"/>
+            <Label
+                Grid.Column="4"
+                Content="印刷する"/>
         </Grid>
 
         <!-- 連名４ -->
-        <Label
+        <TextBlock
             Grid.Row="9"
-            Content="連名４"/>
+            Text="連名４"/>
         <Grid
             Grid.Row="9"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="70"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
@@ -331,18 +333,26 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei4.Honorific}"
-                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+                ItemsSource="{Binding Honorifics}"/>
+            <CheckBox
+                Grid.Column="3"
+                IsChecked="{Binding AddressCard.Renmei4.IsPrinting}"/>
+            <Label
+                Grid.Column="4"
+                Content="印刷する"/>
         </Grid>
 
         <!-- 連名５ -->
-        <Label
+        <TextBlock
             Grid.Row="10"
-            Content="連名５"/>
+            Text="連名５"/>
         <Grid
             Grid.Row="10"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="70"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
@@ -356,22 +366,58 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei5.Honorific}"
-                ItemsSource="{Binding Honorifics, ElementName=Root}"/>
+                ItemsSource="{Binding Honorifics}"/>
+            <CheckBox
+                Grid.Column="3"
+                IsChecked="{Binding AddressCard.Renmei5.IsPrinting}"/>
+            <Label
+                Grid.Column="4"
+                Content="印刷する"/>
         </Grid>
+        
+        <!-- 差出人 -->
+        <TextBlock
+            Grid.Row="11"
+            Text="差出人"/>
+        <ComboBox
+            Grid.Row="11"
+            Grid.Column="1"
+            SelectedValue="{Binding SelectedSenderAddressCardId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedValuePath="Id"
+            DisplayMemberPath="MainName.FullName"
+            ItemsSource="{Binding SenderAddressCards}"/>
 
         <!-- 登録ボタン -->
         <Grid
-            Grid.Row="11"
+            Grid.Row="12"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button
                 Grid.Column="1"
+                Content="削除"
+                Command="{Binding DeleteAddressCommand}"
+                Visibility="{Binding AddressCard.IsRegisterdCard, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <Button
+                Grid.Column="2"
                 Content="登録"
-                Command="{Binding RegisterAddressCommand, ElementName=Root}"
-                Style="{StaticResource RegisterButton}"/>
+                Command="{Binding RegisterAddressCommand}"
+                Click="RegisterButton_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Setter Property="Margin" Value="4"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSearchingByWebService}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

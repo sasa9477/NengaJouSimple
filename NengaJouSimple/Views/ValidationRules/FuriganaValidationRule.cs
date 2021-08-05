@@ -13,7 +13,7 @@ namespace NengaJouSimple.Views.ValidationRules
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return FuriganaRegex.IsMatch((string)value) ? ValidationResult.ValidResult : new ValidationResult(false, "");
+            return FuriganaRegex.IsMatch(value as string) ? ValidationResult.ValidResult : new ValidationResult(false, "カナ入力のみ");
         }
     }
 }
