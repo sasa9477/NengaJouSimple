@@ -1,5 +1,4 @@
-﻿using NengaJouSimple.ViewModels.Components.DialogResults;
-using Prism.Services.Dialogs;
+﻿using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,32 +41,6 @@ namespace NengaJouSimple.Extensions
             });
 
             return buttonResult;
-        }
-
-        public static PrintDialogResult ShowPrintDialog(
-            this IDialogService dialogService,
-            FrameworkElement printElement,
-            double printMarginLeft,
-            double printMarginTop,
-            bool isPrintSeqenceRequest
-            )
-        {
-            var printDialogResult = PrintDialogResult.None;
-
-            var dialogParameters = new DialogParameters
-            {
-                { "printElement", printElement },
-                { "printMarginLeft", printMarginLeft },
-                { "printMarginTop", printMarginTop },
-                { "isPrintSeqenceRequest", isPrintSeqenceRequest }
-            };
-
-            dialogService.ShowDialog("PrintDialog", dialogParameters, result =>
-            {
-                printDialogResult = result.Parameters.GetValue<PrintDialogResult>("printDialogResult");
-            });
-
-            return printDialogResult;
         }
 
         public static ButtonResult ShowChangePrintingLocationHelperDialog(this IDialogService dialogService)

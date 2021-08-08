@@ -18,7 +18,6 @@ using System.Threading.Tasks;
 using NengaJouSimple.Common;
 using System.Windows.Media;
 using NengaJouSimple.ViewModels.PubSubEvents;
-using NengaJouSimple.ViewModels.Components.DialogResults;
 
 namespace NengaJouSimple.ViewModels
 {
@@ -226,54 +225,28 @@ namespace NengaJouSimple.ViewModels
         {
             addressCardLayoutService.Register(SelectedAddressCardLayout);
 
+            var isCofirmedPrinting = printService.ConfirmPrinting();
+            
+            if (!isCofirmedPrinting)
+            {
+                return;
+            }
+
             SelectedAddressCardLayout.IsAlreadyPrinted = false;
 
             RaisePropertyChanged(nameof(SelectedAddressCardLayout));
 
             IsLetterCanvasTemplateVisible = false;
 
-            if (!SelectedAddressCardLayout.IsPrintedFirstPrinting)
-            {
-                var printDialogResult = dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, false);
+            printService.Print(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
 
-                if (printDialogResult == PrintDialogResult.Done)
-                {
-                    SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
+            RegisterPrintedCurrentIndexAddressCard();
 
-                    RegisterPrintedCurrentIndexAddressCard();
+            SelectedAddressCardLayout.IsAlreadyPrinted = true;
 
-                    SelectedAddressCardLayout.IsAlreadyPrinted = true;
-
-                    SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
-
-                    RaisePropertyChanged(nameof(SelectedAddressCardLayout));
-                }
-            }
-            else
-            {
-                printService.Print(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
-
-                RegisterPrintedCurrentIndexAddressCard();
-
-                SelectedAddressCardLayout.IsAlreadyPrinted = true;
-
-                RaisePropertyChanged(nameof(SelectedAddressCardLayout));
-            }
+            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
 
             IsLetterCanvasTemplateVisible = true;
-        }
-
-        private void RegisterPrintedCurrentIndexAddressCard()
-        {
-            var addressCard = AddressCards[CurrentAddressCardIndex - 1];
-
-            addressCard.IsAlreadyPrinted = true;
-
-            addressCard.PrintedDateTime = DateTime.Now;
-
-            AddressCards[CurrentAddressCardIndex - 1] = addressCard;
-
-            addressCardService.Register(addressCard); ;
         }
 
         private void OnPrintSequenceStart()
@@ -291,70 +264,48 @@ namespace NengaJouSimple.ViewModels
 
             if (FindNextPrintTarget())
             {
+                var isCofirmedPrinting = printService.ConfirmPrinting();
+
+                if (!isCofirmedPrinting)
+                {
+                    return;
+                }
+
+                // Raise event and set address card data on letter canvas.
                 eventAggregator.GetEvent<PrintSeqenceEvent>().Publish();
 
                 return;
             }
 
-            dialogService.ShowInformationDialog("印刷が完了していない宛先がありませんでした。");
+            dialogService.ShowInformationDialog("印刷が終了していない宛先がありませんでした。");
         }
 
         private void OnPrintSequence(FrameworkElement printElement)
         {
             IsLetterCanvasTemplateVisible = false;
 
-            if (SelectedAddressCardLayout.IsPrintedFirstPrinting && !isBeginedSeqencePrinting)
-            {
-                isBeginedSeqencePrinting = true;
-            }
-
             if (!isBeginedSeqencePrinting)
-            {
-                var printDialogResult = dialogService.ShowPrintDialog(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop, true);
-
-                switch (printDialogResult)
-                {
-                    case PrintDialogResult.Done:
-                        RegisterPrintedCurrentIndexAddressCard();
-
-                        SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
-                        break;
-
-                    case PrintDialogResult.ExecuteSeqencePrinting:
-                        RegisterPrintedCurrentIndexAddressCard();
-
-                        SelectedAddressCardLayout.IsPrintedFirstPrinting = true;
-
-                        isBeginedSeqencePrinting = true;
-                        break;
-
-                    case PrintDialogResult.Cancel:
-                    case PrintDialogResult.None:
-                    default:
-                        return;
-                }
-            }
-            else
             {
                 printService.Print(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
 
                 RegisterPrintedCurrentIndexAddressCard();
+
+                isBeginedSeqencePrinting = true;
             }
 
             if (FindNextPrintTarget())
             {
                 eventAggregator.GetEvent<PrintSeqenceEvent>().Publish();
             }
-            else
-            {
-                SelectedAddressCardLayout.IsAlreadyPrinted = true;
 
-                RaisePropertyChanged(nameof(SelectedAddressCardLayout));
+            // End of printing
+            SelectedAddressCardLayout.IsAlreadyPrinted = true;
 
-                IsLetterCanvasTemplateVisible = true;
+            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
 
-                isBeginedSeqencePrinting = false;
-            }
+            IsLetterCanvasTemplateVisible = true;
+
+            isBeginedSeqencePrinting = false;
         }
 
         private bool FindNextPrintTarget()
@@ -378,6 +329,19 @@ namespace NengaJouSimple.ViewModels
             }
 
             return false;
+        }
+
+        private void RegisterPrintedCurrentIndexAddressCard()
+        {
+            var addressCard = AddressCards[CurrentAddressCardIndex - 1];
+
+            addressCard.IsAlreadyPrinted = true;
+
+            addressCard.PrintedDateTime = DateTime.Now;
+
+            AddressCards[CurrentAddressCardIndex - 1] = addressCard;
+
+            addressCardService.Register(addressCard); ;
         }
 
         private void SetDefaultValue(string targetName)

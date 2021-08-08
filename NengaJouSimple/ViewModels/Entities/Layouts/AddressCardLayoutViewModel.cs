@@ -43,8 +43,6 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
 
         public bool IsAlreadyPrinted { get; set; }
 
-        public bool IsPrintedFirstPrinting { get; set; }
-
         public void AttachAddressCard(AddressCardViewModel addressCard)
         {
             PostalCode.MailWard = addressCard.PostalCode.MailWard;
