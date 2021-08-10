@@ -36,7 +36,7 @@ namespace NengaJouSimple.Data.Jsons
 
             var jsonData = JsonSerializer.Serialize(addressCardLayout, options);
 
-            File.WriteAllText(AddressCardLayoutJsonFileName, jsonData);
+            File.WriteAllText(AddressCardLayoutJsonFilePath, jsonData);
         }
     }
 }
