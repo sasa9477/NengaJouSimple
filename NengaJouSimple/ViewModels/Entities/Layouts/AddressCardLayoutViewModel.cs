@@ -47,12 +47,12 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
         {
             PostalCode.MailWard = addressCard.PostalCode.MailWard;
             PostalCode.TownWard = addressCard.PostalCode.TownWard;
-            Address.Text = addressCard.Address;
+            Address.Text = $"{addressCard.Address1}\n　{addressCard.Address2}";
             Addressee.Text = BuildAddressee(addressCard);
 
             SenderPostalCode.MailWard = addressCard.SenderAddressCard.PostalCode.MailWard;
             SenderPostalCode.TownWard = addressCard.SenderAddressCard.PostalCode.TownWard;
-            SenderAddress.Text = addressCard.SenderAddressCard.Address;
+            SenderAddress.Text = $"{addressCard.SenderAddressCard.Address1}\n　{addressCard.SenderAddressCard.Address2}";
             Sender.Text = BuildSender(addressCard.SenderAddressCard);
             
             IsAlreadyPrinted = addressCard.IsAlreadyPrinted;

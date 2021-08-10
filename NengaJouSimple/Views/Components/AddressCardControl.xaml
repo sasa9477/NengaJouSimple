@@ -22,7 +22,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -183,17 +184,16 @@
             </Button>
         </Grid>
 
-        <!-- 住所 -->
+        <!-- 住所１ -->
         <TextBlock
             Grid.Row="3"
-            Text="住所"/>
+            Text="住所１"/>
         <TextBox
             Grid.Row="3"
             Grid.Column="1"
-            x:Name="Address"
-            AcceptsReturn="True">
+            x:Name="Address1">
             <TextBox.Text>
-                <Binding Path="AddressCard.Address" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="AddressCard.Address1" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
                     </Binding.ValidationRules>
@@ -210,12 +210,30 @@
             </TextBox.Style>
         </TextBox>
 
+        <!-- 住所２ -->
+        <TextBlock
+            Grid.Row="4"
+            Text="住所２"/>
+        <TextBox
+            Grid.Row="4"
+            Grid.Column="1"
+            x:Name="Address2"
+            Style="{StaticResource AddressTextBox}">
+            <TextBox.Text>
+                <Binding Path="AddressCard.Address2" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
         <!-- 連名１ -->
         <TextBlock
-            Grid.Row="6"
+            Grid.Row="5"
             Text="連名１"/>
         <Grid
-            Grid.Row="6"
+            Grid.Row="5"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -234,7 +252,8 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei1.Honorific}"
-                ItemsSource="{Binding Honorifics}"/>
+                ItemsSource="{Binding Honorifics}"
+                Style="{StaticResource PersonNameHonorificComboBox}"/>
             <CheckBox
                 Grid.Column="3"
                 IsChecked="{Binding AddressCard.Renmei1.IsPrinting}"/>
@@ -245,10 +264,10 @@
 
         <!-- 連名２ -->
         <TextBlock
-            Grid.Row="7"
+            Grid.Row="6"
             Text="連名２"/>
         <Grid
-            Grid.Row="7"
+            Grid.Row="6"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -267,7 +286,8 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei2.Honorific}"
-                ItemsSource="{Binding Honorifics}"/>
+                ItemsSource="{Binding Honorifics}"
+                Style="{StaticResource PersonNameHonorificComboBox}"/>
             <CheckBox
                 Grid.Column="3"
                 IsChecked="{Binding AddressCard.Renmei2.IsPrinting}"/>
@@ -300,7 +320,8 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei3.Honorific}"
-                ItemsSource="{Binding Honorifics}"/>
+                ItemsSource="{Binding Honorifics}"
+                Style="{StaticResource PersonNameHonorificComboBox}"/>
             <CheckBox
                 Grid.Column="3"
                 IsChecked="{Binding AddressCard.Renmei3.IsPrinting}"/>
@@ -333,7 +354,8 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei4.Honorific}"
-                ItemsSource="{Binding Honorifics}"/>
+                ItemsSource="{Binding Honorifics}"
+                Style="{StaticResource PersonNameHonorificComboBox}"/>
             <CheckBox
                 Grid.Column="3"
                 IsChecked="{Binding AddressCard.Renmei4.IsPrinting}"/>
@@ -366,7 +388,8 @@
             <ComboBox
                 Grid.Column="2"
                 SelectedItem="{Binding AddressCard.Renmei5.Honorific}"
-                ItemsSource="{Binding Honorifics}"/>
+                ItemsSource="{Binding Honorifics}"
+                Style="{StaticResource PersonNameHonorificComboBox}"/>
             <CheckBox
                 Grid.Column="3"
                 IsChecked="{Binding AddressCard.Renmei5.IsPrinting}"/>

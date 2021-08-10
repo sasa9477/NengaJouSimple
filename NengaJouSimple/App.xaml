@@ -67,10 +67,10 @@
                 <Setter Property="Margin" Value="4,2"/>
             </Style>
 
-            
-            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
-                <Setter Property="VerticalAlignment" Value="Center"/>
+            <Style x:Key="PersonNameHonorificComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource ComboBoxBase}">
+                <Setter Property="FontSize" Value="16"/>
             </Style>
+
 
             <Style x:Key="TextBlockBase" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
                 <Setter Property="VerticalAlignment" Value="Center"/>

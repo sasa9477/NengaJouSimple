@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -175,17 +175,16 @@
             </Button>
         </Grid>
 
-        <!-- 住所 -->
+        <!-- 住所１ -->
         <TextBlock
             Grid.Row="3"
-            Text="住所"/>
+            Text="住所１"/>
         <TextBox
             Grid.Row="3"
             Grid.Column="1"
-            x:Name="Address"
-            AcceptsReturn="True">
+            x:Name="Address1">
             <TextBox.Text>
-                <Binding Path="SenderAddressCard.Address" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="SenderAddressCard.Address1" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
                     </Binding.ValidationRules>
@@ -200,6 +199,25 @@
                     </Style.Triggers>
                 </Style>
             </TextBox.Style>
+        </TextBox>
+
+
+        <!-- 住所２ -->
+        <TextBlock
+            Grid.Row="4"
+            Text="住所２"/>
+        <TextBox
+            Grid.Row="4"
+            Grid.Column="1"
+            x:Name="Address2"
+            Style="{StaticResource AddressTextBox}">
+            <TextBox.Text>
+                <Binding Path="SenderAddressCard.Address2" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
         </TextBox>
 
         <!-- 連名１ -->

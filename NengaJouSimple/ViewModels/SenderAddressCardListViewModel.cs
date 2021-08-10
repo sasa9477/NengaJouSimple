@@ -138,7 +138,7 @@ namespace NengaJouSimple.ViewModels
             }
             else
             {
-                SenderAddressCard.Address = response + SenderAddressCard.Address;
+                SenderAddressCard.Address1 = response + SenderAddressCard.Address1;
 
                 RaisePropertyChanged(nameof(SenderAddressCard));
             }
@@ -211,7 +211,7 @@ namespace NengaJouSimple.ViewModels
                 sb.AppendLine("郵便番号を入力してください。");
             }
 
-            if (string.IsNullOrWhiteSpace(SenderAddressCard.Address))
+            if (string.IsNullOrWhiteSpace(SenderAddressCard.Address1))
             {
                 sb.AppendLine("住所を入力してください。");
             }

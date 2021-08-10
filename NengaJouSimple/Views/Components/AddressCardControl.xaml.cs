@@ -32,7 +32,8 @@ namespace NengaJouSimple.Views.Components
             MainNameGivenName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             MailWard.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             TownWard.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            Address.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            Address1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            Address2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         }
     }
 }
