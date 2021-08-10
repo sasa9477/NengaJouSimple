@@ -13,6 +13,7 @@
         Height="720" Width="1280"
         GlowBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="1"
+        WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type={x:Type vm:MainWindowViewModel}}">
 
     <bh:Interaction.Triggers>
