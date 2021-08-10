@@ -18,6 +18,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisilityConverter"/>
         <converters:SpaceBetweenMailWardAndTownWardMarginConverter x:Key="SpaceBetweenMailWardAndTownWardMarginConverter"/>
         <converters:EachWardSpaceAndMarginConverter x:Key="EachWardSpaceAndMarginConverter"/>
+        <converters:NumberAndHyphenToTategakiConverter x:Key="NumberAndHyphenToTategakiConverter"/>
     </UserControl.Resources>
 
     <Grid
@@ -66,7 +67,7 @@
             </cc:PostalCodeTextBlockControl>
 
             <cc:VerticalTextBlockControl
-                Text="{Binding SelectedAddressCardLayout.Address.Text}"
+                Text="{Binding SelectedAddressCardLayout.Address.Text, Converter={StaticResource NumberAndHyphenToTategakiConverter}}"
                 FontSize="{Binding SelectedAddressCardLayout.Address.Font.FontSize}"
                 FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
                 FontWeight="{Binding SelectedAddressCardLayout.Address.Font.FontWeight}"
@@ -83,7 +84,7 @@
             </cc:VerticalTextBlockControl>
 
             <cc:VerticalTextBlockControl
-                Text="{Binding SelectedAddressCardLayout.Addressee.Text}"
+                Text="{Binding SelectedAddressCardLayout.Addressee.Text, Converter={StaticResource NumberAndHyphenToTategakiConverter}}"
                 FontSize="{Binding SelectedAddressCardLayout.Addressee.Font.FontSize}"
                 FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
                 FontWeight="{Binding SelectedAddressCardLayout.Addressee.Font.FontWeight}"
@@ -121,7 +122,7 @@
             </cc:PostalCodeTextBlockControl>
 
             <cc:VerticalTextBlockControl
-                Text="{Binding SelectedAddressCardLayout.SenderAddress.Text}"
+                Text="{Binding SelectedAddressCardLayout.SenderAddress.Text, Converter={StaticResource NumberAndHyphenToTategakiConverter}}"
                 FontSize="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontSize}"
                 FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
                 FontWeight="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontWeight}"
@@ -138,7 +139,7 @@
             </cc:VerticalTextBlockControl>
 
             <cc:VerticalTextBlockControl
-                Text="{Binding SelectedAddressCardLayout.Sender.Text}"
+                Text="{Binding SelectedAddressCardLayout.Sender.Text, Converter={StaticResource NumberAndHyphenToTategakiConverter}}"
                 FontSize="{Binding SelectedAddressCardLayout.Sender.Font.FontSize}"
                 FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
                 FontWeight="{Binding SelectedAddressCardLayout.Sender.Font.FontWeight}"
