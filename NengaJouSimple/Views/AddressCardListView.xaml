@@ -70,9 +70,11 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="氏名" DisplayMemberBinding="{Binding MainName}" Width="120"/>
-                        <GridViewColumn Header="フリガナ" DisplayMemberBinding="{Binding MainNameKana}" Width="100"/>
-                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding PostalCode}" Width="80"/>
-                        <GridViewColumn Header="住所" DisplayMemberBinding="{Binding Address}" Width="200"/>
+                        <GridViewColumn Header="フリガナ" DisplayMemberBinding="{Binding MainNameKana}" Width="120"/>
+                        <GridViewColumn Header="差出人" DisplayMemberBinding="{Binding SenderAddressCard.MainName.FullName}" Width="100"/>
+                        <GridViewColumn Header="郵便番号" DisplayMemberBinding="{Binding PostalCode}" Width="90"/>
+                        <GridViewColumn Header="住所１" DisplayMemberBinding="{Binding Address1}" Width="220"/>
+                        <GridViewColumn Header="住所２" DisplayMemberBinding="{Binding Address2}" Width="220"/>
                         <GridViewColumn Header="連名１" DisplayMemberBinding="{Binding Renmei1}" Width="100"/>
                         <GridViewColumn Header="印刷" DisplayMemberBinding="{Binding Renmei1.IsPrinting, Converter={StaticResource RenmeiPrintingConverter}}" Width="Auto"/>
                         <GridViewColumn Header="連名２" DisplayMemberBinding="{Binding Renmei2}" Width="100"/>
@@ -83,7 +85,6 @@
                         <GridViewColumn Header="印刷" DisplayMemberBinding="{Binding Renmei4.IsPrinting, Converter={StaticResource RenmeiPrintingConverter}}" Width="Auto"/>
                         <GridViewColumn Header="連名５" DisplayMemberBinding="{Binding Renmei5}" Width="100"/>
                         <GridViewColumn Header="印刷" DisplayMemberBinding="{Binding Renmei5.IsPrinting, Converter={StaticResource RenmeiPrintingConverter}}" Width="Auto"/>
-                        <GridViewColumn Header="差出人" DisplayMemberBinding="{Binding SenderAddressCard.MainName.FullName}" Width="100"/>
                         <GridViewColumn Header="印刷日時" DisplayMemberBinding="{Binding PrintedDateTime, Converter={StaticResource DatetimeToJapaneseStringConverter}}" Width="200"/>
                         <GridViewColumn Header="登録日時" DisplayMemberBinding="{Binding RegisterdDateTime, Converter={StaticResource DatetimeToJapaneseStringConverter}}" Width="200"/>
                         <GridViewColumn Header="更新日時" DisplayMemberBinding="{Binding UpdatedDateTime, Converter={StaticResource DatetimeToJapaneseStringConverter}}" Width="200"/>

@@ -41,7 +41,8 @@
 
         <!-- 氏名 -->
         <TextBlock
-            Text="氏名"/>
+            Text="氏名"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -84,7 +85,8 @@
         <!-- フリガナ -->
         <TextBlock
             Grid.Row="1"
-            Text="フリガナ"/>
+            Text="フリガナ"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="1"
             Grid.Column="1">
@@ -118,7 +120,8 @@
         <!-- 郵便番号 -->
         <TextBlock
             Grid.Row="2"
-            Text="郵便番号"/>
+            Text="郵便番号"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="2"
             Grid.Column="1">
@@ -187,7 +190,8 @@
         <!-- 住所１ -->
         <TextBlock
             Grid.Row="3"
-            Text="住所１"/>
+            Text="住所１"
+            Style="{StaticResource TextBlockBase}"/>
         <TextBox
             Grid.Row="3"
             Grid.Column="1"
@@ -213,7 +217,8 @@
         <!-- 住所２ -->
         <TextBlock
             Grid.Row="4"
-            Text="住所２"/>
+            Text="住所２"
+            Style="{StaticResource TextBlockBase}"/>
         <TextBox
             Grid.Row="4"
             Grid.Column="1"
@@ -231,7 +236,8 @@
         <!-- 連名１ -->
         <TextBlock
             Grid.Row="5"
-            Text="連名１"/>
+            Text="連名１"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="5"
             Grid.Column="1">
@@ -265,7 +271,8 @@
         <!-- 連名２ -->
         <TextBlock
             Grid.Row="6"
-            Text="連名２"/>
+            Text="連名２"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="6"
             Grid.Column="1">
@@ -299,7 +306,8 @@
         <!-- 連名３ -->
         <TextBlock
             Grid.Row="8"
-            Text="連名３"/>
+            Text="連名３"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="8"
             Grid.Column="1">
@@ -333,7 +341,8 @@
         <!-- 連名４ -->
         <TextBlock
             Grid.Row="9"
-            Text="連名４"/>
+            Text="連名４"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="9"
             Grid.Column="1">
@@ -367,7 +376,8 @@
         <!-- 連名５ -->
         <TextBlock
             Grid.Row="10"
-            Text="連名５"/>
+            Text="連名５"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="10"
             Grid.Column="1">
@@ -401,14 +411,16 @@
         <!-- 差出人 -->
         <TextBlock
             Grid.Row="11"
-            Text="差出人"/>
+            Text="差出人"
+            Style="{StaticResource TextBlockBase}"/>
         <ComboBox
             Grid.Row="11"
             Grid.Column="1"
             SelectedValue="{Binding SelectedSenderAddressCardId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SelectedValuePath="Id"
             DisplayMemberPath="MainName.FullName"
-            ItemsSource="{Binding SenderAddressCards}"/>
+            ItemsSource="{Binding SenderAddressCards}"
+            Style="{StaticResource ComboBoxBase}"/>
 
         <!-- 登録ボタン -->
         <Grid
