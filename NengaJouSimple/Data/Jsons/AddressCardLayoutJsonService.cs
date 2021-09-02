@@ -12,14 +12,17 @@ namespace NengaJouSimple.Data.Jsons
     {
         public const string AddressCardLayoutJsonFileName = @"AddressCardLayout.json";
 
+        private static readonly string AddressCardLayoutJsonFilePath = Path.Combine(BaseDirectory.BaseDirectoryPath, AddressCardLayoutJsonFileName);
+
+
         public AddressCardLayoutJsonDTO ReadAddressCardLayoutJson()
         {
-            if (!File.Exists(AddressCardLayoutJsonFileName))
+            if (!File.Exists(AddressCardLayoutJsonFilePath))
             {
                 return null;
             }
 
-            var jsonData = File.ReadAllText(AddressCardLayoutJsonFileName);
+            var jsonData = File.ReadAllText(AddressCardLayoutJsonFilePath);
 
             return JsonSerializer.Deserialize<AddressCardLayoutJsonDTO>(jsonData);
         }
@@ -33,7 +36,7 @@ namespace NengaJouSimple.Data.Jsons
 
             var jsonData = JsonSerializer.Serialize(addressCardLayout, options);
 
-            File.WriteAllText(AddressCardLayoutJsonFileName, jsonData);
+            File.WriteAllText(AddressCardLayoutJsonFilePath, jsonData);
         }
     }
 }

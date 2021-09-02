@@ -13,7 +13,6 @@
              d:DataContext="{d:DesignInstance Type={x:Type vm:SenderAddressCardListViewModel}}">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converters:PostalCodeCombineConverter x:Key="PostalCodeCombineConverter"/>
     </UserControl.Resources>
 
     <Grid
@@ -22,7 +21,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -39,7 +38,8 @@
 
         <!-- 氏名 -->
         <TextBlock
-            Text="氏名"/>
+            Text="氏名"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -75,7 +75,8 @@
         <!-- フリガナ -->
         <TextBlock
             Grid.Row="1"
-            Text="フリガナ"/>
+            Text="フリガナ"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="1"
             Grid.Column="1">
@@ -109,13 +110,12 @@
         <!-- 郵便番号 -->
         <TextBlock
             Grid.Row="2"
-            Text="郵便番号"/>
+            Text="郵便番号"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="2"
             Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
@@ -123,46 +123,23 @@
 
             <!-- 全角入力不可 InputMethod.IsInputMethodEnabled="False" -->
             <TextBox
-                x:Name="MailWard"
-                materialDesign:HintAssist.Hint="100"
+                x:Name="PostalCode"
+                materialDesign:HintAssist.Hint="100-0001"
                 InputMethod.IsInputMethodEnabled="False"
                 Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
-                    <Binding Path="SenderAddressCard.PostalCode.MailWard" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.PostalCode" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validationRules:MailWardValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <TextBlock
-                Grid.Column="1"
-                Text=" - "/>
-            <TextBox
-                Grid.Column="2"
-                x:Name="TownWard"
-                materialDesign:HintAssist.Hint="0001"
-                InputMethod.IsInputMethodEnabled="False"
-                Style="{StaticResource PostalCodeTextBox}">
-                <TextBox.Text>
-                    <Binding Path="SenderAddressCard.PostalCode.TownWard" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validationRules:TownWardValidationRule/>
+                            <validationRules:PostalCodeValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
             <Button
-                Grid.RowSpan="3"
-                Grid.Column="4"
+                Grid.Column="2"
                 Content="郵便番号から住所を検索"
-                Command="{Binding SearchByPostalCodeCommand}">
-                <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource PostalCodeCombineConverter}">
-                        <Binding Path="Text" ElementName="MailWard"/>
-                        <Binding Path="Text" ElementName="TownWard"/>
-                    </MultiBinding>
-                </Button.CommandParameter>
+                Command="{Binding SearchByPostalCodeCommand}"
+                CommandParameter="{Binding SenderAddressCard.PostalCode}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
@@ -175,17 +152,17 @@
             </Button>
         </Grid>
 
-        <!-- 住所 -->
+        <!-- 住所１ -->
         <TextBlock
             Grid.Row="3"
-            Text="住所"/>
+            Text="住所１"
+            Style="{StaticResource TextBlockBase}"/>
         <TextBox
             Grid.Row="3"
             Grid.Column="1"
-            x:Name="Address"
-            AcceptsReturn="True">
+            x:Name="Address1">
             <TextBox.Text>
-                <Binding Path="SenderAddressCard.Address" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="SenderAddressCard.Address1" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
                     </Binding.ValidationRules>
@@ -202,10 +179,31 @@
             </TextBox.Style>
         </TextBox>
 
+
+        <!-- 住所２ -->
+        <TextBlock
+            Grid.Row="4"
+            Text="住所２"
+            Style="{StaticResource TextBlockBase}"/>
+        <TextBox
+            Grid.Row="4"
+            Grid.Column="1"
+            x:Name="Address2"
+            Style="{StaticResource AddressTextBox}">
+            <TextBox.Text>
+                <Binding Path="SenderAddressCard.Address2" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationRules:StringEmptyOrWhiteSpaceValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
         <!-- 連名１ -->
         <TextBlock
             Grid.Row="6"
-            Text="連名１"/>
+            Text="連名１"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="6"
             Grid.Column="1">
@@ -233,7 +231,8 @@
         <!-- 連名２ -->
         <TextBlock
             Grid.Row="7"
-            Text="連名２"/>
+            Text="連名２"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="7"
             Grid.Column="1">
@@ -261,7 +260,8 @@
         <!-- 連名３ -->
         <TextBlock
             Grid.Row="8"
-            Text="連名３"/>
+            Text="連名３"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="8"
             Grid.Column="1">
@@ -289,7 +289,8 @@
         <!-- 連名４ -->
         <TextBlock
             Grid.Row="9"
-            Text="連名４"/>
+            Text="連名４"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="9"
             Grid.Column="1">
@@ -317,7 +318,8 @@
         <!-- 連名５ -->
         <TextBlock
             Grid.Row="10"
-            Text="連名５"/>
+            Text="連名５"
+            Style="{StaticResource TextBlockBase}"/>
         <Grid
             Grid.Row="10"
             Grid.Column="1">

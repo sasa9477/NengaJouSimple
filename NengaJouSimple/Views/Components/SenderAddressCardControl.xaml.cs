@@ -30,9 +30,9 @@ namespace NengaJouSimple.Views.Components
             // Force validation rules
             MainNameFamilyName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             MainNameGivenName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            MailWard.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            TownWard.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            Address.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            PostalCode.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            Address1.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            Address2.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         }
     }
 }

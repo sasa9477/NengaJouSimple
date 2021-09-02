@@ -11,7 +11,8 @@ namespace NengaJouSimple.Models.Addresses
             MainName = new PersonName();
             MainNameKana = new PersonName();
             PostalCode = string.Empty;
-            Address = string.Empty;
+            Address1 = string.Empty;
+            Address2 = string.Empty;
             Renmei1 = new Renmei();
             Renmei2 = new Renmei();
             Renmei3 = new Renmei();
@@ -26,7 +27,9 @@ namespace NengaJouSimple.Models.Addresses
 
         public string PostalCode { get; set; }
 
-        public string Address { get; set; }
+        public string Address1 { get; set; }
+
+        public string Address2 { get; set; }
 
         public Renmei Renmei1 { get; set; }
 

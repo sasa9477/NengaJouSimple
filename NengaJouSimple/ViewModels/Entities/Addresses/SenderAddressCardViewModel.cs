@@ -11,8 +11,9 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
         {
             MainName = new PersonNameViewModel();
             MainNameKana = new PersonNameViewModel();
-            PostalCode = new PostalCodeViewModel();
-            Address = string.Empty;
+            PostalCode = string.Empty;
+            Address1 = string.Empty;
+            Address2 = string.Empty;
             Renmei1 = new RenmeiViewModel();
             Renmei2 = new RenmeiViewModel();
             Renmei3 = new RenmeiViewModel();
@@ -24,9 +25,11 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
 
         public PersonNameViewModel MainNameKana { get; set; }
 
-        public PostalCodeViewModel PostalCode { get; set; }
+        public string PostalCode { get; set; }
 
-        public string Address { get; set; }
+        public string Address1 { get; set; }
+
+        public string Address2 { get; set; }
 
         public RenmeiViewModel Renmei1 { get; set; }
 
@@ -47,8 +50,9 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
                 Id = Id,
                 MainName = MainName.Clone(),
                 MainNameKana = MainNameKana.Clone(),
-                PostalCode = PostalCode.Clone(),
-                Address = Address,
+                PostalCode = PostalCode,
+                Address1 = Address1,
+                Address2 = Address2,
                 Renmei1 = Renmei1.Clone(),
                 Renmei2 = Renmei2.Clone(),
                 Renmei3 = Renmei3.Clone(),
@@ -65,8 +69,9 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             Id = 0;
             MainName = new PersonNameViewModel();
             MainNameKana = new PersonNameViewModel();
-            PostalCode = new PostalCodeViewModel();
-            Address = string.Empty;
+            PostalCode = string.Empty;
+            Address1 = string.Empty;
+            Address2 = string.Empty;
             Renmei1 = new RenmeiViewModel();
             Renmei2 = new RenmeiViewModel();
             Renmei3 = new RenmeiViewModel();

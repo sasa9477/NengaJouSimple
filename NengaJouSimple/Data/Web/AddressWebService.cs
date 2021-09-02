@@ -15,7 +15,7 @@ namespace NengaJouSimple.Data.Web
 
         public async Task<string> Search(string zipcode)
         {
-            if (string.IsNullOrEmpty(zipcode) || zipcode.Length != 8)
+            if (string.IsNullOrEmpty(zipcode))
             {
                 return string.Empty;
             }
@@ -39,7 +39,7 @@ namespace NengaJouSimple.Data.Web
 
                     if (address != null)
                     {
-                        return $"{address.Address1}{address.Address2}\n{address.Address3}";
+                        return $"{address.Address1}{address.Address2}{address.Address3}";
                     }
                 }
             }

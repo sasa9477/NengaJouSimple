@@ -43,18 +43,14 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
 
         public bool IsAlreadyPrinted { get; set; }
 
-        public bool IsPrintedFirstPrinting { get; set; }
-
         public void AttachAddressCard(AddressCardViewModel addressCard)
         {
-            PostalCode.MailWard = addressCard.PostalCode.MailWard;
-            PostalCode.TownWard = addressCard.PostalCode.TownWard;
-            Address.Text = addressCard.Address;
+            PostalCode.PostalCode = addressCard.PostalCode;
+            Address.Text = $"{addressCard.Address1}\n　{addressCard.Address2}";
             Addressee.Text = BuildAddressee(addressCard);
 
-            SenderPostalCode.MailWard = addressCard.SenderAddressCard.PostalCode.MailWard;
-            SenderPostalCode.TownWard = addressCard.SenderAddressCard.PostalCode.TownWard;
-            SenderAddress.Text = addressCard.SenderAddressCard.Address;
+            SenderPostalCode.PostalCode = addressCard.SenderAddressCard.PostalCode;
+            SenderAddress.Text = $"{addressCard.SenderAddressCard.Address1}\n　{addressCard.SenderAddressCard.Address2}";
             Sender.Text = BuildSender(addressCard.SenderAddressCard);
             
             IsAlreadyPrinted = addressCard.IsAlreadyPrinted;

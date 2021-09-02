@@ -8,15 +8,12 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
     {
         public PostalCodeTextLayoutViewModel()
         {
-            MailWard = string.Empty;
-            TownWard = string.Empty;
+            PostalCode = string.Empty;
             Position = new PositionViewModel();
             Font = new FontViewModel();
         }
 
-        public string MailWard { get; set; }
-
-        public string TownWard { get; set; }
+        public string PostalCode { get; set; }
 
         public PositionViewModel Position { get; set; }
 
