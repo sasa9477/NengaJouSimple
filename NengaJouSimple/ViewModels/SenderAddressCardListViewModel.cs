@@ -129,7 +129,7 @@ namespace NengaJouSimple.ViewModels
             }
             else
             {
-                SenderAddressCard.Address1 = response + SenderAddressCard.Address1;
+                SenderAddressCard.Address1 = response;
 
                 RaisePropertyChanged(nameof(SenderAddressCard));
             }
