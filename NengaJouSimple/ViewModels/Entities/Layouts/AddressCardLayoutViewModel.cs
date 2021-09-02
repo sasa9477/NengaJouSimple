@@ -45,13 +45,11 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
 
         public void AttachAddressCard(AddressCardViewModel addressCard)
         {
-            PostalCode.MailWard = addressCard.PostalCode.MailWard;
-            PostalCode.TownWard = addressCard.PostalCode.TownWard;
+            PostalCode.PostalCode = addressCard.PostalCode;
             Address.Text = $"{addressCard.Address1}\n　{addressCard.Address2}";
             Addressee.Text = BuildAddressee(addressCard);
 
-            SenderPostalCode.MailWard = addressCard.SenderAddressCard.PostalCode.MailWard;
-            SenderPostalCode.TownWard = addressCard.SenderAddressCard.PostalCode.TownWard;
+            SenderPostalCode.PostalCode = addressCard.SenderAddressCard.PostalCode;
             SenderAddress.Text = $"{addressCard.SenderAddressCard.Address1}\n　{addressCard.SenderAddressCard.Address2}";
             Sender.Text = BuildSender(addressCard.SenderAddressCard);
             

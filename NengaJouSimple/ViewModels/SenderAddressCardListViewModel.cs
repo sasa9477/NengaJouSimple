@@ -119,15 +119,6 @@ namespace NengaJouSimple.ViewModels
 
         private async void SearchByPostalCode(string postalCode)
         {
-            if (postalCode.Length != 7)
-            {
-                var message = "郵便番号の形式が正しくありません。";
-
-                dialogService.ShowInformationDialog(message);
-
-                return;
-            }
-
             IsSearchingByWebService = true;
 
             var response = await senderAddressCardService.SearchAddressByPostalCode(SenderAddressCard.PostalCode.ToString());
@@ -206,7 +197,7 @@ namespace NengaJouSimple.ViewModels
                 sb.AppendLine("氏名を入力してください。");
             }
 
-            if (!SenderAddressCard.PostalCode.IsCompleted)
+            if (string.IsNullOrEmpty(SenderAddressCard.PostalCode))
             {
                 sb.AppendLine("郵便番号を入力してください。");
             }

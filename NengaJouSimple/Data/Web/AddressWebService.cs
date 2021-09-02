@@ -15,7 +15,7 @@ namespace NengaJouSimple.Data.Web
 
         public async Task<string> Search(string zipcode)
         {
-            if (string.IsNullOrEmpty(zipcode) || zipcode.Length != 8)
+            if (string.IsNullOrEmpty(zipcode))
             {
                 return string.Empty;
             }

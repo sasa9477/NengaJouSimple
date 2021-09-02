@@ -13,7 +13,6 @@
              d:DataContext="{d:DesignInstance Type={x:Type vm:SenderAddressCardListViewModel}}">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converters:PostalCodeCombineConverter x:Key="PostalCodeCombineConverter"/>
     </UserControl.Resources>
 
     <Grid
@@ -118,54 +117,29 @@
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <!-- 全角入力不可 InputMethod.IsInputMethodEnabled="False" -->
             <TextBox
-                x:Name="MailWard"
-                materialDesign:HintAssist.Hint="100"
+                x:Name="PostalCode"
+                materialDesign:HintAssist.Hint="100-0001"
                 InputMethod.IsInputMethodEnabled="False"
                 Style="{StaticResource PostalCodeTextBox}">
                 <TextBox.Text>
-                    <Binding Path="SenderAddressCard.PostalCode.MailWard" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="SenderAddressCard.PostalCode" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validationRules:MailWardValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <TextBlock
-                Grid.Column="1"
-                Text=" - "/>
-            <TextBox
-                Grid.Column="2"
-                x:Name="TownWard"
-                materialDesign:HintAssist.Hint="0001"
-                InputMethod.IsInputMethodEnabled="False"
-                Style="{StaticResource PostalCodeTextBox}">
-                <TextBox.Text>
-                    <Binding Path="SenderAddressCard.PostalCode.TownWard" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validationRules:TownWardValidationRule/>
+                            <validationRules:PostalCodeValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
             <Button
-                Grid.RowSpan="3"
-                Grid.Column="4"
+                Grid.Column="2"
                 Content="郵便番号から住所を検索"
-                Command="{Binding SearchByPostalCodeCommand}">
-                <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource PostalCodeCombineConverter}">
-                        <Binding Path="Text" ElementName="MailWard"/>
-                        <Binding Path="Text" ElementName="TownWard"/>
-                    </MultiBinding>
-                </Button.CommandParameter>
+                Command="{Binding SearchByPostalCodeCommand}"
+                CommandParameter="{Binding SenderAddressCard.PostalCode}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>

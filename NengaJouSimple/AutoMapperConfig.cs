@@ -25,11 +25,11 @@ namespace NengaJouSimple
                     .IncludeBase<PersonName, PersonNameViewModel>();
 
                 config.CreateMap<SenderAddressCard, SenderAddressCardViewModel>()
-                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => new PostalCodeViewModel(src.PostalCode)))
+                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode))
                     .ForMember(dest => dest.IsRegisterdCard, opt => opt.Ignore());
 
                 config.CreateMap<AddressCard, AddressCardViewModel>()
-                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => new PostalCodeViewModel(src.PostalCode)))
+                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode))
                     .ForMember(dest => dest.IsRegisterdCard, opt => opt.Ignore());
 
 
@@ -39,10 +39,10 @@ namespace NengaJouSimple
                     .IncludeBase<PersonNameViewModel, PersonName>();
 
                 config.CreateMap<SenderAddressCardViewModel, SenderAddressCard>()
-                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.ToString()));
+                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.Length == 8 ? src.PostalCode : $"{src.PostalCode.Substring(0, 3)}-{src.PostalCode.Substring(3, 4)}"));
 
                 config.CreateMap<AddressCardViewModel, AddressCard>()
-                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.ToString()));
+                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.Length == 8 ? src.PostalCode : $"{src.PostalCode.Substring(0, 3)}-{src.PostalCode.Substring(3, 4)}"));
 
 
                 config.CreateMap<Font, FontViewModel>()
@@ -55,8 +55,7 @@ namespace NengaJouSimple
                     .ForMember(dest => dest.Text, opt => opt.Ignore());
 
                 config.CreateMap<PostalCodeTextLayout, PostalCodeTextLayoutViewModel>()
-                    .ForMember(dest => dest.MailWard, opt => opt.Ignore())
-                    .ForMember(dest => dest.TownWard, opt => opt.Ignore());
+                    .ForMember(dest => dest.PostalCode, opt => opt.Ignore());
 
                 config.CreateMap<AddressCardLayout, AddressCardLayoutViewModel>()
                     .ForMember(dest => dest.FontFamily, opt =>
