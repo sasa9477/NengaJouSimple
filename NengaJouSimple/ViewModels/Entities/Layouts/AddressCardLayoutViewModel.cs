@@ -11,105 +11,47 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
     {
         public AddressCardLayoutViewModel()
         {
-            FontFamily = new FontFamily();
-
-            PostalCode = new PostalCodeTextLayoutViewModel();
+            PostalCode = new TextLayoutViewModel();
             Address = new TextLayoutViewModel();
             Addressee = new TextLayoutViewModel();
-            SenderPostalCode = new PostalCodeTextLayoutViewModel();
-            Sender = new TextLayoutViewModel();
+            SenderPostalCode = new TextLayoutViewModel();
             SenderAddress = new TextLayoutViewModel();
+            Sender = new TextLayoutViewModel();
+            AddressCard = new AddressCardViewModel();
         }
 
         public int Id { get; set; }
 
-        public FontFamily FontFamily { get; set; }
-
-        public PostalCodeTextLayoutViewModel PostalCode { get; set; }
+        public TextLayoutViewModel PostalCode { get; set; }
 
         public TextLayoutViewModel Address { get; set; }
 
         public TextLayoutViewModel Addressee { get; set; }
 
-        public PostalCodeTextLayoutViewModel SenderPostalCode { get; set; }
-
-        public TextLayoutViewModel Sender { get; set; }
+        public TextLayoutViewModel SenderPostalCode { get; set; }
 
         public TextLayoutViewModel SenderAddress { get; set; }
 
-        public double PrintMarginLeft { get; set; }
+        public TextLayoutViewModel Sender { get; set; }
 
-        public double PrintMarginTop { get; set; }
+        public AddressCardViewModel AddressCard { get; set; }
 
         public bool IsAlreadyPrinted { get; set; }
 
-        public void AttachAddressCard(AddressCardViewModel addressCard)
+        public AddressCardLayoutViewModel Clone()
         {
-            PostalCode.PostalCode = addressCard.PostalCode;
-            Address.Text = $"{addressCard.Address1}\n　{addressCard.Address2}";
-            Addressee.Text = BuildAddressee(addressCard);
-
-            SenderPostalCode.PostalCode = addressCard.SenderAddressCard.PostalCode;
-            SenderAddress.Text = $"{addressCard.SenderAddressCard.Address1}\n　{addressCard.SenderAddressCard.Address2}";
-            Sender.Text = BuildSender(addressCard.SenderAddressCard);
-            
-            IsAlreadyPrinted = addressCard.IsAlreadyPrinted;
-        }
-
-        private string BuildAddressee(AddressCardViewModel addressCard)
-        {
-            var printRenmeis = addressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
-
-            var maxFamilyNameLengthInRenmeis = 0;
-
-            if (printRenmeis.Any())
+            return new AddressCardLayoutViewModel
             {
-                maxFamilyNameLengthInRenmeis = printRenmeis
-                .Select(r => r.FamilyName.Length)
-                .Aggregate((maxValue, length) => maxValue = Math.Max(maxValue, length));
-            }
-
-            var maxFamilyNameLength = Math.Max(maxFamilyNameLengthInRenmeis, addressCard.MainName.FamilyName.Length);
-
-
-            var sb = new StringBuilder();
-
-            sb.AppendLine(addressCard.MainName.ToString(maxFamilyNameLength - addressCard.MainName.FamilyName.Length + 1));
-
-            foreach (var renmei in printRenmeis)
-            {
-                sb.AppendLine(renmei.ToString(maxFamilyNameLength - renmei.FamilyName.Length + 1));
-            }
-
-            return sb.ToString();
-        }
-
-        private string BuildSender(SenderAddressCardViewModel senderAddressCard)
-        {
-            var printRenmeis = senderAddressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
-
-            var maxFamilyNameLengthInRenmeis = 0;
-
-            if (printRenmeis.Any())
-            {
-                maxFamilyNameLengthInRenmeis = printRenmeis
-                .Select(r => r.FamilyName.Length)
-                .Aggregate((maxValue, length) => maxValue = Math.Max(maxValue, length));
-            }
-
-            var maxFamilyNameLength = Math.Max(maxFamilyNameLengthInRenmeis, senderAddressCard.MainName.FamilyName.Length);
-
-
-            var sb = new StringBuilder();
-
-            sb.AppendLine(senderAddressCard.MainName.ToString(maxFamilyNameLength - senderAddressCard.MainName.FamilyName.Length + 1));
-
-            foreach (var renmei in printRenmeis)
-            {
-                sb.AppendLine(renmei.ToString(maxFamilyNameLength - renmei.FamilyName.Length + 1));
-            }
-
-            return sb.ToString();
+                Id = Id,
+                PostalCode = PostalCode.Clone(),
+                Address = Address.Clone(),
+                Addressee = Addressee.Clone(),
+                SenderPostalCode = SenderPostalCode.Clone(),
+                SenderAddress = SenderAddress.Clone(),
+                Sender = Sender.Clone(),
+                AddressCard = AddressCard.Clone(),
+                IsAlreadyPrinted = IsAlreadyPrinted
+            };
         }
     }
 }

@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using NengaJouSimple.Data;
 using NengaJouSimple.Data.Csv;
-using NengaJouSimple.Data.Devices;
 using NengaJouSimple.Data.Jsons;
 using NengaJouSimple.Data.Repositories;
 using NengaJouSimple.Data.Web;
+using NengaJouSimple.Devices;
+using NengaJouSimple.Models.Settings;
 using NengaJouSimple.Services;
 using NengaJouSimple.ViewModels.Components;
 using NengaJouSimple.Views;
@@ -13,7 +14,10 @@ using NengaJouSimple.Views.Components;
 using NLog;
 using Prism.Ioc;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -40,7 +44,7 @@ namespace NengaJouSimple
 
         protected override Window CreateShell()
         {
-            InitializeDataFromFiles();
+            InitializeData();
 
             return Container.Resolve<MainWindow>();
         }
@@ -57,15 +61,19 @@ namespace NengaJouSimple
 
             containerRegistry.RegisterSingleton<SenderAddressCardCsvService>();
 
+            containerRegistry.RegisterSingleton<TextLayoutCsvService>();
+
             // Jsons
-            containerRegistry.RegisterSingleton<AddressCardLayoutJsonService>();
+            containerRegistry.RegisterSingleton<ApplicationSettingJsonService>();
 
             // Repositories
+            containerRegistry.RegisterSingleton<ApplicationSettingRepository>();
+
             containerRegistry.RegisterSingleton<AddressCardRepository>();
 
             containerRegistry.RegisterSingleton<SenderAddressCardRepository>();
 
-            containerRegistry.RegisterSingleton<AddressCardLayoutRepository>();
+            containerRegistry.RegisterSingleton<TextLayoutRepository>();
 
             // Webs
             containerRegistry.RegisterSingleton<AddressWebService>();
@@ -74,6 +82,8 @@ namespace NengaJouSimple
             containerRegistry.RegisterSingleton<Printer>();
 
             // Services
+            containerRegistry.RegisterSingleton<ApplicationSettingService>();
+
             containerRegistry.RegisterSingleton<AddressCardService>();
 
             containerRegistry.RegisterSingleton<SenderAddressCardService>();
@@ -120,19 +130,23 @@ namespace NengaJouSimple
             return dbConnection;
         }
 
-        private void InitializeDataFromFiles()
+        private void InitializeData()
         {
+            var applicationSettingService = Container.Resolve<ApplicationSettingService>();
+
+            applicationSettingService.InitializeData();
+
             var senderAddressCardService = Container.Resolve<SenderAddressCardService>();
 
-            senderAddressCardService.ReadCsvFile();
+            senderAddressCardService.InitializeData();
 
             var addressCardService = Container.Resolve<AddressCardService>();
 
-            addressCardService.ReadCsvFile();
+            addressCardService.InitializeData();
 
             var addressCardLayoutService = Container.Resolve<AddressCardLayoutService>();
 
-            addressCardLayoutService.ReadJsonFile();
+            addressCardLayoutService.InitializeData();
         }
 
         /// <summary>
@@ -141,6 +155,7 @@ namespace NengaJouSimple
         private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             logger.Error(e.Exception, "UIスレッドでハンドルされていない例外が発生しました。");
+
             ExitByUnhandledException();
         }
 
@@ -150,6 +165,7 @@ namespace NengaJouSimple
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             logger.Error(e.Exception, "バッググランドでハンドルされていない例外が発生しました。");
+
             ExitByUnhandledException();
         }
 
@@ -159,6 +175,7 @@ namespace NengaJouSimple
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             logger.Error(e.ExceptionObject as Exception, "ハンドルされていない例外が発生しました。");
+
             ExitByUnhandledException();
         }
 

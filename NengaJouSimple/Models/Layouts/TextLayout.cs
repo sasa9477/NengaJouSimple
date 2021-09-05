@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NengaJouSimple.Models.Addresses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,19 +8,16 @@ using System.Windows.Media;
 
 namespace NengaJouSimple.Models.Layouts
 {
-    public class TextLayout
+    public class TextLayout : EntityBase
     {
-        public TextLayout()
-        {
-            TextLayoutKind = TextLayoutKind.PostalCode;
-            Position = new Position();
-            Font = new Font();
-        }
-
         public TextLayoutKind TextLayoutKind { get; set; }
+
+        public string Text { get; set; }
 
         public Position Position { get; set; }
 
-        public Font Font { get; set; }
+        public double FontSize { get; set; }
+
+        public AddressCard AddressCard { get; set; }
     }
 }

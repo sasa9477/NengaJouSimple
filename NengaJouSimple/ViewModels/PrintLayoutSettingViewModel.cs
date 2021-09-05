@@ -1,23 +1,19 @@
-﻿using NengaJouSimple.Models.Layouts;
+﻿using NengaJouSimple.Extensions;
 using NengaJouSimple.Services;
-using NengaJouSimple.ViewModels.Entities.Addresses;
 using NengaJouSimple.ViewModels.Entities.Layouts;
-using NengaJouSimple.Extensions;
+using NengaJouSimple.ViewModels.Entities.Settings;
+using NengaJouSimple.ViewModels.PubSubEvents;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using Prism.Events;
 using System.Threading.Tasks;
-using NengaJouSimple.Common;
+using System.Windows;
 using System.Windows.Media;
-using NengaJouSimple.ViewModels.PubSubEvents;
 
 namespace NengaJouSimple.ViewModels
 {
@@ -29,11 +25,17 @@ namespace NengaJouSimple.ViewModels
 
         private readonly IEventAggregator eventAggregator;
 
+        private readonly ApplicationSettingService applicationSettingService;
+
         private readonly AddressCardLayoutService addressCardLayoutService;
 
         private readonly AddressCardService addressCardService;
 
         private readonly PrintService printService;
+
+        private ApplicationSettingViewModel applicationSetting;
+
+        private FontFamily currentFontFamily;
 
         private AddressCardLayoutViewModel selectedAddressCardLayout;
 
@@ -55,6 +57,7 @@ namespace NengaJouSimple.ViewModels
             IRegionManager regionManager,
             IDialogService dialogService,
             IEventAggregator eventAggregator,
+            ApplicationSettingService applicationSettingService,
             AddressCardLayoutService addressCardLayoutService,
             AddressCardService addressCardService,
             PrintService printService)
@@ -65,33 +68,37 @@ namespace NengaJouSimple.ViewModels
 
             this.eventAggregator = eventAggregator;
 
+            this.applicationSettingService = applicationSettingService;
+
             this.addressCardLayoutService = addressCardLayoutService;
 
             this.addressCardService = addressCardService;
 
             this.printService = printService;
 
-            var allAddressCards = addressCardService.LoadAll();
+            ApplicationSetting = applicationSettingService.Load();
 
-            AddressCards = new ObservableCollection<AddressCardViewModel>(allAddressCards);
+            CurrentFontFamily = new FontFamily(ApplicationSetting.FontFamilyName);
 
-            SelectedAddressCardLayout = addressCardLayoutService.Load();
+            var allAddressCardLayouts = addressCardLayoutService.LoadAll();
 
-            SelectedAddressCardLayout.AttachAddressCard(allAddressCards.First());
+            AddressCardLayouts = new ObservableCollection<AddressCardLayoutViewModel>(allAddressCardLayouts);
+
+            SelectedAddressCardLayout = AddressCardLayouts.First();
 
             CurrentAddressCardIndex = 1;
 
             IsLetterCanvasTemplateVisible = true;
 
-            AvailableFontFamilyNames = AvailableFontFamilyName.AvailableFontFamilyNames;
+            AvailableFontFamilyNames = applicationSetting.AvailableFontFamilies;
 
-            var fontFamilyName = AvailableFontFamilyNames.FirstOrDefault(f => f.EnglishName == SelectedAddressCardLayout.FontFamily.Source);
-
-            SelectedFontFamilyId = fontFamilyName?.Id ?? 0;
+            SelectedFontFamilyId = AvailableFontFamilyNames.FirstOrDefault(f => f.EnglishName == applicationSetting.FontFamilyName)?.Id ?? 0;
 
             GoBackAddressCardViewCommand = new DelegateCommand(GoBackAddressCardView);
 
-            SetDefaultValueCommand = new DelegateCommand<string>(SetDefaultValue);
+            PreviousViewAddressCardCommnad = new DelegateCommand(PreviousViewAddressCard);
+
+            NextViewAddressCardCommand = new DelegateCommand(NextViewAddressCard);
 
             SelectFontFamilyNameCommand = new DelegateCommand(SelectFontFamilyName);
 
@@ -103,13 +110,23 @@ namespace NengaJouSimple.ViewModels
 
             PrintSequenceCommand = new DelegateCommand<FrameworkElement>(OnPrintSequence);
 
-            PreviousViewAddressCardCommnad = new DelegateCommand(PreviousViewAddressCard);
+            SetDefaultValueCommand = new DelegateCommand<string>(SetDefaultValue);
 
-            NextViewAddressCardCommand = new DelegateCommand(NextViewAddressCard);
-
-            ValidViewAddressCardButtons();
+            ChangePreviousAndNextButtonEnablityStautus();
 
             PreparePrinter();
+        }
+
+        public ApplicationSettingViewModel ApplicationSetting
+        {
+            get { return applicationSetting; }
+            set { SetProperty(ref applicationSetting, value); }
+        }
+
+        public FontFamily CurrentFontFamily
+        {
+            get { return currentFontFamily; }
+            set { SetProperty(ref currentFontFamily, value); }
         }
 
         public AddressCardLayoutViewModel SelectedAddressCardLayout
@@ -131,9 +148,12 @@ namespace NengaJouSimple.ViewModels
             {
                 SetProperty(ref currentAddressCardIndex, value);
 
-                ValidViewAddressCardButtons();
+                ChangePreviousAndNextButtonEnablityStautus();
 
-                ChangeSelectedAddressCard();
+                if (0 < CurrentAddressCardIndex && AddressCardLayouts.Count() <= CurrentAddressCardIndex)
+                {
+                    SelectedAddressCardLayout = AddressCardLayouts[CurrentAddressCardIndex - 1];
+                }
             }
         }
 
@@ -161,13 +181,15 @@ namespace NengaJouSimple.ViewModels
             set { SetProperty(ref selectedFontFamilyId, value); }
         }
 
-        public ObservableCollection<AddressCardViewModel> AddressCards { get; }
+        public ObservableCollection<AddressCardLayoutViewModel> AddressCardLayouts { get; }
 
-        public List<AvailableFontFamilyName> AvailableFontFamilyNames { get; }
+        public List<AvailableFontFamilyNameViewModel> AvailableFontFamilyNames { get; }
 
         public DelegateCommand GoBackAddressCardViewCommand { get; }
 
-        public DelegateCommand<string> SetDefaultValueCommand { get; }
+        public DelegateCommand PreviousViewAddressCardCommnad { get; }
+
+        public DelegateCommand NextViewAddressCardCommand { get; }
 
         public DelegateCommand SelectFontFamilyNameCommand { get; }
 
@@ -179,9 +201,7 @@ namespace NengaJouSimple.ViewModels
 
         public DelegateCommand<FrameworkElement> PrintSequenceCommand { get; }
 
-        public DelegateCommand PreviousViewAddressCardCommnad { get; }
-
-        public DelegateCommand NextViewAddressCardCommand { get; }
+        public DelegateCommand<string> SetDefaultValueCommand { get; }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
@@ -204,9 +224,48 @@ namespace NengaJouSimple.ViewModels
             regionManager.RequestNavigate(RegionNames.ContentRegion, "AddressCardListView");
         }
 
+        private void PreviousViewAddressCard()
+        {
+            CurrentAddressCardIndex -= 1;
+        }
+
+        private void NextViewAddressCard()
+        {
+            CurrentAddressCardIndex += 1;
+        }
+
+        private void ChangePreviousAndNextButtonEnablityStautus()
+        {
+            if (AddressCardLayouts.Count() <= 1)
+            {
+                IsEnablePreviousViewAddressCard = false;
+                IsEnableNextViewAddressCard = false;
+
+                return;
+            }
+
+            IsEnablePreviousViewAddressCard = CurrentAddressCardIndex > 1;
+            IsEnableNextViewAddressCard = CurrentAddressCardIndex < AddressCardLayouts.Count();
+        }
+
+        private void SelectFontFamilyName()
+        {
+            var selectedFontFamilyName = AvailableFontFamilyNames[SelectedFontFamilyId];
+
+            ApplicationSetting.FontFamilyName = selectedFontFamilyName.EnglishName;
+
+            RaisePropertyChanged(nameof(ApplicationSetting));
+
+            CurrentFontFamily = new FontFamily(ApplicationSetting.FontFamilyName);
+
+            RaisePropertyChanged(nameof(CurrentFontFamily));
+        }
+
         private void SaveLayout()
         {
             addressCardLayoutService.Register(SelectedAddressCardLayout);
+
+            applicationSettingService.Update(applicationSetting);
 
             dialogService.ShowInformationDialog("レイアウトを保存しました。");
         }
@@ -238,15 +297,15 @@ namespace NengaJouSimple.ViewModels
 
             IsLetterCanvasTemplateVisible = false;
 
-            printService.Print(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
-
-            RegisterPrintedCurrentIndexAddressCard();
+            printService.Print(printElement, ApplicationSetting.PrintingOffsetX, ApplicationSetting.PrintingOffsetY);
 
             SelectedAddressCardLayout.IsAlreadyPrinted = true;
 
             RaisePropertyChanged(nameof(SelectedAddressCardLayout));
 
             IsLetterCanvasTemplateVisible = true;
+
+            addressCardService.UpdatePrintDateTime(SelectedAddressCardLayout.AddressCard);
         }
 
         private void OnPrintSequenceStart()
@@ -266,13 +325,13 @@ namespace NengaJouSimple.ViewModels
             {
                 var isCofirmedPrinting = printService.ConfirmPrinting();
 
-                if (!isCofirmedPrinting)
+                if (isCofirmedPrinting)
                 {
-                    return;
-                }
+                    IsLetterCanvasTemplateVisible = false;
 
-                // Raise event and set address card data on letter canvas.
-                eventAggregator.GetEvent<PrintSeqenceEvent>().Publish();
+                    // Raise event and set address card data on letter canvas.
+                    eventAggregator.GetEvent<PrintSeqenceEvent>().Publish();
+                }
 
                 return;
             }
@@ -282,13 +341,13 @@ namespace NengaJouSimple.ViewModels
 
         private void OnPrintSequence(FrameworkElement printElement)
         {
-            IsLetterCanvasTemplateVisible = false;
-
             if (!isBeginedSeqencePrinting)
             {
-                printService.Print(printElement, SelectedAddressCardLayout.PrintMarginLeft, SelectedAddressCardLayout.PrintMarginTop);
+                printService.Print(printElement, ApplicationSetting.PrintingOffsetX, ApplicationSetting.PrintingOffsetY);
 
-                RegisterPrintedCurrentIndexAddressCard();
+                SelectedAddressCardLayout.IsAlreadyPrinted = true;
+
+                addressCardService.UpdatePrintDateTime(SelectedAddressCardLayout.AddressCard);
 
                 isBeginedSeqencePrinting = true;
             }
@@ -297,28 +356,28 @@ namespace NengaJouSimple.ViewModels
             {
                 eventAggregator.GetEvent<PrintSeqenceEvent>().Publish();
             }
+            else
+            {
+                // End of printing
+                RaisePropertyChanged(nameof(SelectedAddressCardLayout));
 
-            // End of printing
-            SelectedAddressCardLayout.IsAlreadyPrinted = true;
+                IsLetterCanvasTemplateVisible = true;
 
-            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
-
-            IsLetterCanvasTemplateVisible = true;
-
-            isBeginedSeqencePrinting = false;
+                isBeginedSeqencePrinting = false;
+            }
         }
 
         private bool FindNextPrintTarget()
         {
-            var addressCardLength = AddressCards.Count();
+            var addressCardLayoutCount = AddressCardLayouts.Count();
 
             var currentIndex = CurrentAddressCardIndex - 1;
 
-            while (currentIndex < addressCardLength)
+            while (currentIndex < addressCardLayoutCount)
             {
-                var addressCard = AddressCards[currentIndex];
+                var addressCardLayout = AddressCardLayouts[currentIndex];
 
-                if (!addressCard.IsAlreadyPrinted)
+                if (!addressCardLayout.IsAlreadyPrinted)
                 {
                     CurrentAddressCardIndex = currentIndex + 1;
 
@@ -331,102 +390,45 @@ namespace NengaJouSimple.ViewModels
             return false;
         }
 
-        private void RegisterPrintedCurrentIndexAddressCard()
-        {
-            var addressCard = AddressCards[CurrentAddressCardIndex - 1];
-
-            addressCard.IsAlreadyPrinted = true;
-
-            addressCard.PrintedDateTime = DateTime.Now;
-
-            AddressCards[CurrentAddressCardIndex - 1] = addressCard;
-
-            addressCardService.Register(addressCard); ;
-        }
-
         private void SetDefaultValue(string targetName)
         {
             switch (targetName)
             {
                 case "PostalCode.FontSize":
-                    SelectedAddressCardLayout.PostalCode.Font.FontSize = AddressCardLayout.PostalCodeFontSizeDefaultValue;
+                    SelectedAddressCardLayout.PostalCode.FontSize = ApplicationSetting.PostalCodeSetting.FontSizeDefaultValue;
                     break;
 
                 case "PostalCode.SpaceBetweenMailWardAndTownWard":
-                    SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardAndTownWard = AddressCardLayout.PostalCodeSpaceBetweenMainWardAndTownWardDefaultValue;
+                    ApplicationSetting.PostalCodeSetting.SpaceBetweenMailWardAndTownWard = ApplicationSetting.PostalCodeSetting.SpaceBetweenMailWardAndTownWardDefaultValue;
                     break;
 
                 case "PostalCode.SpaceBetweenMailWardEachWard":
-                    SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardEachWard = AddressCardLayout.PostalCodeSpaceBetweenMailWardEachWardDefaultValue;
+                    ApplicationSetting.PostalCodeSetting.SpaceBetweenMailWardEachWard = ApplicationSetting.PostalCodeSetting.SpaceBetweenMailWardEachWardDefaultValue;
                     break;
 
                 case "PostatlCode.SpaceBetweenTownWardEachWard":
-                    SelectedAddressCardLayout.PostalCode.SpaceBetweenTownWardEachWard = AddressCardLayout.PostalCodeSpaceBetweenTownWardEachWardDefaultValue;
+                    ApplicationSetting.PostalCodeSetting.SpaceBetweenTownWardEachWard = ApplicationSetting.PostalCodeSetting.SpaceBetweenTownWardEachWardDefaultValue;
                     break;
 
                 case "SenderPostalCode.FontSize":
-                    SelectedAddressCardLayout.SenderPostalCode.Font.FontSize = AddressCardLayout.SenderPostalCodeFontSizeDefaultValue;
+                    SelectedAddressCardLayout.SenderPostalCode.FontSize = ApplicationSetting.SenderPostalCodeSetting.FontSizeDefaultValue;
                     break;
 
                 case "SenderPostalCode.SpaceBetweenMailWardAndTownWard":
-                    SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenMailWardAndTownWard = AddressCardLayout.SenderPostalCodeSpaceBetweenMainWardAndTownWardDefaultValue;
+                    ApplicationSetting.SenderPostalCodeSetting.SpaceBetweenMailWardAndTownWard = ApplicationSetting.SenderPostalCodeSetting.SpaceBetweenMailWardAndTownWardDefaultValue;
                     break;
 
                 case "SenderPostalCode.SpaceBetweenMailWardEachWard":
-                    SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenMailWardEachWard = AddressCardLayout.SenderPostalCodeSpaceBetweenMailWardEachWardDefaultValue;
+                    ApplicationSetting.SenderPostalCodeSetting.SpaceBetweenMailWardEachWard = ApplicationSetting.SenderPostalCodeSetting.SpaceBetweenMailWardEachWardDefaultValue;
                     break;
 
                 case "SenderPostatlCode.SpaceBetweenTownWardEachWard":
-                    SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenTownWardEachWard = AddressCardLayout.SenderPostalCodeSpaceBetweenTownWardEachWardDefaultValue;
+                    ApplicationSetting.SenderPostalCodeSetting.SpaceBetweenTownWardEachWard = ApplicationSetting.SenderPostalCodeSetting.SpaceBetweenTownWardEachWardDefaultValue;
                     break;
 
                 default:
                     return;
             }
-
-            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
-        }
-
-        private void SelectFontFamilyName()
-        {
-            var selectedFontFamilyName = AvailableFontFamilyNames[SelectedFontFamilyId];
-
-            SelectedAddressCardLayout.FontFamily = new FontFamily(selectedFontFamilyName.EnglishName);
-
-            RaisePropertyChanged(nameof(SelectedAddressCardLayout));
-        }
-
-        private void PreviousViewAddressCard()
-        {
-            CurrentAddressCardIndex -= 1;
-        }
-
-        private void NextViewAddressCard()
-        {
-            CurrentAddressCardIndex += 1;
-        }
-
-        private void ValidViewAddressCardButtons()
-        {
-            if (AddressCards.Count() <= 1)
-            {
-                IsEnablePreviousViewAddressCard = false;
-                IsEnableNextViewAddressCard = false;
-
-                return;
-            }
-
-            IsEnablePreviousViewAddressCard = CurrentAddressCardIndex > 1;
-            IsEnableNextViewAddressCard = CurrentAddressCardIndex < AddressCards.Count();
-        }
-
-        private void ChangeSelectedAddressCard()
-        {
-            if (CurrentAddressCardIndex < 1 || AddressCards.Count() < CurrentAddressCardIndex) return;
-
-            var selectedAddressCard = AddressCards[CurrentAddressCardIndex - 1];
-
-            SelectedAddressCardLayout.AttachAddressCard(selectedAddressCard);
 
             RaisePropertyChanged(nameof(SelectedAddressCardLayout));
         }

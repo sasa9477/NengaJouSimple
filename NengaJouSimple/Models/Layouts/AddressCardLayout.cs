@@ -1,115 +1,172 @@
 ﻿using AutoMapper;
+using NengaJouSimple.Models.Addresses;
+using NengaJouSimple.Models.Settings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NengaJouSimple.Models.Layouts
 {
-    public class AddressCardLayout : EntityBase
+    public class AddressCardLayout
     {
-        public const double PostalCodeFontSizeDefaultValue = 20;
-
-        public const double PostalCodeSpaceBetweenMainWardAndTownWardDefaultValue = 3;
-
-        public const double PostalCodeSpaceBetweenMailWardEachWardDefaultValue = 7.8;
-
-        public const double PostalCodeSpaceBetweenTownWardEachWardDefaultValue = 7.4;
-
-        public const double SenderPostalCodeFontSizeDefaultValue = 14;
-
-        public const double SenderPostalCodeSpaceBetweenMainWardAndTownWardDefaultValue = 4.5;
-
-        public const double SenderPostalCodeSpaceBetweenMailWardEachWardDefaultValue = 3.7;
-
-        public const double SenderPostalCodeSpaceBetweenTownWardEachWardDefaultValue = 3.7;
-
         public AddressCardLayout()
         {
-            FontFamilyName = "Yu Mincho - SemiBold";
+        }
 
-            PostalCode = new PostalCodeTextLayout
+        public AddressCardLayout(
+            ApplicationSetting applicationSetting,
+            IEnumerable<TextLayout> textLayouts,
+            AddressCard addressCard)
+        {
+            PostalCode = new TextLayout
             {
-                TextLayoutKind = TextLayoutKind.PostalCode,
-                Font = new Font
-                {
-                    FontSize = PostalCodeFontSizeDefaultValue,
-                },
-                Position = new Position(165, 48),
-                SpaceBetweenMailWardAndTownWard = PostalCodeSpaceBetweenMainWardAndTownWardDefaultValue,
-                SpaceBetweenMailWardEachWard = PostalCodeSpaceBetweenMailWardEachWardDefaultValue,
-                SpaceBetweenTownWardEachWard = PostalCodeSpaceBetweenTownWardEachWardDefaultValue
+                FontSize = applicationSetting.PostalCodeSetting.FontSizeDefaultValue,
+                Position = applicationSetting.PostalCodeSetting.PositionDefaultValue
             };
 
             Address = new TextLayout
             {
-                TextLayoutKind = TextLayoutKind.Address,
-                Font = new Font
-                {
-                    FontSize = 20,
-                },
-                Position = new Position(300, 110),
+                FontSize = applicationSetting.AddressSetting.FontSizeDefaultValue,
+                Position = applicationSetting.AddressSetting.PositionDefaultValue
             };
 
             Addressee = new TextLayout
             {
-                TextLayoutKind = TextLayoutKind.Addressee,
-                Font = new Font
-                {
-                    FontSize = 43,
-                },
-                Position = new Position(167, 110),
+                FontSize = applicationSetting.AddresseeSetting.FontSizeDefaultValue,
+                Position = applicationSetting.AddresseeSetting.PositionDefaultValue
             };
 
-            SenderPostalCode = new PostalCodeTextLayout
+            SenderPostalCode = new TextLayout
             {
-                TextLayoutKind = TextLayoutKind.SenderPostalCode,
-                Font = new Font
-                {
-                    FontSize = SenderPostalCodeFontSizeDefaultValue,
-                },
-                Position = new Position(23, 464),
-                SpaceBetweenMailWardAndTownWard = SenderPostalCodeSpaceBetweenMainWardAndTownWardDefaultValue,
-                SpaceBetweenMailWardEachWard = SenderPostalCodeSpaceBetweenMailWardEachWardDefaultValue,
-                SpaceBetweenTownWardEachWard = SenderPostalCodeSpaceBetweenTownWardEachWardDefaultValue
+                FontSize = applicationSetting.SenderPostalCodeSetting.FontSizeDefaultValue,
+                Position = applicationSetting.SenderPostalCodeSetting.PositionDefaultValue
             };
 
             SenderAddress = new TextLayout
             {
-                TextLayoutKind = TextLayoutKind.SenderAddress,
-                Font = new Font
-                {
-                    FontSize = 14,
-                },
-                Position = new Position(115, 220),
+                FontSize = applicationSetting.SenderAddressSetting.FontSizeDefaultValue,
+                Position = applicationSetting.SenderAddressSetting.PositionDefaultValue
             };
 
             Sender = new TextLayout
             {
-                TextLayoutKind = TextLayoutKind.Sender,
-                Font = new Font
-                {
-                    FontSize = 24,
-                },
-                Position = new Position(55, 260),
+                FontSize = applicationSetting.SenderSetting.FontSizeDefaultValue,
+                Position = applicationSetting.SenderSetting.PositionDefaultValue
             };
+
+            foreach (var textLayout in textLayouts)
+            {
+                switch (textLayout.TextLayoutKind)
+                {
+                    case TextLayoutKind.PostalCode:
+                        PostalCode = textLayout;
+                        break;
+
+                    case TextLayoutKind.Address:
+                        Address = textLayout;
+                        break;
+
+                    case TextLayoutKind.Addressee:
+                        Addressee = textLayout;
+                        break;
+
+                    case TextLayoutKind.SenderPostalCode:
+                        SenderPostalCode = textLayout;
+                        break;
+
+                    case TextLayoutKind.SenderAddress:
+                        SenderAddress = textLayout;
+                        break;
+
+                    case TextLayoutKind.Sender:
+                        Sender = textLayout;
+                        break;
+                }
+            }
+
+            PostalCode.Text = addressCard.PostalCode;
+            Address.Text = $"{addressCard.Address1}\n　{addressCard.Address2}";
+            Addressee.Text = BuildAddressee(addressCard);
+            SenderPostalCode.Text = addressCard.SenderAddressCard.PostalCode;
+            SenderAddress.Text = $"{addressCard.SenderAddressCard.Address1}\n　{addressCard.SenderAddressCard.Address2}";
+            Sender.Text = BuildSender(addressCard.SenderAddressCard);
+
+            AddressCard = addressCard;
         }
 
-        public string FontFamilyName { get; set; }
-
-        public PostalCodeTextLayout PostalCode { get; set; }
+        public TextLayout PostalCode { get; set; }
 
         public TextLayout Address { get; set; }
 
         public TextLayout Addressee { get; set; }
 
-        public PostalCodeTextLayout SenderPostalCode { get; set; }
+        public TextLayout SenderPostalCode { get; set; }
 
         public TextLayout SenderAddress { get; set; }
 
         public TextLayout Sender { get; set; }
 
-        public double PrintMarginLeft { get; set; }
+        public AddressCard AddressCard { get; set; }
 
-        public double PrintMarginTop { get; set; }
+        public IEnumerable<TextLayout> GetTextLayoutProperties()
+        {
+            yield return PostalCode;
+            yield return Address;
+            yield return Addressee;
+            yield return SenderPostalCode;
+            yield return SenderAddress;
+            yield return Sender;
+        }
+
+        private string BuildAddressee(AddressCard addressCard)
+        {
+            var printingRenmeis = addressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
+
+            var renmeiFamilyNameLength = CalculateFamilyNameLength(printingRenmeis);
+
+            var maxFamilyNameLength = Math.Max(renmeiFamilyNameLength, addressCard.MainName.FamilyName.Length);
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine(addressCard.MainName.ToStringAppendingHeadSpaces(maxFamilyNameLength - addressCard.MainName.FamilyName.Length + 1));
+
+            foreach (var renmei in printingRenmeis)
+            {
+                sb.AppendLine(renmei.ToStringAppendingHeadSpaces(maxFamilyNameLength - renmei.FamilyName.Length + 1));
+            }
+
+            return sb.ToString();
+        }
+
+        private string BuildSender(SenderAddressCard senderAddressCard)
+        {
+            var printingRenmeis = senderAddressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
+
+            var renmeiFamilyNameLength = CalculateFamilyNameLength(printingRenmeis);
+
+            var maxFamilyNameLength = Math.Max(renmeiFamilyNameLength, senderAddressCard.MainName.FamilyName.Length);
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine(senderAddressCard.MainName.ToStringAppendingHeadSpaces(maxFamilyNameLength - senderAddressCard.MainName.FamilyName.Length + 1));
+
+            foreach (var renmei in printingRenmeis)
+            {
+                sb.AppendLine(renmei.ToStringAppendingHeadSpaces(maxFamilyNameLength - renmei.FamilyName.Length + 1));
+            }
+
+            return sb.ToString();
+        }
+
+        private int CalculateFamilyNameLength(IEnumerable<Renmei> renmeis)
+        {
+            if (renmeis.Any())
+            {
+                return renmeis.Select(r => r.FamilyName.Length).Max();
+            }
+
+            return 0;
+        }
     }
 }

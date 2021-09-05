@@ -17,7 +17,7 @@ namespace NengaJouSimple.Data.Web
         {
             if (string.IsNullOrEmpty(zipcode))
             {
-                return string.Empty;
+                throw new InvalidOperationException($"{nameof(zipcode)} must not be null.");
             }
 
             try

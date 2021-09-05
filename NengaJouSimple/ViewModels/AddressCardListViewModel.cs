@@ -11,6 +11,7 @@ using Prism.Services.Dialogs;
 using System.Linq;
 using Prism.Regions;
 using NengaJouSimple.Models.Addresses;
+using NengaJouSimple.ViewModels.Entities.Settings;
 
 namespace NengaJouSimple.ViewModels
 {
@@ -21,6 +22,8 @@ namespace NengaJouSimple.ViewModels
         private readonly IDialogService dialogService;
 
         private readonly AddressCardService addressCardService;
+
+        private readonly ApplicationSettingViewModel applicationSetting;
 
         private AddressCardViewModel addressCard;
 
@@ -33,6 +36,7 @@ namespace NengaJouSimple.ViewModels
         public AddressCardListViewModel(
             IRegionManager regionManager,
             IDialogService dialogService,
+            ApplicationSettingService applicationSettingService,
             AddressCardService addressCardService,
             SenderAddressCardService senderAddressCardService)
         {
@@ -40,18 +44,21 @@ namespace NengaJouSimple.ViewModels
             this.dialogService = dialogService;
             this.addressCardService = addressCardService;
 
+            applicationSetting = applicationSettingService.Load();
+
             AddressCard = new AddressCardViewModel();
 
             SelectedAddressCard = new AddressCardViewModel();
 
             var allAddressCards = addressCardService.LoadAll();
+
             AddressCards = new ObservableCollection<AddressCardViewModel>(allAddressCards);
 
-            Honorifics = Honorific.Honorifics;
+            Honorifics = applicationSetting.Honorifics;
 
-            AddressCard.MainName.Honorific = Honorific.DefalutHonorific;
+            AddressCard.MainName.Honorific = applicationSetting.DefaultHonorific;
 
-            SenderAddressCards = senderAddressCardService.LoadAll().ToList();
+            SenderAddressCards = senderAddressCardService.LoadAll();
 
             SelectedSenderAddressCardId = 1;
 
@@ -131,7 +138,7 @@ namespace NengaJouSimple.ViewModels
         {
             AddressCard.Clear();
 
-            AddressCard.MainName.Honorific = Honorific.DefalutHonorific;
+            AddressCard.MainName.Honorific = applicationSetting.DefaultHonorific;
 
             RaisePropertyChanged(nameof(AddressCard));
 

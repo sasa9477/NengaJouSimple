@@ -13,13 +13,31 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
         {
             Text = string.Empty;
             Position = new PositionViewModel();
-            Font = new FontViewModel();
         }
+
+        public int Id { get; set; }
 
         public string Text { get; set; }
 
         public PositionViewModel Position { get; set; }
 
-        public FontViewModel Font { get; set; }
+        public double FontSize { get; set; }
+
+        public DateTime RegisterdDateTime { get; set; }
+
+        public DateTime UpdatedDateTime { get; set; }
+
+        public TextLayoutViewModel Clone()
+        {
+            return new TextLayoutViewModel
+            {
+                Id = Id,
+                Text = Text,
+                Position = Position.Clone(),
+                FontSize = FontSize,
+                RegisterdDateTime = RegisterdDateTime,
+                UpdatedDateTime = UpdatedDateTime
+            };
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace NengaJouSimple.Data.Devices
+namespace NengaJouSimple.Devices
 {
     public class Printer
     {
@@ -16,9 +16,9 @@ namespace NengaJouSimple.Data.Devices
         public Task PreparePrinting()
         {
             // ページメディアサイズの設定に時間がかかるため準備メソッドを用意
-            
+
             printDialog = new PrintDialog();
-            
+
             printDialog.PrintTicket.PageMediaSize = new PageMediaSize(PageMediaSizeName.JapanHagakiPostcard);
 
             return Task.CompletedTask;
@@ -29,7 +29,7 @@ namespace NengaJouSimple.Data.Devices
             // メインスレッドで FrameworkElementを VisualBrushに変換するため、再度インスタンスを作成する
 
             printDialog = new PrintDialog();
-            
+
             printDialog.PrintTicket.PageMediaSize = new PageMediaSize(PageMediaSizeName.JapanHagakiPostcard);
 
             isInitializedPrinting = printDialog.ShowDialog() ?? false;

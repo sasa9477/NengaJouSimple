@@ -39,5 +39,14 @@ namespace NengaJouSimple.Models.Addresses
         public Renmei Renmei4 { get; set; }
 
         public Renmei Renmei5 { get; set; }
+
+        public IEnumerable<Renmei> EnumerateRenmeis()
+        {
+            yield return Renmei1;
+            yield return Renmei2;
+            yield return Renmei3;
+            yield return Renmei4;
+            yield return Renmei5;
+        }
     }
 }

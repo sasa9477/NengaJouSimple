@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NengaJouSimple.Models;
+using NengaJouSimple.ViewModels.Entities.Layouts;
 
 namespace NengaJouSimple.ViewModels.Entities.Addresses
 {
@@ -49,8 +50,6 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
 
         public bool IsPrintTarget { get; set; }
 
-        public bool IsAlreadyPrinted { get; set; }
-
         public DateTime? PrintedDateTime { get; set; }
 
         public AddressCardViewModel Clone()
@@ -72,7 +71,6 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
                 UpdatedDateTime = UpdatedDateTime,
                 IsRegisterdCard = IsRegisterdCard,
                 IsPrintTarget = IsPrintTarget,
-                IsAlreadyPrinted = IsAlreadyPrinted,
                 PrintedDateTime = PrintedDateTime
             };
         }
