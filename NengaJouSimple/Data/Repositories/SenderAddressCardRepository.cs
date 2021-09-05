@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NengaJouSimple.Data.Csv;
 using NengaJouSimple.Models.Addresses;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,15 @@ namespace NengaJouSimple.Data.Repositories
     {
         private readonly ApplicationDbContext applicationDbContext;
 
-        public SenderAddressCardRepository(ApplicationDbContext applicationDbContext)
+        private readonly SenderAddressCardCsvService senderAddressCardCsvService;
+
+        public SenderAddressCardRepository(
+            ApplicationDbContext applicationDbContext,
+            SenderAddressCardCsvService senderAddressCardCsvService)
         {
             this.applicationDbContext = applicationDbContext;
+
+            this.senderAddressCardCsvService = senderAddressCardCsvService;
         }
 
         public List<SenderAddressCard> LoadAll()
@@ -31,6 +38,8 @@ namespace NengaJouSimple.Data.Repositories
             applicationDbContext.Update(senderAddressCard);
 
             applicationDbContext.SaveChanges();
+
+            WriteCsvFile();
         }
 
         public void Delete(SenderAddressCard senderAddressCard)
@@ -40,6 +49,8 @@ namespace NengaJouSimple.Data.Repositories
             applicationDbContext.Remove(senderAddressCard);
             
             applicationDbContext.SaveChanges();
+
+            WriteCsvFile();
         }
 
         public bool IsRegisterdAnySenderAddressCard()
@@ -47,13 +58,22 @@ namespace NengaJouSimple.Data.Repositories
             return applicationDbContext.SenderAddressCards.Any();
         }
 
-        public void AddInitialData(IEnumerable<SenderAddressCard> senderAddressCards)
+        public void InitializeData()
         {
             applicationDbContext.ChangeTracker.Clear();
+
+            var senderAddressCards = senderAddressCardCsvService.ReadAddressCardCsv();
 
             applicationDbContext.AddRange(senderAddressCards);
 
             applicationDbContext.SaveChangesAsync();
+        }
+
+        private void WriteCsvFile()
+        {
+            var allAddressCards = LoadAll();
+
+            senderAddressCardCsvService.WriteAddressCardCsv(allAddressCards);
         }
     }
 }

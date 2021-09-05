@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NengaJouSimple.Models.Layouts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -45,8 +46,15 @@ namespace NengaJouSimple.Models.Addresses
 
         public bool IsPrintTarget { get; set; }
 
-        public bool IsAlreadyPrinted { get; set; }
-
         public DateTime? PrintedDateTime { get; set; }
+
+        public IEnumerable<Renmei> EnumerateRenmeis()
+        {
+            yield return Renmei1;
+            yield return Renmei2;
+            yield return Renmei3;
+            yield return Renmei4;
+            yield return Renmei5;
+        }
     }
 }

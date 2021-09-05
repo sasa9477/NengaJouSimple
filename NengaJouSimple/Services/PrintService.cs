@@ -1,4 +1,4 @@
-﻿using NengaJouSimple.Data.Devices;
+﻿using NengaJouSimple.Devices;
 using System;
 using System.Collections.Generic;
 using System.Text;

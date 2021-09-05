@@ -1,71 +1,75 @@
 ﻿using AutoMapper;
-using NengaJouSimple.Data.Csv;
-using NengaJouSimple.Data.Jsons;
-using NengaJouSimple.Data.Jsons.Entities;
 using NengaJouSimple.Data.Repositories;
+using NengaJouSimple.Models.Addresses;
 using NengaJouSimple.Models.Layouts;
+using NengaJouSimple.Models.Settings;
 using NengaJouSimple.ViewModels.Entities.Layouts;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace NengaJouSimple.Services
 {
     public class AddressCardLayoutService
     {
-        private readonly AddressCardLayoutRepository addressCardLayoutRepository;
+        private readonly ApplicationSettingRepository applicationSettingRepository;
 
-        private readonly AddressCardLayoutJsonService addressCardLayoutJsonService;
+        private readonly TextLayoutRepository textLayoutRepository;
+
+        private readonly AddressCardRepository addressCardRepository;
 
         private readonly IMapper mapper;
 
         public AddressCardLayoutService(
-            AddressCardLayoutRepository addressCardLayoutRepository,
-            AddressCardLayoutJsonService addressCardLayoutJsonService,
+            ApplicationSettingRepository applicationSettingRepository,
+            TextLayoutRepository textLayoutRepository,
+            AddressCardRepository addressCardRepository,
             IMapper mapper)
         {
-            this.addressCardLayoutRepository = addressCardLayoutRepository;
-            this.addressCardLayoutJsonService = addressCardLayoutJsonService;
+            this.applicationSettingRepository = applicationSettingRepository;
+            this.textLayoutRepository = textLayoutRepository;
+            this.addressCardRepository = addressCardRepository;
             this.mapper = mapper;
         }
 
-        public AddressCardLayoutViewModel Load()
+        public List<AddressCardLayoutViewModel> LoadAll()
         {
-            var addressCardLayout = addressCardLayoutRepository.Load();
+            var addressCards = addressCardRepository.LoadAllPrintTargets();
 
-            return mapper.Map<AddressCardLayoutViewModel>(addressCardLayout);
+            var addressCardLayouts = new List<AddressCardLayout>();
+
+            foreach (var addressCard in addressCards)
+            {
+                var applicationSetting = applicationSettingRepository.Load();
+
+                var textLayouts = textLayoutRepository.LoadByAddressCard(addressCard);
+
+                var addressCardLayout = new AddressCardLayout(applicationSetting, textLayouts, addressCard);
+
+                addressCardLayouts.Add(addressCardLayout);
+            }
+
+            return mapper.Map<List<AddressCardLayoutViewModel>>(addressCardLayouts);
         }
 
         public void Register(AddressCardLayoutViewModel addressCardLayoutViewModel)
         {
             var addressCardLayout = mapper.Map<AddressCardLayout>(addressCardLayoutViewModel);
 
-            addressCardLayoutRepository.Register(addressCardLayout);
+            var textLayouts = addressCardLayout.GetTextLayoutProperties();
 
-            WriteJsonFile();
+            textLayoutRepository.Register(textLayouts);
         }
 
-        public void ReadJsonFile()
+        public void Delete(AddressCard addressCard)
         {
-            var addressCardLayout = new AddressCardLayout();
+            var textLayouts = textLayoutRepository.LoadByAddressCard(addressCard);
 
-            var addressCardLayoutJsonDTO = addressCardLayoutJsonService.ReadAddressCardLayoutJson();
-
-            if (addressCardLayoutJsonDTO != null)
-            {
-                addressCardLayout = mapper.Map<AddressCardLayout>(addressCardLayoutJsonDTO);
-            }
-
-            addressCardLayoutRepository.Register(addressCardLayout);
+            textLayoutRepository.Delete(textLayouts);
         }
 
-        private void WriteJsonFile()
+        public void InitializeData()
         {
-            var addressCardLayout = addressCardLayoutRepository.Load();
-
-            var addressCardLayoutJsonDTO = mapper.Map<AddressCardLayoutJsonDTO>(addressCardLayout);
-
-            addressCardLayoutJsonService.WriteAddressCardLayoutJson(addressCardLayoutJsonDTO);
+            textLayoutRepository.InitializeData();
         }
     }
 }

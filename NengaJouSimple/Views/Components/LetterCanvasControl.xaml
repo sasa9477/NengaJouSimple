@@ -46,19 +46,18 @@
             x:Name="RootCanvas"
             ClipToBounds="True">
             <cc:PostalCodeTextBlockControl
-                MailWardText="{Binding SelectedAddressCardLayout.PostalCode.MailWard}"
-                TownWardText="{Binding SelectedAddressCardLayout.PostalCode.TownWard}"
-                FontSize="{Binding SelectedAddressCardLayout.PostalCode.Font.FontSize}"
-                MailWardAndTownWardMargin="{Binding SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardAndTownWard, Converter={StaticResource SpaceBetweenMailWardAndTownWardMarginConverter}}"
-                MailWardEachWardMargin="{Binding SelectedAddressCardLayout.PostalCode.SpaceBetweenMailWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
-                TownWardEachWardMargin="{Binding SelectedAddressCardLayout.PostalCode.SpaceBetweenTownWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
+                Text ="{Binding SelectedAddressCardLayout.PostalCode.Text}"
+                FontSize="{Binding SelectedAddressCardLayout.PostalCode.FontSize}"
+                MailWardAndTownWardMargin="{Binding ApplicationSetting.PostalCodeSetting.SpaceBetweenMailWardAndTownWard, Converter={StaticResource SpaceBetweenMailWardAndTownWardMarginConverter}}"
+                MailWardEachWardMargin="{Binding ApplicationSetting.PostalCodeSetting.SpaceBetweenMailWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
+                TownWardEachWardMargin="{Binding ApplicationSetting.PostalCodeSetting.SpaceBetweenTownWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
                 d:MailWardText="888"
                 d:TownWardText="8888"
-                d:MailWardAndTownWardMargin="0,0,3,0"
-                d:MailWardEachWardMargin="7.8,0"
+                d:MailWardAndTownWardMargin="0,0,1,0"
+                d:MailWardEachWardMargin="7.4,0"
                 d:TownWardEachWardMargin="7.4,0"
                 d:FontSize="22"
-                d:Canvas.Left="165" d:Canvas.Top="48">
+                d:Canvas.Left="164" d:Canvas.Top="47">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior
                         X="{Binding SelectedAddressCardLayout.PostalCode.Position.X, Mode=TwoWay}"
@@ -68,11 +67,8 @@
 
             <cc:VerticalTextBlockControl
                 Text="{Binding SelectedAddressCardLayout.Address.Text, Converter={StaticResource NumberAndHyphenToTategakiConverter}}"
-                FontSize="{Binding SelectedAddressCardLayout.Address.Font.FontSize}"
-                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
-                FontWeight="{Binding SelectedAddressCardLayout.Address.Font.FontWeight}"
-                FontStyle="{Binding SelectedAddressCardLayout.Address.Font.FontStyle}"
-                VerticalAlignment="{Binding SelectedAddressCardLayout.Address.Font.VerticalAlignment}"
+                FontSize="{Binding SelectedAddressCardLayout.Address.FontSize}"
+                FontFamily="{Binding CurrentFontFamily}"
                 d:Text="東京都江東区荒川一ー十五&#xA;若草荘 ２０３号室"
                 d:FontSize="20"
                 d:Canvas.Left="300" d:Canvas.Top="110" d:FontFamily="Yu Mincho">
@@ -85,11 +81,8 @@
 
             <cc:VerticalTextBlockControl
                 Text="{Binding SelectedAddressCardLayout.Addressee.Text, Converter={StaticResource NumberAndHyphenToTategakiConverter}}"
-                FontSize="{Binding SelectedAddressCardLayout.Addressee.Font.FontSize}"
-                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
-                FontWeight="{Binding SelectedAddressCardLayout.Addressee.Font.FontWeight}"
-                FontStyle="{Binding SelectedAddressCardLayout.Addressee.Font.FontStyle}"
-                VerticalAlignment="{Binding SelectedAddressCardLayout.Addressee.Font.VerticalAlignment}"
+                FontSize="{Binding SelectedAddressCardLayout.Addressee.FontSize}"
+                FontFamily="{Binding CurrentFontFamily}"
                 d:Text="工藤　勝則様"
                 d:FontSize="43"
                 d:Canvas.Left="167" d:Canvas.Top="110">
@@ -101,12 +94,11 @@
             </cc:VerticalTextBlockControl>
 
             <cc:PostalCodeTextBlockControl
-                MailWardText="{Binding SelectedAddressCardLayout.SenderPostalCode.MailWard}"
-                TownWardText="{Binding SelectedAddressCardLayout.SenderPostalCode.TownWard}"
-                FontSize="{Binding SelectedAddressCardLayout.SenderPostalCode.Font.FontSize}"
-                MailWardAndTownWardMargin="{Binding SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenMailWardAndTownWard, Converter={StaticResource SpaceBetweenMailWardAndTownWardMarginConverter}}"
-                MailWardEachWardMargin="{Binding SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenMailWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
-                TownWardEachWardMargin="{Binding SelectedAddressCardLayout.SenderPostalCode.SpaceBetweenTownWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
+                Text ="{Binding SelectedAddressCardLayout.SenderPostalCode.Text}"
+                FontSize="{Binding SelectedAddressCardLayout.SenderPostalCode.FontSize}"
+                MailWardAndTownWardMargin="{Binding ApplicationSetting.SenderPostalCodeSetting.SpaceBetweenMailWardAndTownWard, Converter={StaticResource SpaceBetweenMailWardAndTownWardMarginConverter}}"
+                MailWardEachWardMargin="{Binding ApplicationSetting.SenderPostalCodeSetting.SpaceBetweenMailWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
+                TownWardEachWardMargin="{Binding ApplicationSetting.SenderPostalCodeSetting.SpaceBetweenTownWardEachWard, Converter={StaticResource EachWardSpaceAndMarginConverter}}"
                 d:MailWardText="888"
                 d:TownWardText="8888"
                 d:MailWardAndTownWardMargin="0,0,4.5,0"
@@ -123,11 +115,8 @@
 
             <cc:VerticalTextBlockControl
                 Text="{Binding SelectedAddressCardLayout.SenderAddress.Text, Converter={StaticResource NumberAndHyphenToTategakiConverter}}"
-                FontSize="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontSize}"
-                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
-                FontWeight="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontWeight}"
-                FontStyle="{Binding SelectedAddressCardLayout.SenderAddress.Font.FontStyle}"
-                VerticalAlignment="{Binding SelectedAddressCardLayout.SenderAddress.Font.VerticalAlignment}"
+                FontSize="{Binding SelectedAddressCardLayout.SenderAddress.FontSize}"
+                FontFamily="{Binding CurrentFontFamily}"
                 d:Text="東京都江東区荒川一の十六"
                 d:FontSize="15"
                 d:Canvas.Left="110" d:Canvas.Top="200">
@@ -140,11 +129,8 @@
 
             <cc:VerticalTextBlockControl
                 Text="{Binding SelectedAddressCardLayout.Sender.Text, Converter={StaticResource NumberAndHyphenToTategakiConverter}}"
-                FontSize="{Binding SelectedAddressCardLayout.Sender.Font.FontSize}"
-                FontFamily="{Binding SelectedAddressCardLayout.FontFamily}"
-                FontWeight="{Binding SelectedAddressCardLayout.Sender.Font.FontWeight}"
-                FontStyle="{Binding SelectedAddressCardLayout.Sender.Font.FontStyle}"
-                VerticalAlignment="{Binding SelectedAddressCardLayout.Sender.Font.VerticalAlignment}"
+                FontSize="{Binding SelectedAddressCardLayout.Sender.FontSize}"
+                FontFamily="{Binding CurrentFontFamily}"
                 d:Text="佐藤 弘樹"
                 d:FontSize="24"
                 d:Canvas.Left="55" d:Canvas.Top="260">

@@ -26,5 +26,14 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
         {
             return $"{{X={X}, Y={Y}}}";
         }
+
+        public PositionViewModel Clone()
+        {
+            return new PositionViewModel
+            {
+                X = X,
+                Y = Y
+            };
+        }
     }
 }

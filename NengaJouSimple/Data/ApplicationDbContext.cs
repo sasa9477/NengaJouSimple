@@ -3,9 +3,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NengaJouSimple.Models;
 using NengaJouSimple.Models.Addresses;
 using NengaJouSimple.Models.Layouts;
+using NengaJouSimple.Models.Settings;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 
 namespace NengaJouSimple.Data
@@ -16,7 +15,7 @@ namespace NengaJouSimple.Data
 
         public DbSet<SenderAddressCard> SenderAddressCards => Set<SenderAddressCard>();
 
-        public DbSet<AddressCardLayout> AddressCardLayouts => Set<AddressCardLayout>();
+        public DbSet<TextLayout> TextLayouts => Set<TextLayout>();
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -24,7 +23,7 @@ namespace NengaJouSimple.Data
 
         public override int SaveChanges()
         {
-            foreach(var entry in ChangeTracker.Entries<EntityBase>())
+            foreach (var entry in ChangeTracker.Entries<EntityBase>())
             {
                 if (entry.State == EntityState.Added)
                 {
@@ -107,73 +106,13 @@ namespace NengaJouSimple.Data
                     .HasConversion(renmeiConverter);
             });
 
-            var positionConverter = new ValueConverter<Position, string>(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<Position>(v, null));
-
-            modelBuilder.Entity<AddressCardLayout>(builder =>
+            modelBuilder.Entity<TextLayout>(builder =>
             {
-                builder.OwnsOne(
-                    e => e.PostalCode,
-                    o =>
-                    {
-                        o.Property(e2 => e2.Position)
-                            .HasConversion(positionConverter);
-
-                        o.OwnsOne(e2 => e2.Font);
-                    });
-
-                builder.OwnsOne(
-                    e => e.Address,
-                    o =>
-                    {
-                        o.Property(e2 => e2.Position)
-                            .HasConversion(positionConverter);
-
-                        o.OwnsOne(e2 => e2.Font);
-                    });
-
-                builder.OwnsOne(
-                    e => e.Addressee,
-                    o =>
-                    {
-                        o.Property(e2 => e2.Position)
-                            .HasConversion(positionConverter);
-
-                        o.OwnsOne(e2 => e2.Font);
-                    });
-
-                builder.OwnsOne(
-                    e => e.SenderPostalCode,
-                    o =>
-                    {
-                        o.Property(e2 => e2.Position)
-                            .HasConversion(positionConverter);
-
-                        o.OwnsOne(e2 => e2.Font);
-                    });
-
-                builder.OwnsOne(
-                    e => e.SenderAddress,
-                    o =>
-                    {
-                        o.Property(e2 => e2.Position)
-                            .HasConversion(positionConverter);
-
-                        o.OwnsOne(e2 => e2.Font);
-                    });
-
-                builder.OwnsOne(
-                    e => e.Sender,
-                    o =>
-                    {
-                        o.Property(e2 => e2.Position)
-                            .HasConversion(positionConverter);
-
-                        o.OwnsOne(e2 => e2.Font);
-                    });
+                builder.Property(e => e.Position)
+                    .HasConversion(
+                        v => JsonSerializer.Serialize(v, null),
+                        v => JsonSerializer.Deserialize<Position>(v, null));
             });
-
 
             base.OnModelCreating(modelBuilder);
         }

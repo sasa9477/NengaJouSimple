@@ -15,21 +15,21 @@ namespace NengaJouSimple.Services
     {
         private readonly AddressCardRepository addressCardRepository;
 
-        private readonly AddressCardCsvService addressCardCsvService;
-
         private readonly AddressWebService addressWebService;
+
+        private readonly AddressCardLayoutService addressCardLayoutService;
 
         private readonly IMapper mapper;
 
         public AddressCardService(
             AddressCardRepository addressCardRepository,
-            AddressCardCsvService addressCardCsvService,
             AddressWebService addressWebService,
+            AddressCardLayoutService addressCardLayoutService,
             IMapper mapper)
         {
             this.addressCardRepository = addressCardRepository;
-            this.addressCardCsvService = addressCardCsvService;
             this.addressWebService = addressWebService;
+            this.addressCardLayoutService = addressCardLayoutService;
             this.mapper = mapper;
         }
 
@@ -45,17 +45,24 @@ namespace NengaJouSimple.Services
             var requestAddressCard = mapper.Map<AddressCard>(addressCard);
 
             addressCardRepository.Register(requestAddressCard);
+        }
 
-            WriteCsvFile();
+        public void UpdatePrintDateTime(AddressCardViewModel addressCard)
+        {
+            var requestAddressCard = mapper.Map<AddressCard>(addressCard);
+
+            requestAddressCard.RegisterdDateTime = DateTime.Now;
+
+            addressCardRepository.Register(requestAddressCard);
         }
 
         public void Delete(AddressCardViewModel addressCard)
         {
             var requestAddressCard = mapper.Map<AddressCard>(addressCard);
 
-            addressCardRepository.Delete(requestAddressCard);
+            addressCardLayoutService.Delete(requestAddressCard);
 
-            WriteCsvFile();
+            addressCardRepository.Delete(requestAddressCard);
         }
 
         public bool IsRegisterdAnyAddressCard()
@@ -63,23 +70,14 @@ namespace NengaJouSimple.Services
             return addressCardRepository.IsRegisterAnyAddressCard();
         }
 
+        public void InitializeData()
+        {
+            addressCardRepository.InitializeData();
+        }
+
         public async Task<string> SearchAddressByPostalCode(string postalCode)
         {
             return await addressWebService.Search(postalCode);
-        }
-
-        public void ReadCsvFile()
-        {
-            var addressCards = addressCardCsvService.ReadAddressCardCsv();
-
-            addressCardRepository.AddInitialData(addressCards);
-        }
-
-        private void WriteCsvFile()
-        {
-            var allAddressCards = addressCardRepository.LoadAll();
-
-            addressCardCsvService.WriteAddressCardCsv(allAddressCards);
         }
     }
 }

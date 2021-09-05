@@ -21,7 +21,14 @@ namespace NengaJouSimple.Models.Addresses
 
         public override string ToString()
         {
-            var space = string.IsNullOrEmpty(FamilyName) ? "" : " ";
+            var spaceLength = string.IsNullOrEmpty(FamilyName) ? 0 : 1;
+
+            return ToStringAppendingHeadSpaces(spaceLength);
+        }
+
+        public string ToStringAppendingHeadSpaces(int spaceLength)
+        {
+            var space = spaceLength == 0 ? string.Empty : new string(' ', spaceLength);
 
             return $"{FamilyName}{space}{GivenName}{Honorific}";
         }

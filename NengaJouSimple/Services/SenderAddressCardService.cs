@@ -15,20 +15,16 @@ namespace NengaJouSimple.Services
     {
         private readonly SenderAddressCardRepository senderAddressCardRepository;
 
-        private readonly SenderAddressCardCsvService senderAddressCardCsvService;
-
         private readonly AddressWebService addressWebService;
 
         private readonly IMapper mapper;
 
         public SenderAddressCardService(
             SenderAddressCardRepository senderAddressCardRepository,
-            SenderAddressCardCsvService senderAddressCardCsvService,
             AddressWebService addressWebService,
             IMapper mapper)
         {
             this.senderAddressCardRepository = senderAddressCardRepository;
-            this.senderAddressCardCsvService = senderAddressCardCsvService;
             this.addressWebService = addressWebService;
             this.mapper = mapper;
         }
@@ -45,8 +41,6 @@ namespace NengaJouSimple.Services
             var requestSenderAddressCard = mapper.Map<SenderAddressCard>(senderAddressCard);
 
             senderAddressCardRepository.Register(requestSenderAddressCard);
-
-            WriteCsvFile();
         }
 
         public void Delete(SenderAddressCardViewModel senderAddressCard)
@@ -54,8 +48,6 @@ namespace NengaJouSimple.Services
             var requestSenderAddressCard = mapper.Map<SenderAddressCard>(senderAddressCard);
 
             senderAddressCardRepository.Delete(requestSenderAddressCard);
-
-            WriteCsvFile();
         }
 
         public bool IsRegisterdAnySenderAddressCard()
@@ -63,23 +55,14 @@ namespace NengaJouSimple.Services
             return senderAddressCardRepository.IsRegisterdAnySenderAddressCard();
         }
 
+        public void InitializeData()
+        {
+            senderAddressCardRepository.InitializeData();
+        }
+
         public async Task<string> SearchAddressByPostalCode(string postalCode)
         {
             return await addressWebService.Search(postalCode);
-        }
-
-        public void ReadCsvFile()
-        {
-            var senderAddressCards = senderAddressCardCsvService.ReadAddressCardCsv();
-
-            senderAddressCardRepository.AddInitialData(senderAddressCards);
-        }
-
-        private void WriteCsvFile()
-        {
-            var allAddressCards = senderAddressCardRepository.LoadAll();
-
-            senderAddressCardCsvService.WriteAddressCardCsv(allAddressCards);
         }
     }
 }
