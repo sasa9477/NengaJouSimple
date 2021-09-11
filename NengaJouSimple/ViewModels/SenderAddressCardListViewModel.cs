@@ -9,6 +9,8 @@ using NengaJouSimple.Services;
 using NengaJouSimple.Extensions;
 using Prism.Services.Dialogs;
 using Prism.Regions;
+using Prism.Events;
+using NengaJouSimple.ViewModels.PubSubEvents;
 
 namespace NengaJouSimple.ViewModels
 {
@@ -17,6 +19,8 @@ namespace NengaJouSimple.ViewModels
         private readonly IRegionManager regionManager;
 
         private readonly IDialogService dialogService;
+
+        private readonly IEventAggregator eventAggregator;
 
         private readonly SenderAddressCardService senderAddressCardService;
 
@@ -29,10 +33,12 @@ namespace NengaJouSimple.ViewModels
         public SenderAddressCardListViewModel(
             IRegionManager regionManager,
             IDialogService dialogService,
+            IEventAggregator eventAggregator, 
             SenderAddressCardService senderAddressCardService)
         {
             this.regionManager = regionManager;
             this.dialogService = dialogService;
+            this.eventAggregator = eventAggregator;
             this.senderAddressCardService = senderAddressCardService;
 
             senderAddressCard = new SenderAddressCardViewModel();
@@ -132,6 +138,8 @@ namespace NengaJouSimple.ViewModels
                 SenderAddressCard.Address1 = response;
 
                 RaisePropertyChanged(nameof(SenderAddressCard));
+
+                eventAggregator.GetEvent<FocusAddress2Event>().Publish();
             }
 
             IsSearchingByWebService = false;
