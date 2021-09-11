@@ -92,7 +92,7 @@ namespace NengaJouSimple.Data.Repositories
 
         private void WriteCsvFile()
         {
-            var allAddressCards = LoadAll(AddressCardSortKeyKind.Default);
+            var allAddressCards = LoadAll();
 
             addressCardCsvService.WriteAddressCardCsv(allAddressCards);
         }
