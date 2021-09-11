@@ -27,6 +27,7 @@ namespace NengaJouSimple.Data.Repositories
         {
             return applicationDbContext
                 .SenderAddressCards
+                .Include(e => e.MainNameKana)
                 .AsNoTracking()
                 .ToList();
         }
@@ -71,7 +72,7 @@ namespace NengaJouSimple.Data.Repositories
 
         private void WriteCsvFile()
         {
-            var allAddressCards = LoadAll();
+            var allAddressCards = LoadAll(SenderAddressCardSortKeyKind.Default);
 
             senderAddressCardCsvService.WriteAddressCardCsv(allAddressCards);
         }
