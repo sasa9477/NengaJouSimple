@@ -21,9 +21,10 @@ namespace NengaJouSimple.Data.Csv.ClassMaps
             Map(e => e.Renmei5).Index(10).Name(nameof(AddressCard.Renmei5)).TypeConverter<CsvJsonConverter<Renmei>>();
             Map(e => e.SenderAddressCard.Id).Index(11).Name("SenderAddressCardId");
             Map(e => e.IsPrintTarget).Index(12).Name(nameof(AddressCard.IsPrintTarget));
-            Map(e => e.PrintedDateTime).Index(13).Name(nameof(AddressCard.PrintedDateTime));
-            Map(e => e.RegisterdDateTime).Index(14).Name(nameof(AddressCard.RegisterdDateTime));
-            Map(e => e.UpdatedDateTime).Index(15).Name(nameof(AddressCard.UpdatedDateTime));
+            Map(e => e.IsFamilyPrinting).Index(13).Name(nameof(AddressCard.IsFamilyPrinting));
+            Map(e => e.PrintedDateTime).Index(14).Name(nameof(AddressCard.PrintedDateTime));
+            Map(e => e.RegisterdDateTime).Index(15).Name(nameof(AddressCard.RegisterdDateTime));
+            Map(e => e.UpdatedDateTime).Index(16).Name(nameof(AddressCard.UpdatedDateTime));
         }
     }
 }

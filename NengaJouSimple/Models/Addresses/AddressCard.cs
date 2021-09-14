@@ -20,6 +20,7 @@ namespace NengaJouSimple.Models.Addresses
             Renmei4 = new Renmei();
             Renmei5 = new Renmei();
             SenderAddressCard = new SenderAddressCard();
+            IsFamilyPrinting = true;
         }
 
         public PersonName MainName { get; set; }
@@ -47,6 +48,8 @@ namespace NengaJouSimple.Models.Addresses
         public bool IsPrintTarget { get; set; }
 
         public DateTime? PrintedDateTime { get; set; }
+
+        public bool IsFamilyPrinting { get; set; }
 
         public IEnumerable<Renmei> EnumerateRenmeis()
         {
