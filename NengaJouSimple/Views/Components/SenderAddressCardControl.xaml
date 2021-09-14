@@ -17,6 +17,11 @@
 
     <Grid
         d:Background="White">
+
+        <Grid.InputBindings>
+            <KeyBinding Gesture="Ctrl+S" Command="{Binding RegisterSenderAddressCommand}"/>
+        </Grid.InputBindings>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -347,12 +352,17 @@
         <!-- 登録ボタン -->
         <Grid
             Grid.Row="11"
-            Grid.Column="1">
+            Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Text="[Ctrl]+[s] でカードを登録"
+                Style="{StaticResource TextBlockBase}"/>
+
             <Button
                 Grid.Column="1"
                 Content="削除"
