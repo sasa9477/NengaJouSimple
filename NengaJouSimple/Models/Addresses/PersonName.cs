@@ -35,6 +35,11 @@ namespace NengaJouSimple.Models.Addresses
             return ToStringAppendingHeadSpaces(givenNameSpaceLength, honorificNameSpaceLength);
         }
 
+        public string ToStringAppendingHeadSpaces(int givenNameSpaceLength)
+        {
+            return ToStringAppendingHeadSpaces(givenNameSpaceLength, 0);
+        }
+
         public string ToStringAppendingHeadSpaces(int givenNameSpaceLength, int honorificSpaceLength)
         {
             var givenNameSpace = givenNameSpaceLength == 0 ? string.Empty : new string(' ', givenNameSpaceLength);
