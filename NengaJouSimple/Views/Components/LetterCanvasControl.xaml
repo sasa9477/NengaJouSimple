@@ -71,7 +71,7 @@
                 FontFamily="{Binding CurrentFontFamily}"
                 d:Text="東京都江東区荒川一ー十五&#xA;若草荘 ２０３号室"
                 d:FontSize="20"
-                d:Canvas.Left="300" d:Canvas.Top="110" d:FontFamily="Yu Mincho">
+                d:Canvas.Left="300" d:Canvas.Top="90" d:FontFamily="Yu Mincho">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior
                         X="{Binding SelectedAddressCardLayout.Address.Position.X, Mode=TwoWay}"
@@ -83,8 +83,8 @@
                 Text="{Binding SelectedAddressCardLayout.Addressee.Text, Converter={StaticResource NumberAndHyphenToTategakiConverter}}"
                 FontSize="{Binding SelectedAddressCardLayout.Addressee.FontSize}"
                 FontFamily="{Binding CurrentFontFamily}"
-                d:Text="工藤　勝則様"
-                d:FontSize="43"
+                d:Text="工藤　勝則　様"
+                d:FontSize="34"
                 d:Canvas.Left="167" d:Canvas.Top="110">
                 <bh:Interaction.Behaviors>
                     <bhlocal:MouseDragAndKeyMoveBehavior

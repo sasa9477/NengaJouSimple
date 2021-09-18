@@ -58,13 +58,19 @@ namespace NengaJouSimple.Models.Settings
             AddressSetting = new TextLayoutSetting
             {
                 FontSizeDefaultValue = 20,
-                PositionDefaultValue = new Position(300, 110)
+                PositionDefaultValue = new Position(300, 100)
             };
 
             AddresseeSetting = new TextLayoutSetting
             {
-                FontSizeDefaultValue = 43,
+                FontSizeDefaultValue = 34,
                 PositionDefaultValue = new Position(167, 110)
+            };
+
+            MultiAddresseeSetting = new TextLayoutSetting
+            {
+                FontSizeDefaultValue = 34,
+                PositionDefaultValue = new Position(150, 110)
             };
 
             SenderPostalCodeSetting = new PostalCodeTextLayoutSetting
@@ -81,8 +87,8 @@ namespace NengaJouSimple.Models.Settings
 
             SenderAddressSetting = new TextLayoutSetting
             {
-                FontSizeDefaultValue = 14,
-                PositionDefaultValue = new Position(115, 220)
+                FontSizeDefaultValue = 12,
+                PositionDefaultValue = new Position(100, 220)
             };
 
             SenderSetting = new TextLayoutSetting
@@ -109,6 +115,8 @@ namespace NengaJouSimple.Models.Settings
         public TextLayoutSetting AddressSetting { get; set; }
 
         public TextLayoutSetting AddresseeSetting { get; set; }
+
+        public TextLayoutSetting MultiAddresseeSetting { get; set; }
 
         public PostalCodeTextLayoutSetting SenderPostalCodeSetting { get; set; }
 
