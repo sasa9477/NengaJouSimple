@@ -1,6 +1,7 @@
 ﻿using NengaJouSimple.Models.Layouts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NengaJouSimple.Models.Addresses
@@ -50,6 +51,40 @@ namespace NengaJouSimple.Models.Addresses
         public DateTime? PrintedDateTime { get; set; }
 
         public bool IsFamilyPrinting { get; set; }
+
+        public int MaxFamilyNameLength
+        {
+            get
+            {
+                var renmeis = EnumerateRenmeis();
+
+                if (renmeis.Any())
+                {
+                    var renmeiFamilyNameLength = renmeis.Select(r => r.FamilyName.Length).Max();
+
+                    return Math.Max(renmeiFamilyNameLength, MainName.FamilyName.Length);
+                }
+
+                return MainName.FamilyName.Length;
+            }
+        }
+
+        public int MaxGivenNameLength
+        {
+            get
+            {
+                var renmeis = EnumerateRenmeis();
+
+                if (renmeis.Any())
+                {
+                    var renmeiGivenNameLength = renmeis.Select(r => r.GivenName.Length).Max();
+
+                    return Math.Max(renmeiGivenNameLength, MainName.GivenName.Length);
+                }
+
+                return MainName.GivenName.Length;
+            }
+        }
 
         public IEnumerable<Renmei> EnumerateRenmeis()
         {

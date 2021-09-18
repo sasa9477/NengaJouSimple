@@ -10,6 +10,8 @@ namespace NengaJouSimple.Models.Layouts
 {
     public class AddressCardLayout
     {
+        private static readonly PersonName FamiliesText = new PersonName(string.Empty, "ご家族", "様");
+
         public AddressCardLayout()
         {
         }
@@ -121,19 +123,46 @@ namespace NengaJouSimple.Models.Layouts
 
         private string BuildAddressee(AddressCard addressCard)
         {
-            var printingRenmeis = addressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
-
-            var renmeiFamilyNameLength = CalculateFamilyNameLength(printingRenmeis);
-
-            var maxFamilyNameLength = Math.Max(renmeiFamilyNameLength, addressCard.MainName.FamilyName.Length);
-
             var sb = new StringBuilder();
 
-            sb.AppendLine(addressCard.MainName.ToStringAppendingHeadSpaces(maxFamilyNameLength - addressCard.MainName.FamilyName.Length + 1));
-
-            foreach (var renmei in printingRenmeis)
+            if (addressCard.IsFamilyPrinting)
             {
-                sb.AppendLine(renmei.ToStringAppendingHeadSpaces(maxFamilyNameLength - renmei.FamilyName.Length + 1));
+                var maxGivenNameLength = Math.Max(addressCard.MainName.GivenName.Length, FamiliesText.GivenName.Length);
+
+                var mainNameText = addressCard.MainName.ToStringAppendingHeadSpaces(
+                    1,
+                    maxGivenNameLength - addressCard.MainName.GivenName.Length + 1);
+
+                sb.AppendLine(mainNameText);
+
+                var familyNameText = FamiliesText.ToStringAppendingHeadSpaces(
+                    addressCard.MainName.FamilyName.Length + 1,
+                    maxGivenNameLength - FamiliesText.GivenName.Length + 1);
+
+                sb.AppendLine(familyNameText);
+            }
+            else
+            {
+                var printingRenmeis = addressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
+
+                var maxFamilyNameLength = addressCard.MaxFamilyNameLength;
+
+                var maxGivenNameLength = addressCard.MaxGivenNameLength;
+
+                var mainNameText = addressCard.MainName.ToStringAppendingHeadSpaces(
+                    maxFamilyNameLength - addressCard.MainName.FamilyName.Length + 1,
+                    maxGivenNameLength - addressCard.MainName.GivenName.Length + 1);
+
+                sb.AppendLine(mainNameText);
+
+                foreach (var renmei in printingRenmeis)
+                {
+                    var renmeiText = renmei.ToStringAppendingHeadSpaces(
+                        maxFamilyNameLength - renmei.FamilyName.Length + 1,
+                        maxGivenNameLength - renmei.GivenName.Length + 1);
+
+                    sb.AppendLine(renmeiText);
+                }
             }
 
             return sb.ToString();
@@ -141,32 +170,30 @@ namespace NengaJouSimple.Models.Layouts
 
         private string BuildSender(SenderAddressCard senderAddressCard)
         {
-            var printingRenmeis = senderAddressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
-
-            var renmeiFamilyNameLength = CalculateFamilyNameLength(printingRenmeis);
-
-            var maxFamilyNameLength = Math.Max(renmeiFamilyNameLength, senderAddressCard.MainName.FamilyName.Length);
-
             var sb = new StringBuilder();
 
-            sb.AppendLine(senderAddressCard.MainName.ToStringAppendingHeadSpaces(maxFamilyNameLength - senderAddressCard.MainName.FamilyName.Length + 1));
+            var maxFamilyNameLength = senderAddressCard.MaxFamilyNameLength;
+
+            var maxGivenNameLength = senderAddressCard.MaxGivenNameLength;
+
+            var mainNameText = senderAddressCard.MainName.ToStringAppendingHeadSpaces(
+                maxFamilyNameLength - senderAddressCard.MainName.FamilyName.Length + 1,
+                maxGivenNameLength - senderAddressCard.MainName.GivenName.Length + 1);
+
+            sb.AppendLine(mainNameText);
+
+            var printingRenmeis = senderAddressCard.EnumerateRenmeis().Where(r => r.IsPrinting);
 
             foreach (var renmei in printingRenmeis)
             {
-                sb.AppendLine(renmei.ToStringAppendingHeadSpaces(maxFamilyNameLength - renmei.FamilyName.Length + 1));
+                var renmeiText = renmei.ToStringAppendingHeadSpaces(
+                    maxFamilyNameLength - renmei.FamilyName.Length + 1,
+                    maxGivenNameLength - renmei.GivenName.Length + 1);
+
+                sb.AppendLine(renmeiText);
             }
 
             return sb.ToString();
-        }
-
-        private int CalculateFamilyNameLength(IEnumerable<Renmei> renmeis)
-        {
-            if (renmeis.Any())
-            {
-                return renmeis.Select(r => r.FamilyName.Length).Max();
-            }
-
-            return 0;
         }
     }
 }
