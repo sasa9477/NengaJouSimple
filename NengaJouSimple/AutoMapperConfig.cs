@@ -59,10 +59,10 @@ namespace NengaJouSimple
                     .IncludeBase<PersonNameViewModel, PersonName>();
 
                 config.CreateMap<SenderAddressCardViewModel, SenderAddressCard>()
-                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.Length == 8 ? src.PostalCode : $"{src.PostalCode.Substring(0, 3)}-{src.PostalCode.Substring(3, 4)}"));
+                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.Length == 7 ? $"{src.PostalCode.Substring(0, 3)}-{src.PostalCode.Substring(3, 4)}" : src.PostalCode));
 
                 config.CreateMap<AddressCardViewModel, AddressCard>()
-                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.Length == 8 ? src.PostalCode : $"{src.PostalCode.Substring(0, 3)}-{src.PostalCode.Substring(3, 4)}"));
+                    .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.PostalCode.Length == 7 ? $"{src.PostalCode.Substring(0, 3)}-{src.PostalCode.Substring(3, 4)}" : src.PostalCode));
 
                 // Layouts
                 config.CreateMap<PositionViewModel, Position>();

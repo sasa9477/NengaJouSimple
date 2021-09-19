@@ -12,7 +12,7 @@ namespace NengaJouSimple.ViewModels.Components
     {
         private string message;
 
-        private string title = "通知ダイアログ";
+        private string title = "情報";
 
         public AlertDialogViewModel()
         {

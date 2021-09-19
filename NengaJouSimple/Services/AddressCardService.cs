@@ -51,7 +51,7 @@ namespace NengaJouSimple.Services
         {
             var requestAddressCard = mapper.Map<AddressCard>(addressCard);
 
-            requestAddressCard.RegisterdDateTime = DateTime.Now;
+            requestAddressCard.PrintedDateTime = DateTime.Now;
 
             addressCardRepository.Register(requestAddressCard);
         }

@@ -22,7 +22,7 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             Renmei5 = new RenmeiViewModel();
             SenderAddressCard = new SenderAddressCardViewModel();
             IsPrintTarget = true;
-            IsFamilyPrinting = true;
+            IsFamilyPrinting = false;
         }
 
         public PersonNameViewModel MainName { get; set; }
@@ -94,7 +94,7 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             Renmei5 = new RenmeiViewModel();
             SenderAddressCard = new SenderAddressCardViewModel();
             IsPrintTarget = true;
-            IsFamilyPrinting = true;
+            IsFamilyPrinting = false;
         }
 
         public IEnumerable<RenmeiViewModel> EnumerateRenmeis()

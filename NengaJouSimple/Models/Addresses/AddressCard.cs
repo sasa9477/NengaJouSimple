@@ -21,7 +21,7 @@ namespace NengaJouSimple.Models.Addresses
             Renmei4 = new Renmei();
             Renmei5 = new Renmei();
             SenderAddressCard = new SenderAddressCard();
-            IsFamilyPrinting = true;
+            IsFamilyPrinting = false;
         }
 
         public PersonName MainName { get; set; }

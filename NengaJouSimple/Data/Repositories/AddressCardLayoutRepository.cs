@@ -47,6 +47,8 @@ namespace NengaJouSimple.Data.Repositories
             }
 
             return applicationDbContext.AddressCardLayouts
+                .Include(e => e.AddressCard)
+                .ThenInclude(e => e.SenderAddressCard)
                 .AsNoTracking()
                 .FirstOrDefault(e => e.AddressCard.Id == addressCard.Id);
         }
@@ -102,7 +104,7 @@ namespace NengaJouSimple.Data.Repositories
                 applicationDbContext.Entry(addressCardLayout.AddressCard.SenderAddressCard).State = EntityState.Detached;
             }
 
-            applicationDbContext.SaveChanges();
+            applicationDbContext.SaveChangesOnInitialize();
         }
 
         private void WriteCsvFile()
