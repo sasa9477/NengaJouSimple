@@ -1,4 +1,5 @@
-﻿using NengaJouSimple.ViewModels.Entities.Addresses;
+﻿using NengaJouSimple.Models;
+using NengaJouSimple.ViewModels.Entities.Addresses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Windows.Media;
 
 namespace NengaJouSimple.ViewModels.Entities.Layouts
 {
-    public class AddressCardLayoutViewModel
+    public class AddressCardLayoutViewModel : EntityBase
     {
         public AddressCardLayoutViewModel()
         {
@@ -19,8 +20,6 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
             Sender = new TextLayoutViewModel();
             AddressCard = new AddressCardViewModel();
         }
-
-        public int Id { get; set; }
 
         public TextLayoutViewModel PostalCode { get; set; }
 
@@ -50,7 +49,9 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
                 SenderAddress = SenderAddress.Clone(),
                 Sender = Sender.Clone(),
                 AddressCard = AddressCard.Clone(),
-                IsAlreadyPrinted = IsAlreadyPrinted
+                IsAlreadyPrinted = IsAlreadyPrinted,
+                RegisterdDateTime = RegisterdDateTime,
+                UpdatedDateTime = UpdatedDateTime,
             };
         }
     }

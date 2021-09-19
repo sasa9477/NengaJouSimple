@@ -1,4 +1,7 @@
-﻿using System;
+﻿using NengaJouSimple.Models;
+using NengaJouSimple.Models.Layouts;
+using NengaJouSimple.ViewModels.Entities.Addresses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +18,7 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
             Position = new PositionViewModel();
         }
 
-        public int Id { get; set; }
+        public TextLayoutKind TextLayoutKind { get; set; }
 
         public string Text { get; set; }
 
@@ -23,20 +26,17 @@ namespace NengaJouSimple.ViewModels.Entities.Layouts
 
         public double FontSize { get; set; }
 
-        public DateTime RegisterdDateTime { get; set; }
-
-        public DateTime UpdatedDateTime { get; set; }
+        public AddressCardLayoutViewModel AddressCardLayout { get; set; }
 
         public TextLayoutViewModel Clone()
         {
             return new TextLayoutViewModel
             {
-                Id = Id,
+                TextLayoutKind = TextLayoutKind,
                 Text = Text,
                 Position = Position.Clone(),
                 FontSize = FontSize,
-                RegisterdDateTime = RegisterdDateTime,
-                UpdatedDateTime = UpdatedDateTime
+                AddressCardLayout = AddressCardLayout.Clone()
             };
         }
     }

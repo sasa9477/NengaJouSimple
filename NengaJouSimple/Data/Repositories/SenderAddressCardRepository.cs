@@ -19,7 +19,6 @@ namespace NengaJouSimple.Data.Repositories
             SenderAddressCardCsvService senderAddressCardCsvService)
         {
             this.applicationDbContext = applicationDbContext;
-
             this.senderAddressCardCsvService = senderAddressCardCsvService;
         }
 
@@ -67,7 +66,7 @@ namespace NengaJouSimple.Data.Repositories
 
             applicationDbContext.AddRange(senderAddressCards);
 
-            applicationDbContext.SaveChangesAsync();
+            applicationDbContext.SaveChanges();
         }
 
         private void WriteCsvFile()

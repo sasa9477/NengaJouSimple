@@ -1,14 +1,12 @@
-﻿using AutoMapper;
-using NengaJouSimple.Models.Addresses;
+﻿using NengaJouSimple.Models.Addresses;
 using NengaJouSimple.Models.Settings;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace NengaJouSimple.Models.Layouts
 {
-    public class AddressCardLayout
+    public class AddressCardLayout : EntityBase
     {
         private static readonly PersonName FamiliesText = new PersonName(string.Empty, "ご家族", "様");
 
@@ -16,74 +14,97 @@ namespace NengaJouSimple.Models.Layouts
         {
         }
 
-        public AddressCardLayout(
+        public TextLayout PostalCode { get; set; }
+
+        public TextLayout Address { get; set; }
+
+        public TextLayout Addressee { get; set; }
+
+        public TextLayout SenderPostalCode { get; set; }
+
+        public TextLayout SenderAddress { get; set; }
+
+        public TextLayout Sender { get; set; }
+
+        public virtual AddressCard AddressCard { get; set; }
+
+        public void Attach(
             ApplicationSetting applicationSetting,
             IEnumerable<TextLayout> textLayouts,
             AddressCard addressCard)
         {
             PostalCode = new TextLayout
             {
+                TextLayoutKind = TextLayoutKind.PostalCode,
                 FontSize = applicationSetting.PostalCodeSetting.FontSizeDefaultValue,
                 Position = applicationSetting.PostalCodeSetting.PositionDefaultValue
             };
 
             Address = new TextLayout
             {
+                TextLayoutKind = TextLayoutKind.Address,
                 FontSize = applicationSetting.AddressSetting.FontSizeDefaultValue,
                 Position = applicationSetting.AddressSetting.PositionDefaultValue
             };
 
             Addressee = new TextLayout
             {
+                TextLayoutKind = TextLayoutKind.Addressee,
                 FontSize = applicationSetting.AddresseeSetting.FontSizeDefaultValue,
                 Position = applicationSetting.AddresseeSetting.PositionDefaultValue
             };
 
             SenderPostalCode = new TextLayout
             {
+                TextLayoutKind = TextLayoutKind.SenderPostalCode,
                 FontSize = applicationSetting.SenderPostalCodeSetting.FontSizeDefaultValue,
                 Position = applicationSetting.SenderPostalCodeSetting.PositionDefaultValue
             };
 
             SenderAddress = new TextLayout
             {
+                TextLayoutKind = TextLayoutKind.SenderAddress,
                 FontSize = applicationSetting.SenderAddressSetting.FontSizeDefaultValue,
                 Position = applicationSetting.SenderAddressSetting.PositionDefaultValue
             };
 
             Sender = new TextLayout
             {
+                TextLayoutKind = TextLayoutKind.Sender,
                 FontSize = applicationSetting.SenderSetting.FontSizeDefaultValue,
                 Position = applicationSetting.SenderSetting.PositionDefaultValue
             };
 
-            foreach (var textLayout in textLayouts)
+            if (textLayouts != null)
             {
-                switch (textLayout.TextLayoutKind)
+                foreach (var textLayout in textLayouts)
                 {
-                    case TextLayoutKind.PostalCode:
-                        PostalCode = textLayout;
-                        break;
+                    switch (textLayout.TextLayoutKind)
+                    {
+                        case TextLayoutKind.PostalCode:
+                            PostalCode = textLayout;
+                            break;
 
-                    case TextLayoutKind.Address:
-                        Address = textLayout;
-                        break;
+                        case TextLayoutKind.Address:
+                            Address = textLayout;
+                            break;
 
-                    case TextLayoutKind.Addressee:
-                        Addressee = textLayout;
-                        break;
+                        case TextLayoutKind.Addressee:
+                            Addressee = textLayout;
+                            break;
 
-                    case TextLayoutKind.SenderPostalCode:
-                        SenderPostalCode = textLayout;
-                        break;
+                        case TextLayoutKind.SenderPostalCode:
+                            SenderPostalCode = textLayout;
+                            break;
 
-                    case TextLayoutKind.SenderAddress:
-                        SenderAddress = textLayout;
-                        break;
+                        case TextLayoutKind.SenderAddress:
+                            SenderAddress = textLayout;
+                            break;
 
-                    case TextLayoutKind.Sender:
-                        Sender = textLayout;
-                        break;
+                        case TextLayoutKind.Sender:
+                            Sender = textLayout;
+                            break;
+                    }
                 }
             }
 
@@ -102,20 +123,6 @@ namespace NengaJouSimple.Models.Layouts
 
             AddressCard = addressCard;
         }
-
-        public TextLayout PostalCode { get; set; }
-
-        public TextLayout Address { get; set; }
-
-        public TextLayout Addressee { get; set; }
-
-        public TextLayout SenderPostalCode { get; set; }
-
-        public TextLayout SenderAddress { get; set; }
-
-        public TextLayout Sender { get; set; }
-
-        public AddressCard AddressCard { get; set; }
 
         public IEnumerable<TextLayout> GetTextLayoutProperties()
         {

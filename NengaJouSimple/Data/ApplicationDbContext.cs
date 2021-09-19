@@ -15,7 +15,7 @@ namespace NengaJouSimple.Data
 
         public DbSet<SenderAddressCard> SenderAddressCards => Set<SenderAddressCard>();
 
-        public DbSet<TextLayout> TextLayouts => Set<TextLayout>();
+        public DbSet<AddressCardLayout> AddressCardLayouts => Set<AddressCardLayout>();
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -34,6 +34,37 @@ namespace NengaJouSimple.Data
                 {
                     entry.Entity.UpdatedDateTime = DateTime.Now;
                 }
+
+                var entity = entry.Entity;
+
+                System.Diagnostics.Debug.WriteLine(entity.GetType());
+
+                System.Diagnostics.Debug.WriteLine($"EntityState:{entry.State}");
+
+
+                if (entity is AddressCard addressCard)
+                {
+                    var addressCardId = addressCard.Id;
+
+                    System.Diagnostics.Debug.WriteLine($"addressCardId : {addressCardId}");
+                }
+
+                if (entity is SenderAddressCard senderAddressCard)
+                {
+                    var senderAddressCardId = senderAddressCard.Id;
+
+                    System.Diagnostics.Debug.WriteLine($"senderAddressCardId : {senderAddressCardId}");
+                }
+
+                if (entity is AddressCardLayout layout)
+                {
+                    var addressCardId = layout.AddressCard.Id;
+
+                    var senderAddressCardId = layout.AddressCard.SenderAddressCard.Id;
+
+                    System.Diagnostics.Debug.WriteLine($"addressCardId : {addressCardId}");
+                    System.Diagnostics.Debug.WriteLine($"senderAddressCardId : {senderAddressCardId}");
+                }
             }
 
             return base.SaveChanges();
@@ -41,9 +72,8 @@ namespace NengaJouSimple.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.EnableSensitiveDataLogging();
-
-            //optionsBuilder.LogTo(log => System.Diagnostics.Debug.WriteLine(log));
+            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.LogTo(log => System.Diagnostics.Debug.WriteLine(log), Microsoft.Extensions.Logging.LogLevel.Information);
 
             base.OnConfiguring(optionsBuilder);
         }
@@ -106,12 +136,59 @@ namespace NengaJouSimple.Data
                     .HasConversion(renmeiConverter);
             });
 
-            modelBuilder.Entity<TextLayout>(builder =>
+            var positionConverter = new ValueConverter<Position, string>(
+                    v => JsonSerializer.Serialize(v, null),
+                    v => JsonSerializer.Deserialize<Position>(v, null));
+
+            modelBuilder.Entity<AddressCardLayout>(builder =>
             {
-                builder.Property(e => e.Position)
-                    .HasConversion(
-                        v => JsonSerializer.Serialize(v, null),
-                        v => JsonSerializer.Deserialize<Position>(v, null));
+                builder.OwnsOne(
+                    e => e.PostalCode,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+                    });
+
+                builder.OwnsOne(
+                    e => e.Address,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+                    });
+
+                builder.OwnsOne(
+                    e => e.Addressee,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+                    });
+
+                builder.OwnsOne(
+                    e => e.SenderPostalCode,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+                    });
+
+                builder.OwnsOne(
+                    e => e.SenderAddress,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+                    });
+
+                builder.OwnsOne(
+                    e => e.Sender,
+                    o =>
+                    {
+                        o.Property(e2 => e2.Position)
+                            .HasConversion(positionConverter);
+                    });
             });
 
             base.OnModelCreating(modelBuilder);

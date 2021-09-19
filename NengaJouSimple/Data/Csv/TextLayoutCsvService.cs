@@ -26,7 +26,7 @@ namespace NengaJouSimple.Data.Csv
             using var reader = new StreamReader(TextLayoutCsvFilePath);
             using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-            csvReader.Context.RegisterClassMap<TextLayoutClassMap>();
+            csvReader.Context.RegisterClassMap<TextLayoutCsvClassMap>();
 
             return csvReader.GetRecords<TextLayout>().ToList();
         }
@@ -36,7 +36,7 @@ namespace NengaJouSimple.Data.Csv
             using var writer = new StreamWriter(TextLayoutCsvFilePath);
             using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
-            csvWriter.Context.RegisterClassMap<TextLayoutClassMap>();
+            csvWriter.Context.RegisterClassMap<TextLayoutCsvClassMap>();
 
             csvWriter.WriteRecords(textLayouts);
         }
