@@ -92,24 +92,14 @@ namespace NengaJouSimple.Data.Repositories
             {
                 var textLayouts = csvTextLayouts.Where(e => e.AddressCardLayout.Id == addressCardLayout.Id);
 
-                //                var addressCard = applicationDbContext.AddressCards.Find(addressCardLayout.AddressCard.Id);
-
-                var addressCard = applicationDbContext.AddressCards
-                    .Include(e => e.SenderAddressCard)
-                    .AsNoTracking()
-                    .FirstOrDefault(e => e.Id == addressCardLayout.AddressCard.Id);
+                var addressCard = addressCardRepository.LoadByAddressCardId(addressCardLayout.AddressCard.Id);
 
                 addressCardLayout.Attach(applicationSetting, textLayouts, addressCard);
 
                 applicationDbContext.Add(addressCardLayout);
-            }
 
-            foreach (var entry in applicationDbContext.ChangeTracker.Entries())
-            {
-                if (entry.Entity is SenderAddressCard || entry.Entity is AddressCard)
-                {
-                    entry.State = EntityState.Unchanged;
-                }
+                applicationDbContext.Entry(addressCardLayout.AddressCard).State = EntityState.Detached;
+                applicationDbContext.Entry(addressCardLayout.AddressCard.SenderAddressCard).State = EntityState.Detached;
             }
 
             applicationDbContext.SaveChanges();

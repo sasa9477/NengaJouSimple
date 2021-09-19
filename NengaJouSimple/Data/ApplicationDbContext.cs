@@ -34,37 +34,6 @@ namespace NengaJouSimple.Data
                 {
                     entry.Entity.UpdatedDateTime = DateTime.Now;
                 }
-
-                var entity = entry.Entity;
-
-                System.Diagnostics.Debug.WriteLine(entity.GetType());
-
-                System.Diagnostics.Debug.WriteLine($"EntityState:{entry.State}");
-
-
-                if (entity is AddressCard addressCard)
-                {
-                    var addressCardId = addressCard.Id;
-
-                    System.Diagnostics.Debug.WriteLine($"addressCardId : {addressCardId}");
-                }
-
-                if (entity is SenderAddressCard senderAddressCard)
-                {
-                    var senderAddressCardId = senderAddressCard.Id;
-
-                    System.Diagnostics.Debug.WriteLine($"senderAddressCardId : {senderAddressCardId}");
-                }
-
-                if (entity is AddressCardLayout layout)
-                {
-                    var addressCardId = layout.AddressCard.Id;
-
-                    var senderAddressCardId = layout.AddressCard.SenderAddressCard.Id;
-
-                    System.Diagnostics.Debug.WriteLine($"addressCardId : {addressCardId}");
-                    System.Diagnostics.Debug.WriteLine($"senderAddressCardId : {senderAddressCardId}");
-                }
             }
 
             return base.SaveChanges();
@@ -72,8 +41,8 @@ namespace NengaJouSimple.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.LogTo(log => System.Diagnostics.Debug.WriteLine(log), Microsoft.Extensions.Logging.LogLevel.Information);
+            //optionsBuilder.EnableSensitiveDataLogging();
+            //optionsBuilder.LogTo(log => System.Diagnostics.Debug.WriteLine(log), Microsoft.Extensions.Logging.LogLevel.Information);
 
             base.OnConfiguring(optionsBuilder);
         }
