@@ -112,6 +112,8 @@ namespace NengaJouSimple.ViewModels
 
             SetDefaultValueCommand = new DelegateCommand<string>(SetDefaultValue);
 
+            ShowChangePrintingLocationHelperDialogCommnad = new DelegateCommand(ShowChangePrintingLocationHelperDialog);
+
             ChangePreviousAndNextButtonEnablityStautus();
 
             PreparePrinter();
@@ -202,6 +204,8 @@ namespace NengaJouSimple.ViewModels
         public DelegateCommand<FrameworkElement> PrintSequenceCommand { get; }
 
         public DelegateCommand<string> SetDefaultValueCommand { get; }
+
+        public DelegateCommand ShowChangePrintingLocationHelperDialogCommnad { get; }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
@@ -431,6 +435,11 @@ namespace NengaJouSimple.ViewModels
             }
 
             RaisePropertyChanged(nameof(SelectedAddressCardLayout));
+        }
+
+        private void ShowChangePrintingLocationHelperDialog()
+        {
+            dialogService.ShowChangePrintingLocationHelperDialog();
         }
     }
 }

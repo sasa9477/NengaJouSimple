@@ -12,7 +12,7 @@ namespace NengaJouSimple.ViewModels.Components
     {
         private string message;
 
-        private string title = "確認ダイアログ";
+        private string title = "確認";
 
         public ConfirmDialogViewModel()
         {
