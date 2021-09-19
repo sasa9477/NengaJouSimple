@@ -95,7 +95,7 @@ namespace NengaJouSimple.Data.Repositories
 
             applicationDbContext.AddRange(addressCards);
 
-            applicationDbContext.SaveChanges();
+            applicationDbContext.SaveChangesOnInitialize();
         }
 
         private void WriteCsvFile()

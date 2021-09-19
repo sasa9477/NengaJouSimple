@@ -21,6 +21,11 @@ namespace NengaJouSimple.Data
         {
         }
 
+        public int SaveChangesOnInitialize()
+        {
+            return base.SaveChanges();
+        }
+
         public override int SaveChanges()
         {
             foreach (var entry in ChangeTracker.Entries<EntityBase>())
