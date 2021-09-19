@@ -22,6 +22,7 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             Renmei5 = new RenmeiViewModel();
             SenderAddressCard = new SenderAddressCardViewModel();
             IsPrintTarget = true;
+            IsFamilyPrinting = true;
         }
 
         public PersonNameViewModel MainName { get; set; }
@@ -52,6 +53,8 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
 
         public DateTime? PrintedDateTime { get; set; }
 
+        public bool IsFamilyPrinting { get; set; }
+
         public AddressCardViewModel Clone()
         {
             return new AddressCardViewModel
@@ -71,7 +74,8 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
                 UpdatedDateTime = UpdatedDateTime,
                 IsRegisterdCard = IsRegisterdCard,
                 IsPrintTarget = IsPrintTarget,
-                PrintedDateTime = PrintedDateTime
+                PrintedDateTime = PrintedDateTime,
+                IsFamilyPrinting = IsFamilyPrinting
             };
         }
 
@@ -90,6 +94,7 @@ namespace NengaJouSimple.ViewModels.Entities.Addresses
             Renmei5 = new RenmeiViewModel();
             SenderAddressCard = new SenderAddressCardViewModel();
             IsPrintTarget = true;
+            IsFamilyPrinting = true;
         }
 
         public IEnumerable<RenmeiViewModel> EnumerateRenmeis()

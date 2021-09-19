@@ -146,7 +146,8 @@
                 BorderBrush="Gray"
                 BorderThickness="1"
                 Padding="5">
-                <vc:AddressCardControl/>
+                <vc:AddressCardControl
+                    x:Name="AddressCardControl"/>
             </Border>
             
             <!-- アクション -->

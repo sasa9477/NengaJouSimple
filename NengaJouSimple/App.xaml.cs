@@ -6,7 +6,6 @@ using NengaJouSimple.Data.Jsons;
 using NengaJouSimple.Data.Repositories;
 using NengaJouSimple.Data.Web;
 using NengaJouSimple.Devices;
-using NengaJouSimple.Models.Settings;
 using NengaJouSimple.Services;
 using NengaJouSimple.ViewModels.Components;
 using NengaJouSimple.Views;
@@ -14,10 +13,7 @@ using NengaJouSimple.Views.Components;
 using NLog;
 using Prism.Ioc;
 using System;
-using System.Collections.Generic;
 using System.Data.Common;
-using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -73,7 +69,7 @@ namespace NengaJouSimple
 
             containerRegistry.RegisterSingleton<SenderAddressCardRepository>();
 
-            containerRegistry.RegisterSingleton<TextLayoutRepository>();
+            containerRegistry.RegisterSingleton<AddressCardLayoutRepository>();
 
             // Webs
             containerRegistry.RegisterSingleton<AddressWebService>();
@@ -112,7 +108,10 @@ namespace NengaJouSimple
 
         private static ApplicationDbContext CreateDbContext()
         {
-            var dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(CreateInMemoryDatabase()).Options;
+            var dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseSqlite(CreateInMemoryDatabase())
+                .EnableSensitiveDataLogging()
+                .Options;
 
             var dbContext = new ApplicationDbContext(dbContextOptions);
 

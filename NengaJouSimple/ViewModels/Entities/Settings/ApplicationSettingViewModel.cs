@@ -33,6 +33,8 @@ namespace NengaJouSimple.ViewModels.Entities.Settings
 
         public TextLayoutSettingViewModel AddresseeSetting { get; set; }
 
+        public TextLayoutSettingViewModel MultiAddresseeSetting { get; set; }
+
         public PostalCodeTextLayoutSettingViewModel SenderPostalCodeSetting { get; set; }
 
         public TextLayoutSettingViewModel SenderAddressSetting { get; set; }

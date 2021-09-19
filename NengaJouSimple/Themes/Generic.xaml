@@ -8,39 +8,43 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:VerticalTextBlockControl}">
-                    <ItemsControl 
-                        Name="MultiLineItemsControl"
-                        ItemsSource="{Binding GlyphsMultiLine, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
-                                  Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ItemsControl
-                                    x:Name="LineItemsControl"
-                                    ItemsSource="{Binding}"
-                                              VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
-                                              Margin="2,1"
-                                              IsTabStop="False">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Glyphs
-                                                FontUri="{Binding FontUri, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
-                                                Indices="{Binding}"
-                                                Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
-                                                FontRenderingEmSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
-                                                StyleSimulations="{Binding StyleSimulation, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}">
-                                            </Glyphs>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel
-                                    Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
+                    <WrapPanel
+                        Orientation="Horizontal">
+                        <ItemsControl
+                            ItemsSource="{Binding GlyphsSecondLine, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                            VerticalAlignment="Bottom"
+                            Margin="2,1"
+                            IsTabStop="False">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Glyphs
+                                        FontUri="{Binding FontUri, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                        Indices="{Binding}"
+                                        Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                        FontRenderingEmSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                        StyleSimulations="{Binding StyleSimulation, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}">
+                                    </Glyphs>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <ItemsControl
+                            ItemsSource="{Binding GlyphsFirstLine, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                            VerticalAlignment="Top"
+                            Margin="2,1"
+                            IsTabStop="False">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Glyphs
+                                        FontUri="{Binding FontUri, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                        Indices="{Binding}"
+                                        Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                        FontRenderingEmSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}"
+                                        StyleSimulations="{Binding StyleSimulation, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:VerticalTextBlockControl}}}">
+                                    </Glyphs>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </WrapPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -1,4 +1,6 @@
 ﻿using NengaJouSimple.ViewModels.Entities.Addresses;
+using NengaJouSimple.ViewModels.PubSubEvents;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,7 +21,6 @@ namespace NengaJouSimple.Views.Components
     /// </summary>
     public partial class AddressCardControl : UserControl
     {
-
         public AddressCardControl()
         {
             InitializeComponent();

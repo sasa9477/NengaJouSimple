@@ -19,7 +19,6 @@ namespace NengaJouSimple.Data.Repositories
             AddressCardCsvService addressCardCsvService)
         {
             this.applicationDbContext = applicationDbContext;
-
             this.addressCardCsvService = addressCardCsvService;
         }
 
@@ -28,8 +27,18 @@ namespace NengaJouSimple.Data.Repositories
             return applicationDbContext
                 .AddressCards
                 .Include(addressCard => addressCard.SenderAddressCard)
+                .OrderBy(e => e.MainNameKana)
                 .AsNoTracking()
                 .ToList();
+        }
+
+        public AddressCard LoadByAddressCardId(int id)
+        {
+            return applicationDbContext
+                .AddressCards
+                .Include(addressCard => addressCard.SenderAddressCard)
+                .AsNoTracking()
+                .FirstOrDefault(e => e.Id == id);
         }
 
         public List<AddressCard> LoadAllPrintTargets()
@@ -86,7 +95,7 @@ namespace NengaJouSimple.Data.Repositories
 
             applicationDbContext.AddRange(addressCards);
 
-            applicationDbContext.SaveChangesAsync();
+            applicationDbContext.SaveChanges();
         }
 
         private void WriteCsvFile()

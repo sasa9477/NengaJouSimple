@@ -2,7 +2,6 @@
 using NengaJouSimple.Data.Repositories;
 using NengaJouSimple.Models.Addresses;
 using NengaJouSimple.Models.Layouts;
-using NengaJouSimple.Models.Settings;
 using NengaJouSimple.ViewModels.Entities.Layouts;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +10,19 @@ namespace NengaJouSimple.Services
 {
     public class AddressCardLayoutService
     {
-        private readonly ApplicationSettingRepository applicationSettingRepository;
-
-        private readonly TextLayoutRepository textLayoutRepository;
-
         private readonly AddressCardRepository addressCardRepository;
+
+        private readonly AddressCardLayoutRepository addressCardLayoutRepository;
 
         private readonly IMapper mapper;
 
         public AddressCardLayoutService(
-            ApplicationSettingRepository applicationSettingRepository,
-            TextLayoutRepository textLayoutRepository,
             AddressCardRepository addressCardRepository,
+            AddressCardLayoutRepository addressCardLayoutRepository,
             IMapper mapper)
         {
-            this.applicationSettingRepository = applicationSettingRepository;
-            this.textLayoutRepository = textLayoutRepository;
             this.addressCardRepository = addressCardRepository;
+            this.addressCardLayoutRepository = addressCardLayoutRepository;
             this.mapper = mapper;
         }
 
@@ -39,11 +34,7 @@ namespace NengaJouSimple.Services
 
             foreach (var addressCard in addressCards)
             {
-                var applicationSetting = applicationSettingRepository.Load();
-
-                var textLayouts = textLayoutRepository.LoadByAddressCard(addressCard);
-
-                var addressCardLayout = new AddressCardLayout(applicationSetting, textLayouts, addressCard);
+                var addressCardLayout = addressCardLayoutRepository.LoadByAddressCard(addressCard);
 
                 addressCardLayouts.Add(addressCardLayout);
             }
@@ -55,21 +46,19 @@ namespace NengaJouSimple.Services
         {
             var addressCardLayout = mapper.Map<AddressCardLayout>(addressCardLayoutViewModel);
 
-            var textLayouts = addressCardLayout.GetTextLayoutProperties();
-
-            textLayoutRepository.Register(textLayouts);
+            addressCardLayoutRepository.Register(addressCardLayout);
         }
 
         public void Delete(AddressCard addressCard)
         {
-            var textLayouts = textLayoutRepository.LoadByAddressCard(addressCard);
+            var addressCardLayout = addressCardLayoutRepository.LoadByAddressCard(addressCard);
 
-            textLayoutRepository.Delete(textLayouts);
+            addressCardLayoutRepository.Delete(addressCardLayout);
         }
 
         public void InitializeData()
         {
-            textLayoutRepository.InitializeData();
+            addressCardLayoutRepository.InitializeData();
         }
     }
 }

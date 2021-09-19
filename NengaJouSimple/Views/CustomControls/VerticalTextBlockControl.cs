@@ -15,7 +15,7 @@ namespace NengaJouSimple.Views.CustomControls
             TextBlock.TextProperty.AddOwner(
                 typeof(VerticalTextBlockControl),
                 new FrameworkPropertyMetadata(
-                    " ",
+                    string.Empty,
                     new PropertyChangedCallback(OnTextChanged),
                     new CoerceValueCallback(CoerceTextProperty)));
 
@@ -31,7 +31,9 @@ namespace NengaJouSimple.Views.CustomControls
 
         public VerticalTextBlockControl()
         {
-            GlyphsMultiLine = new ObservableCollection<IEnumerable<string>>();
+            GlyphsFirstLine = new ObservableCollection<string>();
+
+            GlyphsSecondLine = new ObservableCollection<string>();
 
             var fontUri = CurrentGlyphTypeface!.FontUri;
 
@@ -54,7 +56,12 @@ namespace NengaJouSimple.Views.CustomControls
             get { return (FontStyle != FontStyles.Normal ? StyleSimulations.ItalicSimulation : StyleSimulations.None) | (FontWeight != FontWeights.Normal ? StyleSimulations.BoldSimulation : StyleSimulations.None); }
         }
 
-        public ObservableCollection<IEnumerable<string>> GlyphsMultiLine
+        public ObservableCollection<string> GlyphsFirstLine
+        {
+            get;
+        }
+
+        public ObservableCollection<string> GlyphsSecondLine
         {
             get;
         }
@@ -108,7 +115,7 @@ namespace NengaJouSimple.Views.CustomControls
 
         private void OnTextChanged()
         {
-            ResetGlyphsMultiLine();
+            ResetGlyphsLines();
         }
 
         private void OnTypefaceChanged()
@@ -121,20 +128,36 @@ namespace NengaJouSimple.Views.CustomControls
                 {
                     verticalGlyphMap = tempVerticalGlyphMap;
 
-                    ResetGlyphsMultiLine();
+                    ResetGlyphsLines();
                 }
             }
         }
 
-        private void ResetGlyphsMultiLine()
+        private void ResetGlyphsLines()
         {
-            GlyphsMultiLine.Clear();
+            if (string.IsNullOrEmpty(Text)) return;
 
-            foreach (var splitedText in Text.Replace("\r\n", "\n").Split("\n").Reverse())
+            GlyphsFirstLine.Clear();
+
+            GlyphsSecondLine.Clear();
+
+            var lines = Text.Replace("\r\n", "\n").Split("\n");
+
+            var firstLineGlyphIndices = verticalGlyphMap.EnumerateGlyphIndicesTexts(lines[0]);
+
+            foreach (var glyphIndex in firstLineGlyphIndices)
             {
-                var glyphIndices = verticalGlyphMap.EnumerateGlyphIndicesTexts(splitedText);
+                GlyphsFirstLine.Add(glyphIndex);
+            }
 
-                GlyphsMultiLine.Add(glyphIndices);
+            if (lines.Length > 1)
+            {
+                var secondLineGlyphIndices = verticalGlyphMap.EnumerateGlyphIndicesTexts(lines[1]);
+
+                foreach (var glyphIndex in secondLineGlyphIndices)
+                {
+                    GlyphsSecondLine.Add(glyphIndex);
+                }
             }
         }
     }

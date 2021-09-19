@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NengaJouSimple.ViewModels.PubSubEvents;
+using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,9 +19,14 @@ namespace NengaJouSimple.Views
     /// </summary>
     public partial class AddressCardListView : UserControl
     {
-        public AddressCardListView()
+        public AddressCardListView(IEventAggregator eventAggregator)
         {
             InitializeComponent();
+
+            eventAggregator.GetEvent<FocusAddress2Event>().Subscribe(() =>
+            {
+                AddressCardControl.Address2.Focus();
+            });
         }
     }
 }

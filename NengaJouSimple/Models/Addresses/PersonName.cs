@@ -13,6 +13,13 @@ namespace NengaJouSimple.Models.Addresses
             Honorific = string.Empty;
         }
 
+        public PersonName(string familyName, string givenName, string honorific)
+        {
+            FamilyName = familyName;
+            GivenName = givenName;
+            Honorific = honorific;
+        }
+
         public string FamilyName { get; set; }
 
         public string GivenName { get; set; }
@@ -21,16 +28,25 @@ namespace NengaJouSimple.Models.Addresses
 
         public override string ToString()
         {
-            var spaceLength = string.IsNullOrEmpty(FamilyName) ? 0 : 1;
+            var givenNameSpaceLength = string.IsNullOrEmpty(FamilyName) ? 0 : 1;
 
-            return ToStringAppendingHeadSpaces(spaceLength);
+            var honorificNameSpaceLength = string.IsNullOrEmpty(Honorific) ? 0 : 1;
+
+            return ToStringAppendingHeadSpaces(givenNameSpaceLength, honorificNameSpaceLength);
         }
 
-        public string ToStringAppendingHeadSpaces(int spaceLength)
+        public string ToStringAppendingHeadSpaces(int givenNameSpaceLength)
         {
-            var space = spaceLength == 0 ? string.Empty : new string(' ', spaceLength);
+            return ToStringAppendingHeadSpaces(givenNameSpaceLength, 0);
+        }
 
-            return $"{FamilyName}{space}{GivenName}{Honorific}";
+        public string ToStringAppendingHeadSpaces(int givenNameSpaceLength, int honorificSpaceLength)
+        {
+            var givenNameSpace = givenNameSpaceLength == 0 ? string.Empty : new string(' ', givenNameSpaceLength);
+
+            var honorificNameSpace = honorificSpaceLength == 0 ? string.Empty : new string(' ', honorificSpaceLength);
+
+            return $"{FamilyName}{givenNameSpace}{GivenName}{honorificNameSpace}{Honorific}";
         }
     }
 }

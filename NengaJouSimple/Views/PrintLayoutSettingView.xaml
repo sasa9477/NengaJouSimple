@@ -120,7 +120,62 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <!-- 全体レイアウト -->
             <GroupBox
+                Grid.ColumnSpan="2"
+                Header="全体レイアウト">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Content="フォント"/>
+                        <ComboBox
+                            Grid.Column="1"
+                            SelectedValue="{Binding SelectedFontFamilyId, Mode=TwoWay}"
+                            SelectedValuePath="Id"
+                            DisplayMemberPath="JapaneseName"
+                            ItemsSource="{Binding AvailableFontFamilyNames}">
+                            <bh:Interaction.Triggers>
+                                <bh:EventTrigger EventName="SelectionChanged">
+                                    <bh:InvokeCommandAction Command="{Binding SelectFontFamilyNameCommand}"/>
+                                </bh:EventTrigger>
+                            </bh:Interaction.Triggers>
+                        </ComboBox>
+                    </Grid>
+
+                    <Grid
+                        Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Content="印刷位置横方向"/>
+                        <TextBox
+                            Grid.Column="1"
+                            Text="{Binding ApplicationSetting.PrintingOffsetX, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
+
+                        <Label
+                            Grid.Column="2"
+                            Content="印刷位置縦方向"/>
+                        <TextBox
+                            Grid.Column="3"
+                            Text="{Binding ApplicationSetting.PrintingOffsetY, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- 送り先 -->
+            <GroupBox
+                Grid.Row="1"
                 Header="送り先">
                 <StackPanel>
                     <GroupBox
@@ -239,7 +294,9 @@
                 </StackPanel>
             </GroupBox>
 
+            <!-- 差出人 -->
             <GroupBox
+                Grid.Row="1"
                 Grid.Column="1"
                 Header="差出人">
                 <StackPanel>
@@ -351,60 +408,6 @@
                                 Text="{Binding SelectedAddressCardLayout.Sender.FontSize, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}"/>
                         </Grid>
                     </GroupBox>
-                </StackPanel>
-            </GroupBox>
-            
-            <!-- 全体レイアウト -->
-            <GroupBox
-                Grid.Row="1"
-                Grid.ColumnSpan="2"
-                Header="全体レイアウト">
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="300"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label
-                            Content="フォント"/>
-                        <ComboBox
-                            Grid.Column="1"
-                            SelectedValue="{Binding SelectedFontFamilyId, Mode=TwoWay}"
-                            SelectedValuePath="Id"
-                            DisplayMemberPath="JapaneseName"
-                            ItemsSource="{Binding AvailableFontFamilyNames}">
-                            <bh:Interaction.Triggers>
-                                <bh:EventTrigger EventName="SelectionChanged">
-                                    <bh:InvokeCommandAction Command="{Binding SelectFontFamilyNameCommand}"/>
-                                </bh:EventTrigger>
-                            </bh:Interaction.Triggers>
-                        </ComboBox>
-                    </Grid>
-
-                    <Grid
-                        Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label
-                            Content="印刷位置横方向"/>
-                        <TextBox
-                            Grid.Column="1"
-                            Text="{Binding ApplicationSetting.PrintingOffsetX, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
-
-                        <Label
-                            Grid.Column="2"
-                            Content="印刷位置縦方向"/>
-                        <TextBox
-                            Grid.Column="3"
-                            Text="{Binding ApplicationSetting.PrintingOffsetY, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
-                    </Grid>
                 </StackPanel>
             </GroupBox>
 

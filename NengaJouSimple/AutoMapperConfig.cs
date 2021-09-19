@@ -40,9 +40,7 @@ namespace NengaJouSimple
                 config.CreateMap<TextLayout, TextLayoutViewModel>();
 
                 config.CreateMap<AddressCardLayout, AddressCardLayoutViewModel>()
-                    .ForMember(dest => dest.Id, opt => opt.Ignore())
-                    .ForMember(dest => dest.IsAlreadyPrinted, opt => opt.Ignore())
-                    .ForMember(dest => dest.AddressCard, opt => opt.Ignore());
+                    .ForMember(dest => dest.IsAlreadyPrinted, opt => opt.Ignore());
 
                 // Settings
                 config.CreateMap<TextLayoutSetting, TextLayoutSettingViewModel>();
@@ -69,9 +67,7 @@ namespace NengaJouSimple
                 // Layouts
                 config.CreateMap<PositionViewModel, Position>();
 
-                config.CreateMap<TextLayoutViewModel, TextLayout>()
-                    .ForMember(dest => dest.TextLayoutKind, opt => opt.Ignore())
-                    .ForMember(dest => dest.AddressCard, opt => opt.Ignore());
+                config.CreateMap<TextLayoutViewModel, TextLayout>();
 
                 config.CreateMap<AddressCardLayoutViewModel, AddressCardLayout>();
 

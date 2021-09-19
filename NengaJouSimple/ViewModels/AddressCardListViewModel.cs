@@ -12,6 +12,8 @@ using System.Linq;
 using Prism.Regions;
 using NengaJouSimple.Models.Addresses;
 using NengaJouSimple.ViewModels.Entities.Settings;
+using Prism.Events;
+using NengaJouSimple.ViewModels.PubSubEvents;
 
 namespace NengaJouSimple.ViewModels
 {
@@ -20,6 +22,8 @@ namespace NengaJouSimple.ViewModels
         private readonly IRegionManager regionManager;
 
         private readonly IDialogService dialogService;
+
+        private readonly IEventAggregator eventAggregator;
 
         private readonly AddressCardService addressCardService;
 
@@ -36,12 +40,14 @@ namespace NengaJouSimple.ViewModels
         public AddressCardListViewModel(
             IRegionManager regionManager,
             IDialogService dialogService,
+            IEventAggregator eventAggregator,
             ApplicationSettingService applicationSettingService,
             AddressCardService addressCardService,
             SenderAddressCardService senderAddressCardService)
         {
             this.regionManager = regionManager;
             this.dialogService = dialogService;
+            this.eventAggregator = eventAggregator;
             this.addressCardService = addressCardService;
 
             applicationSetting = applicationSettingService.Load();
@@ -178,6 +184,8 @@ namespace NengaJouSimple.ViewModels
                 AddressCard.Address1 = response;
 
                 RaisePropertyChanged(nameof(AddressCard));
+
+                eventAggregator.GetEvent<FocusAddress2Event>().Publish();
             }
 
             IsSearchingByWebService = false;

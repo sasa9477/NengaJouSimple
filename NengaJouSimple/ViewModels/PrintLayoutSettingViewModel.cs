@@ -150,7 +150,7 @@ namespace NengaJouSimple.ViewModels
 
                 ChangePreviousAndNextButtonEnablityStautus();
 
-                if (0 < CurrentAddressCardIndex && AddressCardLayouts.Count() <= CurrentAddressCardIndex)
+                if (0 < CurrentAddressCardIndex && CurrentAddressCardIndex <= AddressCardLayouts.Count())
                 {
                     SelectedAddressCardLayout = AddressCardLayouts[CurrentAddressCardIndex - 1];
                 }
